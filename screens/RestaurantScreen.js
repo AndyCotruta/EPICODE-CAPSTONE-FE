@@ -100,13 +100,10 @@ const RestaurantScreen = () => {
             >
               {title}
             </Text>
-            <View
-              style={tw.style("flex-row space-x-2 my-2")}
-              className="flex-row space-x-2 my-2"
-            >
+            <View style={tw.style("flex-row my-2")} className="flex-row my-2">
               <View
-                style={tw.style("flex-row items-center space-x-1")}
-                className="flex-row items-center space-x-1"
+                style={tw.style("flex-row items-center")}
+                className="flex-row items-center"
               >
                 <StarIcon color="green" size={22} opacity={0.5} />
                 <Text
@@ -123,8 +120,8 @@ const RestaurantScreen = () => {
                 </Text>
               </View>
               <View
-                style={tw.style("flex-row items-center space-x-1")}
-                className="flex-row items-center space-x-1"
+                style={tw.style("flex-row items-center")}
+                className="flex-row items-center"
               >
                 <MapPinIcon color="gray" opacity={0.4} size={22} />
                 <Text
@@ -143,17 +140,13 @@ const RestaurantScreen = () => {
             </Text>
           </View>
           <TouchableOpacity
-            style={tw.style(
-              "flex-row items-center space-x-2 p-4 border-y border-gray-300"
-            )}
-            className="flex-row items-center space-x-2 p-4 border-y border-gray-300 "
+            style={tw.style("flex-row items-center p-4  border-gray-300")}
+            className="flex-row items-center p-4  border-gray-300 "
           >
             <QuestionMarkCircleIcon color={darkGreen} opacity={0.6} size={20} />
             <Text
-              style={tw.style(
-                `pl-2 flex-1 text-[${darkOrange}] text-md font-bold`
-              )}
-              className="pl-2 flex-1 text-md font-bold"
+              style={tw.style(`pl-2 flex-1 text-[${darkOrange}]  font-bold`)}
+              className="pl-2 flex-1  font-bold"
             >
               Have a food alergy?
             </Text>

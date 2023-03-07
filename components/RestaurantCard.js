@@ -63,7 +63,7 @@ const RestaurantCard = ({
         </Text>
         <View
           style={tw.style("flex-row items-center px-2 pb-1")}
-          className="flex-row items-center space-x-1"
+          className="flex-row items-center "
         >
           <StarIcon color="green" opacity={0.5} size={22} />
 
@@ -79,7 +79,7 @@ const RestaurantCard = ({
         </View>
         <View
           style={tw.style("flex-row items-center px-2")}
-          className="flex-row items-center space-x-1"
+          className="flex-row items-center "
         >
           <MapPinIcon color="gray" opacity={0.4} size={22} />
           <Text
