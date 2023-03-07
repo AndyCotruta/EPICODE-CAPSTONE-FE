@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "bamboo-bites",
+    "slug": "bamboo-bites",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme": "com.bamboo.bites",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bamboo.bites"
+    },
+    "android": {
+      "package": "com.bamboo.bites",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1f4c00d2-8913-41bf-9caa-7fefe1a49d1d"
+      }
+    }
+  }
+}

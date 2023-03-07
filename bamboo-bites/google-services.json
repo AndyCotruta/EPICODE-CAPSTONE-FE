@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "424994455100",
+    "project_id": "bamboo-bites",
+    "storage_bucket": "bamboo-bites.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:424994455100:android:ffedb385338c84a42c8d39",
+        "android_client_info": {
+          "package_name": "host.exp.exponent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "424994455100-ht7h0sk1sio4i2637ha9kvp6v80voudp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW4q0q-PkEieBcId_HG4NVn2YNdefCr3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "424994455100-ht7h0sk1sio4i2637ha9kvp6v80voudp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "424994455100-nna8ah2omf11cfj73jacfq73kauc3pkl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "host.exp.exponent"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
