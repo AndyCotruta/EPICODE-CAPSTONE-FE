@@ -9,7 +9,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 const LoginScreen = () => {
   const { signInWithGoogle } = useAuth();
-  const [accessToken, setAccessToken] = useState();
+  const [accessToken, setAccessToken] = useState(null);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: "GOOGLE_GUID.apps.googleusercontent.com",
@@ -24,7 +24,32 @@ const LoginScreen = () => {
     if (response?.type === "success") {
       setAccessToken(response.authentication.accessToken);
     }
-  }, [response]);
+  }, [response, accessToken]);
+
+  const fetchGoogleData = async () => {
+    try {
+      const response = await fetch(
+        "https://www.googleapis.com/userinfo/v2/me",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const userInfo = await response.json();
+        console.log(userInfo);
+      } else {
+        console.log("Error fetching");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGoogleData();
+  }, [accessToken]);
 
   return (
     <View>
