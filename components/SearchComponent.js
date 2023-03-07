@@ -25,14 +25,12 @@ const SearchComponent = () => {
 
   return (
     <View
-      style={tw.style("flex-row items-center space-x-2 pb-4 mx-4")}
-      className="flex-row items-center space-x-2 pb-2 mx-4"
+      style={tw.style("flex-row items-center  pb-4 mx-4")}
+      className="flex-row items-center  pb-2 mx-4"
     >
       <View
-        style={tw.style(
-          `flex-row flex-1 space-x-2 bg-[${lightBeige}] p-3 items-center`
-        )}
-        className="flex-row flex-1 space-x-2 bg-gray-300 p-3"
+        style={tw.style(`flex-row flex-1  bg-[${lightBeige}] p-3 items-center`)}
+        className="flex-row flex-1  bg-gray-300 p-3"
       >
         <MagnifyingGlassIcon
           style={tw.style("mr-2")}

@@ -95,7 +95,6 @@ const LoginScreen = () => {
   };
   const handleGoogleLogin = async () => {
     try {
-      console.log("We have this inside the function", googleUserData);
       const response = await fetch(
         "https://deliveroo-mongodb-backend-production.up.railway.app/users/googleLogin",
 
@@ -103,7 +102,6 @@ const LoginScreen = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         dispatch(addAccessToken(data.accessToken));
         navigation.navigate("Home");
       } else {
@@ -115,7 +113,6 @@ const LoginScreen = () => {
   };
 
   useEffect(() => {
-    console.log("This is what we are storing: ", googleUserData);
     handleGoogleLogin();
   }, [googleUserData]);
 

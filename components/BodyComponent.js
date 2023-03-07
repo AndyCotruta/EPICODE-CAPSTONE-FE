@@ -22,7 +22,7 @@ const BodyComponent = ({ featuredCategories }) => {
       );
       if (response) {
         const data = await response.json();
-        console.log(data);
+
         setCategories(data);
       } else {
         console.log("Error while fetching categories");

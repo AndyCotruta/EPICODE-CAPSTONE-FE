@@ -22,7 +22,6 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
   const [featuredCategories, setfeaturedCategories] = useState([]);
   const token = useSelector(selectAccessToken);
-  console.log(token);
 
   useEffect(() => {
     navigation.setOptions({
@@ -42,7 +41,7 @@ const HomeScreen = () => {
       );
       if (response) {
         const data = await response.json();
-        console.log(data);
+
         dispatch(addUserData(data));
       } else {
       }
@@ -59,7 +58,6 @@ const HomeScreen = () => {
       if (response) {
         const data = await response.json();
         setfeaturedCategories(data);
-        console.log(data);
       } else {
         console.log("Error fetching featured categories");
       }
