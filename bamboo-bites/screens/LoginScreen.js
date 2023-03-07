@@ -12,8 +12,7 @@ const LoginScreen = () => {
   const [accessToken, setAccessToken] = useState();
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId:
-      "424994455100-nn79bm4jp88fa04sbbk699h8pru2ju5a.apps.googleusercontent.com",
+    androidClientId: "GOOGLE_GUID.apps.googleusercontent.com",
     iosClientId:
       "424994455100-2sfnb87jjakgocnl3v2hfnvcdq9oj4vi.apps.googleusercontent.com",
     expoClientId:
