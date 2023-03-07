@@ -36,6 +36,7 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
   const [focused, setFocused] = useState("false");
   const [userData, setUserData] = useState({ email: "", password: "" });
+  const [googleUserData, setGoogleUserData] = useState(null);
 
   const [accessToken, setAccessToken] = useState(null);
 
@@ -63,7 +64,15 @@ const LoginScreen = () => {
       );
       if (response.ok) {
         const userInfo = await response.json();
-        console.log(userInfo);
+
+        setGoogleUserData({
+          ...googleUserData,
+          email: userInfo.email,
+          firstName: userInfo.given_name,
+          lastName: userInfo.family_name,
+          googleId: userInfo.id,
+          avatar: userInfo.picture,
+        });
       } else {
         console.log("Error fetching");
       }
@@ -71,6 +80,44 @@ const LoginScreen = () => {
       console.error(error);
     }
   };
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const googleConfig = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(googleUserData),
+  };
+  const handleGoogleLogin = async () => {
+    try {
+      console.log("We have this inside the function", googleUserData);
+      const response = await fetch(
+        "https://deliveroo-mongodb-backend-production.up.railway.app/users/googleLogin",
+
+        googleConfig
+      );
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        dispatch(addAccessToken(data.accessToken));
+        navigation.navigate("Home");
+      } else {
+        console.log("Error while login in BE with google");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log("This is what we are storing: ", googleUserData);
+    handleGoogleLogin();
+  }, [googleUserData]);
 
   useEffect(() => {
     fetchGoogleData();
@@ -81,12 +128,6 @@ const LoginScreen = () => {
       headerShown: false,
     });
   }, []);
-
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
 
   const handleLogin = async () => {
     try {
