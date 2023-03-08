@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import React from "react";
 import tw from "twrnc";
 import {
@@ -15,10 +15,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import { addAccessToken, selectUserData } from "../redux/reducers/userSlice";
 import MyProfileHeader from "../components/MyProfileHeader";
+import MyProfileOptions from "../components/MyProfileOptions";
 
 const MyProfileScreen = () => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -30,17 +30,9 @@ const MyProfileScreen = () => {
   return (
     <SafeAreaView style={tw.style(`flex-1 bg-[${lightBeige}] p-4`)}>
       <MyProfileHeader />
-      <TouchableOpacity
-        onPress={() => {
-          dispatch(addAccessToken(null));
-        }}
-      >
-        <Text
-          style={tw.style("text-center bg-red-500 text-white p-5 rounded-lg")}
-        >
-          Log Out
-        </Text>
-      </TouchableOpacity>
+      <ScrollView style={tw.style(`flex-1 bg-[${lightBeige}] `)}>
+        <MyProfileOptions />
+      </ScrollView>
     </SafeAreaView>
   );
 };
