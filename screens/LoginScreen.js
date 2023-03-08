@@ -27,6 +27,7 @@ import {
   GOOGLE_CLIENT_ID_EXPO,
   GOOGLE_CLIENT_ID_IOS,
   GOOGLE_CLIENT_ID_WEB,
+  BE_URL,
 } from "@env";
 
 WebBrowser.maybeCompleteAuthSession();
@@ -96,7 +97,7 @@ const LoginScreen = () => {
   const handleGoogleLogin = async () => {
     try {
       const response = await fetch(
-        "https://deliveroo-mongodb-backend-production.up.railway.app/users/googleLogin",
+        `${BE_URL}/users/googleLogin`,
 
         googleConfig
       );
@@ -129,7 +130,7 @@ const LoginScreen = () => {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        "https://deliveroo-mongodb-backend-production.up.railway.app/users/login",
+        `${BE_URL}/users/login`,
         userData,
         config
       );

@@ -16,6 +16,7 @@ import {
   lightOrange,
   mintGreen,
 } from "../graphics/colours";
+import { BE_URL } from "@env";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -31,14 +32,11 @@ const HomeScreen = () => {
 
   const fetchMyData = async () => {
     try {
-      const response = await fetch(
-        "https://deliveroo-mongodb-backend-production.up.railway.app/users/me",
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+      const response = await fetch(`${BE_URL}/users/me`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
       if (response) {
         const data = await response.json();
 
@@ -52,9 +50,7 @@ const HomeScreen = () => {
 
   const fetchFeaturedCategories = async () => {
     try {
-      const response = await fetch(
-        "https://deliveroo-mongodb-backend-production.up.railway.app/featuredCategories"
-      );
+      const response = await fetch(`${BE_URL}/featuredCategories`);
       if (response) {
         const data = await response.json();
         setfeaturedCategories(data);

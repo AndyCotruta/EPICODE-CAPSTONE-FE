@@ -21,6 +21,7 @@ import {
   lightOrange,
   mintGreen,
 } from "../graphics/colours";
+import { BE_URL } from "@env";
 
 const RegistrationScreen = () => {
   useLayoutEffect(() => {
@@ -48,7 +49,7 @@ const RegistrationScreen = () => {
   const handleRegister = async () => {
     try {
       const response = await axios.post(
-        "https://deliveroo-mongodb-backend-production.up.railway.app/users/register",
+        `${BE_URL}/users/register`,
         userData,
         config
       );

@@ -11,15 +11,14 @@ import {
   lightOrange,
   mintGreen,
 } from "../graphics/colours";
+import { BE_URL } from "@env";
 
 const BodyComponent = ({ featuredCategories }) => {
   const [categories, setCategories] = useState([]);
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(
-        "https://deliveroo-mongodb-backend-production.up.railway.app/categories"
-      );
+      const response = await fetch(`${BE_URL}/categories`);
       if (response) {
         const data = await response.json();
 
