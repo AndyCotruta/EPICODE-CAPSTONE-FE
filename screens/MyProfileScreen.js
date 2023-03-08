@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import { addAccessToken, selectUserData } from "../redux/reducers/userSlice";
+import MyProfileHeader from "../components/MyProfileHeader";
 
 const MyProfileScreen = () => {
   const navigation = useNavigation();
@@ -27,36 +28,19 @@ const MyProfileScreen = () => {
   const userData = useSelector(selectUserData);
 
   return (
-    <SafeAreaView
-      style={tw.style(`flex-1 bg-[${lightBeige}] items-center justify-center`)}
-    >
-      <View style={tw.style("")}>
-        <View>
-          <Image
-            style={tw.style("w-50 h-50")}
-            source={{ uri: userData.avatar }}
-          />
-        </View>
-
-        <Text style={tw.style("text-center")}>
-          Welcome, {userData.firstName}
-        </Text>
-        <TouchableOpacity
-          onPress={() => {
-            dispatch(addAccessToken(null));
-          }}
+    <SafeAreaView style={tw.style(`flex-1 bg-[${lightBeige}] p-4`)}>
+      <MyProfileHeader />
+      <TouchableOpacity
+        onPress={() => {
+          dispatch(addAccessToken(null));
+        }}
+      >
+        <Text
+          style={tw.style("text-center bg-red-500 text-white p-5 rounded-lg")}
         >
-          <View>
-            <Text
-              style={tw.style(
-                "text-center bg-red-500 text-white p-5 rounded-lg"
-              )}
-            >
-              Log Out
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+          Log Out
+        </Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
