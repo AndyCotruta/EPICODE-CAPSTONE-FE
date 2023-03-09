@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRestaurant } from "../redux/reducers/restaurantSlice";
 import {
+  addRestautantId,
   removeFromBasket,
   selectBasketItems,
   selectBasketItemsWithId,
@@ -103,7 +104,14 @@ const BasketScreen = () => {
               </View>
 
               <TouchableOpacity
-                onPress={() => dispatch(removeFromBasket({ id: key }))}
+                onPress={() => {
+                  if (items.length <= 1) {
+                    dispatch(removeFromBasket({ id: key }));
+                    dispatch(addRestautantId(null));
+                  } else {
+                    dispatch(removeFromBasket({ id: key }));
+                  }
+                }}
               >
                 <Text
                   style={tw.style(
