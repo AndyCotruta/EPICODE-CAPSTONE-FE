@@ -16,7 +16,7 @@ const MyProfileOptions = () => {
   const dispatch = useDispatch();
   return (
     <View>
-      <Text style={tw.style("text-2xl font-bold")}>Options</Text>
+      <Text style={tw.style("text-3xl font-bold")}>Options</Text>
       <View style={tw.style("")}>
         <TouchableOpacity
           style={tw.style(

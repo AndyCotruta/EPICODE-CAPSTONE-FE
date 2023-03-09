@@ -11,17 +11,23 @@ import {
   lightOrange,
   mintGreen,
 } from "../graphics/colours";
+import { useNavigation } from "@react-navigation/native";
 import { Cog6ToothIcon } from "react-native-heroicons/outline";
 
 const MyProfileHeader = () => {
   const userData = useSelector(selectUserData);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   return (
     <View style={tw.style("pb-4")}>
       <View style={tw.style("flex flex-row items-center justify-between mb-4")}>
         <Text style={tw.style("text-3xl font-bold")}>Account</Text>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("EditProfile");
+          }}
+        >
           <Cog6ToothIcon size={30} color={darkGreen} />
         </TouchableOpacity>
       </View>

@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { selectAccessToken } from "../redux/reducers/userSlice";
 import RegistrationScreen from "../screens/RegistrationScreen";
 import MyProfileScreen from "../screens/MyProfileScreen";
+import EditProfileScreen from "../screens/EditProfileScreen";
 
 const StackNavigator = () => {
   const Stack = new createNativeStackNavigator();
@@ -25,6 +26,7 @@ const StackNavigator = () => {
             options={{ presentation: "modal", headerShown: false }}
           />
           <Stack.Screen name="MyProfile" component={MyProfileScreen} />
+          <Stack.Screen name="EditProfile" component={EditProfileScreen} />
         </>
       ) : (
         <>
