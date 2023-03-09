@@ -46,9 +46,26 @@ const BasketScreen = () => {
           style={tw.style(`${Platform.OS === "android" ? "pt-12" : "pt-2"}`)}
         >
           <Text style={tw.style("text-3xl font-bold text-center")}>Basket</Text>
-          <Text style={tw.style("text-center text-gray-400")}>
-            {restaurant.title}
-          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Restaurant", {
+                id: restaurant.id,
+                imgUrl: restaurant.imgUrl,
+                title: restaurant.title,
+                rating: restaurant.rating,
+                genre: restaurant.genre,
+                address: restaurant.address,
+                short_description: restaurant.short_description,
+                dishes: restaurant.dishes,
+                long: restaurant.lat,
+                lat: restaurant.lat,
+              });
+            }}
+          >
+            <Text style={tw.style("text-center text-gray-400")}>
+              {restaurant.title}
+            </Text>
+          </TouchableOpacity>
         </View>
         <TouchableOpacity
           onPress={navigation.goBack}
