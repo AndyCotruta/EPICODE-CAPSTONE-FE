@@ -73,14 +73,35 @@ const PersonalInfo = () => {
           const file = new Blob([byteArray], { type: "image/png" });
 
           const url = URL.createObjectURL(file);
+          setCompleteAvatarData({
+            ...completeAvatarData,
+            uri: url,
+          });
+          const cloudinary = (response) => {
+            const data = new FormData();
+            data.append("file", response.uri);
+            data.append("upload_preset", "docs_upload_example_us_preset");
+
+            fetch("https://api.cloudinary.com/v1_1/demo/image/upload", {
+              method: "POST",
+              body: data,
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                console.log("data from cloudinary", data);
+                setCompleteAvatarData({
+                  ...completeAvatarData,
+                  uri: data.secure_url,
+                  name: response.file.name,
+                  type: response.file.type,
+                });
+              });
+          };
+          cloudinary(response);
 
           setDynamicUserData({
             ...dynamicUserData,
             avatar: response.uri,
-          });
-          setCompleteAvatarData({
-            ...completeAvatarData,
-            uri: url,
           });
         }
       }
