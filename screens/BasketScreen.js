@@ -18,6 +18,7 @@ import {
 } from "../redux/reducers/basketSlice";
 import tw from "twrnc";
 import { XCircleIcon } from "react-native-heroicons/solid";
+import { darkGreen, lightBeige } from "../graphics/colours";
 
 const BasketScreen = () => {
   const navigation = useNavigation();
@@ -39,14 +40,12 @@ const BasketScreen = () => {
 
   return (
     <View style={tw.style("flex-1 bg-white")}>
-      <View style={tw.style("flex-1 bg-gray-100")}>
-        <View
-          style={tw.style("p-5 border-b border-[#00CCBB] bg-white shadow-xs")}
-        >
+      <View style={tw.style(`flex-1 bg-white`)}>
+        <View style={tw.style(`p-5  bg-[${lightBeige}] shadow-sm`)}>
           <View
             style={tw.style(`${Platform.OS === "android" ? "pt-12" : "pt-2"}`)}
           >
-            <Text style={tw.style("text-lg font-bold text-center")}>
+            <Text style={tw.style("text-3xl font-bold text-center")}>
               Basket
             </Text>
             <Text style={tw.style("text-center text-gray-400")}>
@@ -61,10 +60,14 @@ const BasketScreen = () => {
               } `
             )}
           >
-            <XCircleIcon color="#00CCBB" size={50} />
+            <XCircleIcon color={darkGreen} size={50} />
           </TouchableOpacity>
         </View>
-        <View style={tw.style("flex-row items-center px-4 py-3 bg-white my-5")}>
+        <View
+          style={tw.style(
+            `flex-row items-center px-4 py-3 bg-[${lightBeige}] my-5`
+          )}
+        >
           <Image
             style={tw.style("h-7 w-7 bg-gray-300 p-4 rounded-full mr-3")}
             source={{
@@ -89,7 +92,7 @@ const BasketScreen = () => {
               <TouchableOpacity
                 onPress={() => dispatch(removeFromBasket({ id: key }))}
               >
-                <Text style={tw.style("text-[#00CCBB] text-xs")}>Remove</Text>
+                <Text style={tw.style("text-[#00CCBB] text-sm")}>Remove</Text>
               </TouchableOpacity>
             </View>
           ))}
