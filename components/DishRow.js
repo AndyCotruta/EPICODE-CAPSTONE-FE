@@ -8,6 +8,8 @@ import {
   addToBasket,
   selectBasketItemsWithId,
   removeFromBasket,
+  addRestautantId,
+  selectBasketRestaurant,
 } from "../redux/reducers/basketSlice";
 import {
   darkGreen,
@@ -18,18 +20,37 @@ import {
   mintGreen,
 } from "../graphics/colours";
 
-const DishRow = ({ id, name, description, price, image }) => {
+const DishRow = ({ id, name, description, price, image, restaurantId }) => {
   const [isPressed, setIsPressed] = useState(false);
   const items = useSelector((state) => selectBasketItemsWithId(state, id));
+  const basketRestaurant = useSelector(selectBasketRestaurant);
   const dispatch = useDispatch();
-
+  console.log("This is what we got from props: ", { restaurantId });
+  console.log("This is what we get from redux: ", basketRestaurant);
   const addItemToBasket = () => {
-    dispatch(addToBasket({ id, name, description, price, image }));
+    if (basketRestaurant === null) {
+      dispatch(addRestautantId({ restaurantId }));
+      dispatch(addToBasket({ id, name, description, price, image }));
+    } else if (
+      basketRestaurant !== null &&
+      restaurantId === basketRestaurant.restaurantId
+    ) {
+      dispatch(addRestautantId({ restaurantId }));
+      dispatch(addToBasket({ id, name, description, price, image }));
+    } else {
+      alert(
+        "You cannot add dishes from different restaurants to the same basket"
+      );
+    }
   };
 
   const removeItemFromBasket = () => {
-    if (!items.length > 0) return;
-    dispatch(removeFromBasket({ id }));
+    if (items.length <= 1) {
+      dispatch(removeFromBasket({ id }));
+      dispatch(addRestautantId(null));
+    } else {
+      dispatch(removeFromBasket({ id }));
+    }
   };
 
   return (

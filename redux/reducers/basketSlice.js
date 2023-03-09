@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  restaurantId: null,
   items: [],
 };
 
@@ -8,6 +9,9 @@ export const basketSlice = createSlice({
   name: "basket",
   initialState,
   reducers: {
+    addRestautantId: (state, action) => {
+      state.restaurantId = action.payload;
+    },
     addToBasket: (state, action) => {
       state.items = [...state.items, action.payload];
     },
@@ -26,7 +30,10 @@ export const basketSlice = createSlice({
   },
 });
 
-export const { addToBasket, removeFromBasket } = basketSlice.actions;
+export const { addToBasket, removeFromBasket, addRestautantId } =
+  basketSlice.actions;
+
+export const selectBasketRestaurant = (state) => state.basket.restaurantId;
 
 export const selectBasketItems = (state) => state.basket.items;
 

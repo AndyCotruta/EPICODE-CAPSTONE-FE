@@ -177,6 +177,7 @@ const LoginScreen = () => {
           onBlur={() => setFocused(false)}
           placeholder="email"
           value={userData.email}
+          autoCapitalize="none"
           onChangeText={(text) => {
             setUserData({ ...userData, email: text });
           }}

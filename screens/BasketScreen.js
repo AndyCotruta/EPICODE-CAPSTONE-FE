@@ -18,7 +18,7 @@ import {
 } from "../redux/reducers/basketSlice";
 import tw from "twrnc";
 import { XCircleIcon } from "react-native-heroicons/solid";
-import { darkGreen, lightBeige } from "../graphics/colours";
+import { darkGreen, darkOrange, lightBeige } from "../graphics/colours";
 
 const BasketScreen = () => {
   const navigation = useNavigation();
@@ -40,32 +40,30 @@ const BasketScreen = () => {
 
   return (
     <View style={tw.style("flex-1 bg-white")}>
-      <View style={tw.style(`flex-1 bg-white`)}>
-        <View style={tw.style(`p-5  bg-[${lightBeige}] shadow-sm`)}>
-          <View
-            style={tw.style(`${Platform.OS === "android" ? "pt-12" : "pt-2"}`)}
-          >
-            <Text style={tw.style("text-3xl font-bold text-center")}>
-              Basket
-            </Text>
-            <Text style={tw.style("text-center text-gray-400")}>
-              {restaurant.title}
-            </Text>
-          </View>
-          <TouchableOpacity
-            onPress={navigation.goBack}
-            style={tw.style(
-              `rounded-full  absolute ${
-                Platform.OS === "android" ? "top-8 right-2" : "top-2 right-2"
-              } `
-            )}
-          >
-            <XCircleIcon color={darkGreen} size={50} />
-          </TouchableOpacity>
+      <View style={tw.style(`p-5  bg-[${lightBeige}] shadow-sm`)}>
+        <View
+          style={tw.style(`${Platform.OS === "android" ? "pt-12" : "pt-2"}`)}
+        >
+          <Text style={tw.style("text-3xl font-bold text-center")}>Basket</Text>
+          <Text style={tw.style("text-center text-gray-400")}>
+            {restaurant.title}
+          </Text>
         </View>
+        <TouchableOpacity
+          onPress={navigation.goBack}
+          style={tw.style(
+            `rounded-full  absolute ${
+              Platform.OS === "android" ? "top-8 right-2" : "top-2 right-2"
+            } `
+          )}
+        >
+          <XCircleIcon color={darkGreen} size={50} />
+        </TouchableOpacity>
+      </View>
+      <View style={tw.style(`flex-1 bg-white px-4`)}>
         <View
           style={tw.style(
-            `flex-row items-center px-4 py-3 bg-[${lightBeige}] my-5`
+            `flex-row items-center px-4 py-3 bg-[${lightBeige}] my-5 rounded-xl`
           )}
         >
           <Image
@@ -76,23 +74,44 @@ const BasketScreen = () => {
           />
           <Text style={tw.style("flex-1")}>Deliver in 50-75 mins</Text>
           <TouchableOpacity>
-            <Text style={tw.style("text-[#00CCBB]")}>Change</Text>
+            <Text style={tw.style(`text-[${darkOrange}] font-bold`)}>
+              Change
+            </Text>
           </TouchableOpacity>
         </View>
         <ScrollView>
           {Object.entries(groupedItemsInBasket).map(([key, items]) => (
-            <View key={key}>
-              <Text>{items.length} x</Text>
+            <View
+              style={tw.style(
+                `flex flex-row items-center bg-[${lightBeige}] p-4 mb-4 rounded-xl`
+              )}
+              key={key}
+            >
+              <Text style={tw.style(`font-bold text-lg text-[${darkGreen}]`)}>
+                {items.length}{" "}
+              </Text>
+              <Text>x</Text>
               <Image
                 source={{ uri: items[0]?.image }}
-                style={tw.style("h-12 w-12 rounded-full")}
+                style={tw.style("h-12 w-12 rounded-full mx-2")}
               />
-              <Text style={tw.style("flex-1")}>{items[0]?.name}</Text>
-              <Text>${items[0]?.price}</Text>
+              <View style={tw.style("flex-1")}>
+                <Text style={tw.style("")}>{items[0]?.name}</Text>
+                <Text style={tw.style(`font-bold text-[${darkGreen}]`)}>
+                  ${items[0]?.price}
+                </Text>
+              </View>
+
               <TouchableOpacity
                 onPress={() => dispatch(removeFromBasket({ id: key }))}
               >
-                <Text style={tw.style("text-[#00CCBB] text-sm")}>Remove</Text>
+                <Text
+                  style={tw.style(
+                    `text-[${darkOrange}] ml-3 text-sm font-bold`
+                  )}
+                >
+                  Remove
+                </Text>
               </TouchableOpacity>
             </View>
           ))}
