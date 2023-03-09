@@ -92,7 +92,7 @@ const RestaurantScreen = () => {
             <ArrowLeftIcon size={20} color={darkGreen} />
           </TouchableOpacity>
         </View>
-        <View style={tw.style(`bg-[${mintGreen}]`)} className=" bg-white">
+        <View style={tw.style(`bg-[${lightBeige}]`)} className=" bg-white">
           <View style={tw.style("px-4 pt-4")} className="px-4 pt-4">
             <Text
               style={tw.style(`text-3xl text-[${darkGreen}] font-bold`)}
@@ -140,8 +140,10 @@ const RestaurantScreen = () => {
             </Text>
           </View>
           <TouchableOpacity
-            style={tw.style("flex-row items-center p-4  border-gray-300")}
-            className="flex-row items-center p-4  border-gray-300 "
+            style={tw.style(
+              `flex-row items-center p-4 border-t border-b border-[${mintGreen}] `
+            )}
+            className="flex-row items-center p-4  border-[${darkGreen}] "
           >
             <QuestionMarkCircleIcon color={darkGreen} opacity={0.6} size={20} />
             <Text
@@ -156,7 +158,7 @@ const RestaurantScreen = () => {
         <View style={tw.style(`${items.length > 0 ? "pb-28" : "pb-0"}`)}>
           <Text
             style={tw.style(
-              `px-4 pt-6 mb-3 text-[${darkGreen}] font-bold text-xl`
+              `px-4 pt-6 mb-3 text-[${darkGreen}] font-bold text-3xl`
             )}
             className="px-4 pt-6 mb-3 font-bold text-xl"
           >

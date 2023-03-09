@@ -28,9 +28,12 @@ const MyProfileScreen = () => {
   const userData = useSelector(selectUserData);
 
   return (
-    <SafeAreaView style={tw.style(`flex-1 bg-[${lightBeige}] p-4`)}>
+    <SafeAreaView style={tw.style(`flex-1 bg-white p-4`)}>
       <MyProfileHeader />
-      <ScrollView style={tw.style(`flex-1 bg-[${lightBeige}] `)}>
+      <View>
+        <Text style={tw.style("text-3xl font-bold pb-4")}>Options</Text>
+      </View>
+      <ScrollView style={tw.style(`flex-1 bg-white `)}>
         <MyProfileOptions />
       </ScrollView>
     </SafeAreaView>

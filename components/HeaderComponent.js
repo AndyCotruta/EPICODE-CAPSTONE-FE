@@ -20,7 +20,7 @@ const HeaderComponent = () => {
 
   return (
     <View
-      style={tw.style(`flex-row p-4 items-center bg-[${mintGreen}]`)}
+      style={tw.style(`flex-row p-4 items-center bg-[${lightBeige}]`)}
       className="flex-row pb-3 items-center mx-4"
     >
       <Image

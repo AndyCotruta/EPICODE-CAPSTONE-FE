@@ -31,7 +31,11 @@ const MyProfileHeader = () => {
           <Cog6ToothIcon size={30} color={darkGreen} />
         </TouchableOpacity>
       </View>
-      <View style={tw.style("flex flex-row items-center")}>
+      <View
+        style={tw.style(
+          `flex flex-row p-4 items-center bg-[${lightBeige}] rounded-xl`
+        )}
+      >
         <Image
           style={tw.style("w-30 h-30 mr-4 rounded-full")}
           source={{ uri: userData.avatar }}

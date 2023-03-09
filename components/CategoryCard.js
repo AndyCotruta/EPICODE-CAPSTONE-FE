@@ -10,7 +10,7 @@ const CategoryCard = (props) => {
         source={{
           uri: props.imgUrl,
         }}
-        style={tw.style("h-20 w-20 rounded")}
+        style={tw.style("h-20 w-20 rounded-xl")}
         className="h-20 w-20 rounded"
       />
       <Text

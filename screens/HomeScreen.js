@@ -70,7 +70,7 @@ const HomeScreen = () => {
   return (
     <SafeAreaView
       edges={["right", "left", "top"]}
-      style={tw.style(`flex-1 bg-[${mintGreen}]`)}
+      style={tw.style(`flex-1 bg-[${lightBeige}]`)}
     >
       <HeaderComponent />
 

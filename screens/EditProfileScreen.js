@@ -18,7 +18,7 @@ const EditProfileScreen = () => {
     });
   }, []);
   return (
-    <SafeAreaView style={tw.style(`flex-1 bg-[${lightBeige}] p-4`)}>
+    <SafeAreaView style={tw.style(`flex-1 bg-white px-4`)}>
       <PersonalInfo />
     </SafeAreaView>
   );

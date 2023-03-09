@@ -36,7 +36,7 @@ const BodyComponent = ({ featuredCategories }) => {
   }, []);
 
   return (
-    <ScrollView style={tw.style(`bg-[${lightBeige}]`)}>
+    <ScrollView style={tw.style(`bg-white`)}>
       <CategoriesComponent categories={categories} />
       {featuredCategories.map((category) => (
         <FeaturedRowComponent

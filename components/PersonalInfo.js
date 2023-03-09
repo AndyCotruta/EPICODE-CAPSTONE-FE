@@ -161,9 +161,13 @@ const PersonalInfo = () => {
   return (
     <View>
       <View style={tw.style("")}>
-        <Text style={tw.style("text-3xl font-bold")}>Personal Info</Text>
+        <Text style={tw.style("text-3xl font-bold py-4")}>Personal Info</Text>
       </View>
-      <View style={tw.style("flex flex-row items-center py-4")}>
+      <View
+        style={tw.style(
+          `flex flex-row items-center p-4 bg-[${lightBeige}] rounded-xl`
+        )}
+      >
         <View style={tw.style("w-30 h-30 rounded-full overflow-hidden")}>
           <Image
             style={tw.style("w-30 h-30 rounded-full")}
@@ -236,40 +240,38 @@ const PersonalInfo = () => {
           </Text>
         </TouchableOpacity>
       )}
-      <View>
-        <Text style={tw.style("text-3xl font-bold")}>Personal Settings</Text>
-        <TouchableOpacity
-          style={tw.style(
-            `flex flex-row items-center py-5 border-b border-[${darkGreen}]`
-          )}
-        >
-          <UserIcon size={25} color={darkGreen} />
-          <Text style={tw.style("px-4")}>Health Data</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={tw.style(
-            `flex flex-row items-center py-5 border-b border-[${darkGreen}]`
-          )}
-        >
-          <CreditCardIcon size={25} color={darkGreen} />
-          <Text style={tw.style("px-4")}>Payment Method</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={tw.style(
-            `flex flex-row items-center py-5 border-b border-[${darkGreen}]`
-          )}
-        >
-          <PaintBrushIcon size={25} color={darkGreen} />
-          <Text style={tw.style("px-4")}>App Theme</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={tw.style(
-            `flex flex-row items-center py-5 border-b border-[${darkGreen}]`
-          )}
-        >
-          <CircleStackIcon size={25} color={darkGreen} />
-          <Text style={tw.style("px-4")}>Currency</Text>
-        </TouchableOpacity>
+      <Text style={tw.style("text-3xl font-bold py-4")}>Personal Settings</Text>
+      <View style={tw.style(`bg-[${lightBeige}] rounded-xl`)}>
+        <View>
+          <TouchableOpacity
+            style={tw.style(
+              `flex flex-row items-center p-5 border-b border-[${darkGreen}]`
+            )}
+          >
+            <UserIcon size={25} color={darkGreen} />
+            <Text style={tw.style("px-4 font-bold")}>Health Data</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={tw.style(
+              `flex flex-row items-center p-5 border-b border-[${darkGreen}]`
+            )}
+          >
+            <CreditCardIcon size={25} color={darkGreen} />
+            <Text style={tw.style("px-4 font-bold")}>Payment Method</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={tw.style(
+              `flex flex-row items-center p-5 border-b border-[${darkGreen}]`
+            )}
+          >
+            <PaintBrushIcon size={25} color={darkGreen} />
+            <Text style={tw.style("px-4 font-bold")}>App Theme</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={tw.style(`flex flex-row items-center p-5 `)}>
+            <CircleStackIcon size={25} color={darkGreen} />
+            <Text style={tw.style("px-4 font-bold")}>Currency</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

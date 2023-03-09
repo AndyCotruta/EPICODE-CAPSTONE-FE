@@ -39,7 +39,7 @@ const DishRow = ({ id, name, description, price, image }) => {
           setIsPressed(!isPressed);
         }}
         style={tw.style(
-          `bg-[${mintGreen}] border p-4 border-[${lightBeige}] ${
+          `bg-[${lightBeige}] border-t p-4 border-[${mintGreen}] ${
             isPressed && "border-b-0"
           }`
         )}
@@ -48,7 +48,7 @@ const DishRow = ({ id, name, description, price, image }) => {
         <View style={tw.style("flex-row")} className="flex-row">
           <View style={tw.style("flex-1 pr-2")} className="flex-1 pr-2">
             <Text
-              style={tw.style(`text-lg text-[${darkGreen}] mb-1`)}
+              style={tw.style(`text-lg font-bold text-[${darkGreen}] mb-1`)}
               className="text-lg mb-1"
             >
               {name}
