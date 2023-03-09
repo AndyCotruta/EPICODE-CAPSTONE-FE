@@ -41,8 +41,8 @@ const BasketScreen = () => {
   console.log(groupedItemsInBasket);
 
   return (
-    <View style={tw.style("flex-1 bg-white")}>
-      <View style={tw.style(`p-5  bg-[${lightBeige}] shadow-sm`)}>
+    <SafeAreaView style={tw.style(`flex-1 bg-[${lightBeige}]`)}>
+      <View style={tw.style(`p-4  bg-[${lightBeige}] shadow-sm`)}>
         <View
           style={tw.style(`${Platform.OS === "android" ? "pt-12" : "pt-2"}`)}
         >
@@ -168,7 +168,7 @@ const BasketScreen = () => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

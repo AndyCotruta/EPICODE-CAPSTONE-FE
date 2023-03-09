@@ -23,7 +23,7 @@ const StackNavigator = () => {
           <Stack.Screen
             name="Basket"
             component={BasketScreen}
-            options={{ presentation: "modal", headerShown: false }}
+            options={{ headerShown: false }}
           />
           <Stack.Screen name="MyProfile" component={MyProfileScreen} />
           <Stack.Screen name="EditProfile" component={EditProfileScreen} />
