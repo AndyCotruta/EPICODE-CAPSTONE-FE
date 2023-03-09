@@ -12,14 +12,20 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "twrnc";
 import { darkGreen, lightBeige, lightOrange } from "../graphics/colours";
-import { useSelector } from "react-redux";
-import { selectUserData } from "../redux/reducers/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addUserData,
+  selectAccessToken,
+  selectUserData,
+} from "../redux/reducers/userSlice";
 import { PencilSquareIcon } from "react-native-heroicons/outline";
-import * as ImagePicker from "expo-image-picker";
-import axios from "axios";
+import * as ImagePicker from "react-native-image-picker";
+import * as DocumentPicker from "expo-document-picker";
 import { BE_URL } from "@env";
 
 const PersonalInfo = () => {
+  const dispatch = useDispatch();
+  const accessToken = useSelector(selectAccessToken);
   const userData = useSelector(selectUserData);
   const [dynamicUserData, setDynamicUserData] = useState({
     firstName: userData.firstName,
@@ -28,44 +34,33 @@ const PersonalInfo = () => {
     avatar: userData.avatar,
     role: userData.role,
   });
+  const [completeAvatarData, setCompleteAvatarData] = useState(null);
   const [editable, setEditable] = useState(false);
 
   const selectFile = async () => {
     try {
-      if (Platform.OS !== "web") {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== "granted") {
-          alert("Permission denied");
-        } else {
-          let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            quality: 1,
-          });
-          console.log(result);
-          if (!result.canceled) {
-            setDynamicUserData({
-              ...dynamicUserData,
-              avatar: result.assets[0].uri,
-            });
-          }
-        }
-      } else {
-        let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          quality: 1,
-        });
-        if (!result.canceled) {
+      const response = await DocumentPicker.getDocumentAsync({
+        type: "image/*",
+      });
+
+      if (response.type !== "cancel") {
+        console.log("We didn't cancel");
+        console.log(response);
+        if (Platform.OS !== "web") {
           setDynamicUserData({
             ...dynamicUserData,
-            avatar: result.assets[0].uri,
+            avatar: response.uri,
+          });
+          setCompleteAvatarData({
+            ...completeAvatarData,
+            uri: response.uri,
+            name: response.name,
+            type: response.mimeType,
           });
         }
       }
     } catch (error) {
-      console.log("You can't select file", error.message);
+      console.log(error);
     }
   };
 
@@ -75,18 +70,27 @@ const PersonalInfo = () => {
       formData.append("firstName", dynamicUserData.firstName);
       formData.append("lastName", dynamicUserData.lastName);
       formData.append("email", dynamicUserData.email);
-      formData.append("avatar", dynamicUserData.avatar);
+      completeAvatarData !== null &&
+        formData.append("userImage", {
+          uri: completeAvatarData.uri,
+          type: completeAvatarData.type,
+          name: completeAvatarData.name,
+        });
+      console.log("This is what complete data has", completeAvatarData);
       formData.append("role", dynamicUserData.role);
       const response = await fetch(`${BE_URL}/users/me`, {
         method: "PUT",
-
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
         body: formData,
       });
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+
+        dispatch(addUserData(data));
       } else {
-        console.log("Error while trying to modify user data");
+        console.log("Error while trying to modify user data", response);
       }
     } catch (error) {
       console.log(error);
