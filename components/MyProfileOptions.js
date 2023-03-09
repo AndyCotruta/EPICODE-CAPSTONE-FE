@@ -9,8 +9,10 @@ import {
   HeartIcon,
   UserGroupIcon,
   InformationCircleIcon,
+  PresentationChartBarIcon,
 } from "react-native-heroicons/outline";
 import { darkGreen } from "../graphics/colours";
+import { addAccessToken } from "../redux/reducers/userSlice";
 
 const MyProfileOptions = () => {
   const dispatch = useDispatch();
@@ -18,6 +20,14 @@ const MyProfileOptions = () => {
     <View>
       <Text style={tw.style("text-3xl font-bold")}>Options</Text>
       <View style={tw.style("")}>
+        <TouchableOpacity
+          style={tw.style(
+            `flex flex-row items-center py-5 border-b border-[${darkGreen}]`
+          )}
+        >
+          <PresentationChartBarIcon size={25} color={darkGreen} />
+          <Text style={tw.style("px-4")}>Dashboard</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={tw.style(
             `flex flex-row items-center py-5 border-b border-[${darkGreen}]`

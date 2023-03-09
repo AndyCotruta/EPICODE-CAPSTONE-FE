@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Button,
+  Image,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -225,15 +226,33 @@ const LoginScreen = () => {
           </View>
         </TouchableOpacity>
       </View>
-      <View>
-        <Text>LoginScreen</Text>
-        <Button
+      <View style={tw.style("w-80")}>
+        <TouchableOpacity
+          style={tw.style(
+            `flex flex-row items-center justify-center bg-[${lightBeige}] p-4 my-5 rounded-3xl shadow-lg `
+          )}
+          onPress={() => {
+            promptAsync({});
+          }}
+        >
+          <Image
+            style={tw.style("w-5 h-5 mx-2")}
+            source={{
+              uri: "https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
+            }}
+          />
+          <Text style={tw.style(`text-black font-bold text-center `)}>
+            Log In with Google
+          </Text>
+        </TouchableOpacity>
+        {/* <Button
+          style={tw.style("flex-grow-1")}
           title="Click to login w google"
           disabled={!request}
           onPress={() => {
             promptAsync({});
           }}
-        />
+        /> */}
       </View>
     </LinearGradient>
   );
