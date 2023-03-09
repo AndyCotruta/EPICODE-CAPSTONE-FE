@@ -40,7 +40,7 @@ const PersonalInfo = () => {
   const selectFile = async () => {
     try {
       const response = await DocumentPicker.getDocumentAsync({
-        type: "image/*",
+        type: "*/*",
       });
 
       if (response.type !== "cancel") {
@@ -57,6 +57,31 @@ const PersonalInfo = () => {
             name: response.name,
             type: response.mimeType,
           });
+        } else {
+          const base64Uri = response.uri;
+          // replace the above URI with your own Base64 URI
+
+          const byteCharacters = atob(base64Uri.split(",")[1]);
+
+          const byteNumbers = new Array(byteCharacters.length);
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+          }
+
+          const byteArray = new Uint8Array(byteNumbers);
+
+          const file = new Blob([byteArray], { type: "image/png" });
+
+          const url = URL.createObjectURL(file);
+
+          setDynamicUserData({
+            ...dynamicUserData,
+            avatar: response.uri,
+          });
+          setCompleteAvatarData({
+            ...completeAvatarData,
+            uri: url,
+          });
         }
       }
     } catch (error) {
@@ -70,13 +95,20 @@ const PersonalInfo = () => {
       formData.append("firstName", dynamicUserData.firstName);
       formData.append("lastName", dynamicUserData.lastName);
       formData.append("email", dynamicUserData.email);
-      completeAvatarData !== null &&
-        formData.append("userImage", {
-          uri: completeAvatarData.uri,
-          type: completeAvatarData.type,
-          name: completeAvatarData.name,
-        });
+      if (Platform.OS !== "web") {
+        completeAvatarData !== null &&
+          formData.append("userImage", {
+            uri: completeAvatarData.uri,
+            type: completeAvatarData.type,
+            name: completeAvatarData.name,
+          });
+      } else {
+        completeAvatarData !== null &&
+          formData.append("userImage", completeAvatarData.uri);
+      }
+
       console.log("This is what complete data has", completeAvatarData);
+      console.log("Formed data has", formData);
       formData.append("role", dynamicUserData.role);
       const response = await fetch(`${BE_URL}/users/me`, {
         method: "PUT",
@@ -87,8 +119,9 @@ const PersonalInfo = () => {
       });
       if (response.ok) {
         const data = await response.json();
-
+        console.log(data);
         dispatch(addUserData(data));
+        setCompleteAvatarData(null);
       } else {
         console.log("Error while trying to modify user data", response);
       }
@@ -161,7 +194,8 @@ const PersonalInfo = () => {
       </View>
       {userData.firstName === dynamicUserData.firstName &&
       userData.lastName === dynamicUserData.lastName &&
-      userData.email === dynamicUserData.email ? (
+      userData.email === dynamicUserData.email &&
+      completeAvatarData === null ? (
         <View></View>
       ) : (
         <TouchableOpacity onPress={saveChanges}>
