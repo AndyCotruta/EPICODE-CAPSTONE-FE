@@ -21,6 +21,7 @@ import {
 } from "../graphics/colours";
 
 const DishRow = ({ id, name, description, price, image, restaurantId }) => {
+  const [alert, setAlert] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
   const items = useSelector((state) => selectBasketItemsWithId(state, id));
   const basketRestaurant = useSelector(selectBasketRestaurant);
@@ -38,9 +39,10 @@ const DishRow = ({ id, name, description, price, image, restaurantId }) => {
       dispatch(addRestautantId({ restaurantId }));
       dispatch(addToBasket({ id, name, description, price, image }));
     } else {
-      alert(
-        "You cannot add dishes from different restaurants to the same basket"
-      );
+      // alert(
+      //   "You cannot add dishes from different restaurants to the same basket"
+      // );
+      setAlert(!alert);
     }
   };
 
@@ -111,6 +113,14 @@ const DishRow = ({ id, name, description, price, image, restaurantId }) => {
             <TouchableOpacity onPress={addItemToBasket}>
               <PlusCircleIcon color={darkGreen} size={32} />
             </TouchableOpacity>
+            {alert && (
+              <View style={tw.style("flex-1 ")}>
+                <Text style={tw.style("text-red-500 text-sm")}>
+                  You cannot add dishes from different restaurants to the same
+                  basket!
+                </Text>
+              </View>
+            )}
           </View>
         </View>
       )}
