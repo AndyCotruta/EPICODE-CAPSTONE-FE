@@ -13,9 +13,11 @@ import {
 } from "react-native-heroicons/outline";
 import { darkGreen, lightBeige, mintGreen } from "../graphics/colours";
 import { addAccessToken } from "../redux/reducers/userSlice";
+import { useNavigation } from "@react-navigation/native";
 
 const MyProfileOptions = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   return (
     <View style={tw.style(`bg-[${lightBeige}] rounded-xl`)}>
       <TouchableOpacity
@@ -38,6 +40,9 @@ const MyProfileOptions = () => {
         style={tw.style(
           `flex flex-row items-center p-5  border-b  border-[${mintGreen}]`
         )}
+        onPress={() => {
+          navigation.navigate("Basket");
+        }}
       >
         <ShoppingBagIcon size={25} color={darkGreen} />
         <Text style={tw.style("px-4 font-bold")}>Basket</Text>
