@@ -26,8 +26,7 @@ const DishRow = ({ id, name, description, price, image, restaurantId }) => {
   const items = useSelector((state) => selectBasketItemsWithId(state, id));
   const basketRestaurant = useSelector(selectBasketRestaurant);
   const dispatch = useDispatch();
-  console.log("This is what we got from props: ", { restaurantId });
-  console.log("This is what we get from redux: ", basketRestaurant);
+
   const addItemToBasket = () => {
     if (basketRestaurant === null) {
       dispatch(addRestautantId({ restaurantId }));
@@ -39,9 +38,6 @@ const DishRow = ({ id, name, description, price, image, restaurantId }) => {
       dispatch(addRestautantId({ restaurantId }));
       dispatch(addToBasket({ id, name, description, price, image }));
     } else {
-      // alert(
-      //   "You cannot add dishes from different restaurants to the same basket"
-      // );
       setAlert(!alert);
     }
   };
