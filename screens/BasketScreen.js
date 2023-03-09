@@ -16,6 +16,7 @@ import {
   removeFromBasket,
   selectBasketItems,
   selectBasketItemsWithId,
+  selectBasketTotal,
 } from "../redux/reducers/basketSlice";
 import tw from "twrnc";
 import { XCircleIcon } from "react-native-heroicons/solid";
@@ -24,7 +25,7 @@ import { darkGreen, darkOrange, lightBeige } from "../graphics/colours";
 const BasketScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
+  const basketTotal = useSelector(selectBasketTotal);
   const restaurant = useSelector(selectRestaurant);
   const items = useSelector(selectBasketItems);
   const [groupedItemsInBasket, setGroupedItemsInBasket] = useState([]);
@@ -141,6 +142,31 @@ const BasketScreen = () => {
             </View>
           ))}
         </ScrollView>
+      </View>
+      <View style={tw.style(`px-4 bg-[${lightBeige}]`)}>
+        <View style={tw.style("flex-row justify-between py-4")}>
+          <Text style={tw.style("text-gray-400")}>Subtotal</Text>
+          <Text style={tw.style("text-gray-400")}>${basketTotal}</Text>
+        </View>
+        <View style={tw.style("flex-row justify-between pb-4")}>
+          <Text style={tw.style("text-gray-400")}>Delivery Fee</Text>
+          <Text style={tw.style("text-gray-400")}>$5.99</Text>
+        </View>
+        <View style={tw.style("flex-row justify-between pb-4")}>
+          <Text style={tw.style(`font-bold text-[${darkGreen}]`)}>
+            Total Price
+          </Text>
+          <Text style={tw.style(`font-bold text-[${darkGreen}]`)}>
+            ${basketTotal + 5.99}
+          </Text>
+        </View>
+        <TouchableOpacity
+          style={tw.style(`bg-[${darkOrange}] rounded-xl p-4 mb-4`)}
+        >
+          <Text style={tw.style("text-center text-white font-bold text-lg")}>
+            Place Order
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
