@@ -162,6 +162,9 @@ const BasketScreen = () => {
         </View>
         <TouchableOpacity
           style={tw.style(`bg-[${darkOrange}] rounded-xl p-4 mb-4`)}
+          onPress={() => {
+            navigation.navigate("Animation");
+          }}
         >
           <Text style={tw.style("text-center text-white font-bold text-lg")}>
             Place Order

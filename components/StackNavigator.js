@@ -9,6 +9,8 @@ import { selectAccessToken } from "../redux/reducers/userSlice";
 import RegistrationScreen from "../screens/RegistrationScreen";
 import MyProfileScreen from "../screens/MyProfileScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
+import AnimationScreen from "../screens/AnimationScreen";
+import DeliveryScreen from "../screens/DeliveryScreen";
 
 const StackNavigator = () => {
   const Stack = new createNativeStackNavigator();
@@ -23,6 +25,16 @@ const StackNavigator = () => {
           <Stack.Screen
             name="Basket"
             component={BasketScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Animation"
+            component={AnimationScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Delivery"
+            component={DeliveryScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen name="MyProfile" component={MyProfileScreen} />
