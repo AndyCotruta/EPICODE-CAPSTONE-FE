@@ -53,6 +53,7 @@ const HomeScreen = () => {
       const response = await fetch(`${BE_URL}/featuredCategories`);
       if (response) {
         const data = await response.json();
+        console.log(data);
         setfeaturedCategories(data);
       } else {
         console.log("Error fetching featured categories");

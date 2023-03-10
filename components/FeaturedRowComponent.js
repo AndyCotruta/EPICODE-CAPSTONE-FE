@@ -54,7 +54,7 @@ const FeaturedRowComponent = (props) => {
             address={restaurant.address}
             short_description={restaurant.short_description}
             dishes={restaurant.dishes}
-            long={restaurant.long}
+            lon={restaurant.lon}
             lat={restaurant.lat}
           />
         ))}

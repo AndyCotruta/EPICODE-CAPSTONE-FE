@@ -11,6 +11,7 @@ import {
 import * as Animatable from "react-native-animatable";
 import * as Progress from "react-native-progress";
 import { useNavigation } from "@react-navigation/native";
+import restaurantSlice from "../redux/reducers/restaurantSlice";
 
 const AnimationScreen = () => {
   const navigation = useNavigation();
