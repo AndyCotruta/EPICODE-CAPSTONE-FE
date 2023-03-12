@@ -82,15 +82,15 @@ const DeliveryScreen = () => {
           </Text>
         </View>
       </View>
-      {Platform.OS === "web" && mapUrl !== "" && (
-        <View style={tw.style(`flex-1 rounded-xl shadow-md`)}>
-          <Image
-            style={tw.style("w-full h-full rounded-xl ")}
-            source={{ uri: mapUrl }}
-          />
-        </View>
-      )}
-      {Platform.OS !== "web" && <MapComponent />}
+
+      <View style={tw.style(`flex-1 rounded-xl shadow-md`)}>
+        <Image
+          style={tw.style("w-full h-full rounded-xl ")}
+          source={{ uri: mapUrl }}
+        />
+      </View>
+
+      {/* {Platform.OS !== "web" && <MapComponent />} */}
       <View
         style={tw.style(
           `bg-white flex-row items-center shadow-md p-4 rounded-xl mt-4`

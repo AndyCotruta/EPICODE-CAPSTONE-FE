@@ -7,20 +7,24 @@ import {
   ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRestaurant } from "../redux/reducers/restaurantSlice";
 import {
   addRestautantId,
+  refreshBasket,
   removeFromBasket,
   selectBasketItems,
   selectBasketItemsWithId,
+  selectBasketRestaurant,
   selectBasketTotal,
 } from "../redux/reducers/basketSlice";
 import tw from "twrnc";
 import { XCircleIcon } from "react-native-heroicons/solid";
 import { darkGreen, darkOrange, lightBeige } from "../graphics/colours";
+import { BE_URL } from "@env";
+import { addUserData, selectAccessToken } from "../redux/reducers/userSlice";
 
 const BasketScreen = () => {
   const navigation = useNavigation();
@@ -28,9 +32,10 @@ const BasketScreen = () => {
   const basketTotal = useSelector(selectBasketTotal);
   const restaurant = useSelector(selectRestaurant);
   const items = useSelector(selectBasketItems);
+  const token = useSelector(selectAccessToken);
   const [groupedItemsInBasket, setGroupedItemsInBasket] = useState([]);
 
-  useMemo(() => {
+  useEffect(() => {
     const groupedItems = items.reduce((results, item) => {
       (results[item.id] = results[item.id] || []).push(item);
       return results;
@@ -38,7 +43,36 @@ const BasketScreen = () => {
     setGroupedItemsInBasket(groupedItems);
   }, [items]);
 
-  console.log(groupedItemsInBasket);
+  const dishes = items.map((item) => item.id);
+
+  const handlePlaceOrder = async () => {
+    try {
+      const activeOrder = {
+        restaurantId: restaurant.id,
+        dishes: dishes,
+        totalPrice: basketTotal + 5.99,
+      };
+      console.log(activeOrder);
+      const response = await fetch(`${BE_URL}/users/me/activeOrder`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(activeOrder),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(addUserData(data));
+      } else {
+        ("Error while creating the active order");
+      }
+      dispatch(refreshBasket());
+      navigation.navigate("Animation");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <SafeAreaView style={tw.style(`flex-1 bg-[${lightBeige}]`)}>
@@ -162,8 +196,8 @@ const BasketScreen = () => {
         </View>
         <TouchableOpacity
           style={tw.style(`bg-[${darkOrange}] rounded-xl p-4 mb-4`)}
-          onPress={() => {
-            navigation.navigate("Animation");
+          onPress={async () => {
+            await handlePlaceOrder();
           }}
         >
           <Text style={tw.style("text-center text-white font-bold text-lg")}>

@@ -27,10 +27,13 @@ export const basketSlice = createSlice({
       }
       state.items = newBasket;
     },
+    refreshBasket: (state) => {
+      (state.restaurantId = null), (state.items = []);
+    },
   },
 });
 
-export const { addToBasket, removeFromBasket, addRestautantId } =
+export const { addToBasket, removeFromBasket, addRestautantId, refreshBasket } =
   basketSlice.actions;
 
 export const selectBasketRestaurant = (state) => state.basket.restaurantId;

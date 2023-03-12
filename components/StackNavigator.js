@@ -11,6 +11,7 @@ import MyProfileScreen from "../screens/MyProfileScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
 import AnimationScreen from "../screens/AnimationScreen";
 import DeliveryScreen from "../screens/DeliveryScreen";
+import OrderHistoryScreen from "../screens/OrderHistoryScreen";
 
 const StackNavigator = () => {
   const Stack = new createNativeStackNavigator();
@@ -35,6 +36,11 @@ const StackNavigator = () => {
           <Stack.Screen
             name="Delivery"
             component={DeliveryScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Order"
+            component={OrderHistoryScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen name="MyProfile" component={MyProfileScreen} />

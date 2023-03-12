@@ -51,6 +51,9 @@ const MyProfileOptions = () => {
         style={tw.style(
           `flex flex-row items-center p-5  border-b  border-[${mintGreen}]`
         )}
+        onPress={() => {
+          navigation.navigate("Order");
+        }}
       >
         <ClipboardDocumentListIcon size={25} color={darkGreen} />
         <Text style={tw.style("px-4 font-bold")}>Order History</Text>
