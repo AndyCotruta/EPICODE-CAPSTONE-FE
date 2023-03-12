@@ -44,7 +44,12 @@ const ActiveOrder = () => {
   return (
     <View>
       <Text style={tw.style("text-3xl font-bold mb-3")}>Active Order</Text>
-      <View style={tw.style(` bg-[${lightBeige}] p-4 rounded-xl shadow-md`)}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("Delivery");
+        }}
+        style={tw.style(` bg-[${lightBeige}] p-4 rounded-xl shadow-md`)}
+      >
         {info && (
           <TouchableOpacity
             style={tw.style(
@@ -110,7 +115,7 @@ const ActiveOrder = () => {
             </Text>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

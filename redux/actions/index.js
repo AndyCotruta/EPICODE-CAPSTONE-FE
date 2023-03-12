@@ -36,7 +36,7 @@ export const moveToHistory = (token, order) => {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        dispatch(addUserData(data));
+        dispatch(fetchMyData(token));
       } else {
         console.log("Error fetching order history");
       }

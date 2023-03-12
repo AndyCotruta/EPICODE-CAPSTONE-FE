@@ -195,7 +195,7 @@ const BasketScreen = () => {
             Total Price
           </Text>
           <Text style={tw.style(`font-bold text-[${darkGreen}]`)}>
-            ${basketTotal + 5.99}
+            ${(((basketTotal + 5.99) * 100) / 100).toFixed(2)}
           </Text>
         </View>
         <TouchableOpacity

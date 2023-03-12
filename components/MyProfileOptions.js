@@ -56,7 +56,7 @@ const MyProfileOptions = () => {
         }}
       >
         <ClipboardDocumentListIcon size={25} color={darkGreen} />
-        <Text style={tw.style("px-4 font-bold")}>Order History</Text>
+        <Text style={tw.style("px-4 font-bold")}>My Orders</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={tw.style(
