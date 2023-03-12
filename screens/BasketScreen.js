@@ -25,10 +25,12 @@ import { XCircleIcon } from "react-native-heroicons/solid";
 import { darkGreen, darkOrange, lightBeige } from "../graphics/colours";
 import { BE_URL } from "@env";
 import { addUserData, selectAccessToken } from "../redux/reducers/userSlice";
+import { fetchMyData } from "../redux/actions";
 
 const BasketScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
   const basketTotal = useSelector(selectBasketTotal);
   const restaurant = useSelector(selectRestaurant);
   const items = useSelector(selectBasketItems);
@@ -67,8 +69,10 @@ const BasketScreen = () => {
       } else {
         ("Error while creating the active order");
       }
-      dispatch(refreshBasket());
+
       navigation.navigate("Animation");
+      dispatch(refreshBasket());
+      dispatch(fetchMyData(token));
     } catch (error) {
       console.log(error);
     }

@@ -17,6 +17,7 @@ import {
   mintGreen,
 } from "../graphics/colours";
 import { BE_URL } from "@env";
+import { fetchMyData } from "../redux/actions";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -30,23 +31,23 @@ const HomeScreen = () => {
     });
   }, []);
 
-  const fetchMyData = async () => {
-    try {
-      const response = await fetch(`${BE_URL}/users/me`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
-      if (response) {
-        const data = await response.json();
+  // const fetchMyData = async () => {
+  //   try {
+  //     const response = await fetch(`${BE_URL}/users/me`, {
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //       },
+  //     });
+  //     if (response) {
+  //       const data = await response.json();
 
-        dispatch(addUserData(data));
-      } else {
-      }
-    } catch (error) {
-      console.log("Error fetching my data");
-    }
-  };
+  //       dispatch(addUserData(data));
+  //     } else {
+  //     }
+  //   } catch (error) {
+  //     console.log("Error fetching my data");
+  //   }
+  // };
 
   const fetchFeaturedCategories = async () => {
     try {
@@ -65,8 +66,8 @@ const HomeScreen = () => {
 
   useEffect(() => {
     fetchFeaturedCategories();
-    fetchMyData();
-  }, []);
+    dispatch(fetchMyData(token));
+  }, [dispatch, token]);
 
   return (
     <SafeAreaView
