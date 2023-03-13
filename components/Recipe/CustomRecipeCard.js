@@ -11,7 +11,7 @@ import { ArrowRightIcon } from "react-native-heroicons/outline";
 
 const CustomRecipeCard = () => {
   return (
-    <View>
+    <View style={tw.style("h-45")}>
       <View
         style={tw.style(
           `bg-[${brightOrange}] w-5/6 h-40 rounded-r-full mt-4 p-4 flex justify-center`
@@ -40,7 +40,7 @@ const CustomRecipeCard = () => {
       </View>
       <View
         style={tw.style(
-          `absolute right-4 top-7 bg-[${lightBeige}] border-8 border-white rounded-full p-5`
+          `absolute right-4 top-7 bg-[${lightBeige}] border-8 border-white rounded-full p-5 shadow-md`
         )}
       >
         <Image
