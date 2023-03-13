@@ -30,7 +30,7 @@ const OrderHistory = () => {
                 {order.restaurantId?.name}
               </Text>
               <View>
-                <Text>{format(new Date(order?.createdAt), "hh mm a")}</Text>
+                <Text>{format(new Date(order?.createdAt), "hh:mm a")}</Text>
                 <Text>{format(new Date(order?.createdAt), "do MMM")}</Text>
               </View>
             </View>

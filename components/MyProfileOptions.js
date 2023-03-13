@@ -22,7 +22,7 @@ const MyProfileOptions = () => {
     <View style={tw.style(`bg-[${lightBeige}] rounded-xl`)}>
       <TouchableOpacity
         style={tw.style(
-          `flex flex-row items-center p-5  border-b  border-[${mintGreen}]`
+          `flex flex-row items-center p-5  border-b  border-gray-200`
         )}
       >
         <PresentationChartBarIcon size={25} color={darkGreen} />
@@ -30,7 +30,7 @@ const MyProfileOptions = () => {
       </TouchableOpacity>
       <TouchableOpacity
         style={tw.style(
-          `flex flex-row items-center p-5  border-b  border-[${mintGreen}]`
+          `flex flex-row items-center p-5  border-b  border-gray-200`
         )}
       >
         <EnvelopeIcon size={25} color={darkGreen} />
@@ -38,7 +38,7 @@ const MyProfileOptions = () => {
       </TouchableOpacity>
       <TouchableOpacity
         style={tw.style(
-          `flex flex-row items-center p-5  border-b  border-[${mintGreen}]`
+          `flex flex-row items-center p-5  border-b  border-gray-200`
         )}
         onPress={() => {
           navigation.navigate("Basket");
@@ -49,7 +49,7 @@ const MyProfileOptions = () => {
       </TouchableOpacity>
       <TouchableOpacity
         style={tw.style(
-          `flex flex-row items-center p-5  border-b  border-[${mintGreen}]`
+          `flex flex-row items-center p-5  border-b  border-gray-200`
         )}
         onPress={() => {
           navigation.navigate("Order");
@@ -60,7 +60,7 @@ const MyProfileOptions = () => {
       </TouchableOpacity>
       <TouchableOpacity
         style={tw.style(
-          `flex flex-row items-center p-5  border-b  border-[${mintGreen}]`
+          `flex flex-row items-center p-5  border-b  border-gray-200`
         )}
       >
         <HeartIcon size={25} color={darkGreen} />
@@ -68,7 +68,7 @@ const MyProfileOptions = () => {
       </TouchableOpacity>
       <TouchableOpacity
         style={tw.style(
-          `flex flex-row items-center p-5  border-b  border-[${mintGreen}]`
+          `flex flex-row items-center p-5  border-b  border-gray-200`
         )}
       >
         <UserGroupIcon size={25} color={darkGreen} />
@@ -76,7 +76,7 @@ const MyProfileOptions = () => {
       </TouchableOpacity>
       <TouchableOpacity
         style={tw.style(
-          `flex flex-row items-center p-5  border-b  border-[${mintGreen}]`
+          `flex flex-row items-center p-5  border-b  border-gray-200`
         )}
       >
         <InformationCircleIcon size={25} color={darkGreen} />

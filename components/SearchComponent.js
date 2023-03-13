@@ -37,7 +37,7 @@ const SearchComponent = () => {
     const filtered = allRestaurants.filter((restaurant) =>
       restaurant.name.toLowerCase().includes(searchValue.toLowerCase())
     );
-    console.log(filtered);
+
     setFiltered(filtered);
   }, [searchValue]);
 
