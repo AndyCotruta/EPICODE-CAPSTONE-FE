@@ -5,4 +5,5 @@ export const darkOrange = "#FBA536";
 export const lightOrange = "#F9BB6A";
 export const lightBrown = "#E69F66";
 export const lightBeige = "#f5f3ef";
+export const brightOrange = "#FEEFCC";
 // export const lightBeige = "#f2ede4";
