@@ -18,6 +18,7 @@ import {
 } from "../graphics/colours";
 import { BE_URL } from "@env";
 import { fetchMyData } from "../redux/actions";
+import { setAllRestaurants } from "../redux/reducers/allRestaurantsSlice";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -31,31 +32,16 @@ const HomeScreen = () => {
     });
   }, []);
 
-  // const fetchMyData = async () => {
-  //   try {
-  //     const response = await fetch(`${BE_URL}/users/me`, {
-  //       headers: {
-  //         Authorization: "Bearer " + token,
-  //       },
-  //     });
-  //     if (response) {
-  //       const data = await response.json();
-
-  //       dispatch(addUserData(data));
-  //     } else {
-  //     }
-  //   } catch (error) {
-  //     console.log("Error fetching my data");
-  //   }
-  // };
-
   const fetchFeaturedCategories = async () => {
     try {
       const response = await fetch(`${BE_URL}/featuredCategories`);
       if (response) {
         const data = await response.json();
-        console.log(data);
+
         setfeaturedCategories(data);
+        const allRestaurants = data.flatMap((category) => category.restaurants);
+
+        dispatch(setAllRestaurants(allRestaurants));
       } else {
         console.log("Error fetching featured categories");
       }
