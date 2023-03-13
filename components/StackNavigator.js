@@ -21,7 +21,7 @@ const StackNavigator = () => {
     <Stack.Navigator>
       {accessToken !== null ? (
         <>
-          <Stack.Screen path="/home" name="Home" component={HomeScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Restaurant" component={RestaurantScreen} />
           <Stack.Screen
             name="Basket"

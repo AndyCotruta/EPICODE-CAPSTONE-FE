@@ -5,6 +5,7 @@ import basketReducer from "../reducers/basketSlice";
 import restaurantReducer from "../reducers/restaurantSlice";
 import userReducer from "../reducers/userSlice";
 import allRestaurantsReducer from "../reducers/allRestaurantsSlice";
+import recipeReducer from "../reducers/recipeSlice";
 
 const persistConfig = {
   key: "root",
@@ -16,6 +17,7 @@ const bigReducer = combineReducers({
   restaurant: restaurantReducer,
   user: userReducer,
   allRestaurants: allRestaurantsReducer,
+  recipe: recipeReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, bigReducer);

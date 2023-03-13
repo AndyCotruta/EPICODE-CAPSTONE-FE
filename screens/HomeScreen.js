@@ -19,12 +19,15 @@ import {
 import { BE_URL } from "@env";
 import { fetchMyData } from "../redux/actions";
 import { setAllRestaurants } from "../redux/reducers/allRestaurantsSlice";
+import { selectRecipeStatus } from "../redux/reducers/recipeSlice";
+import RecipeSearchComponent from "../components/Recipe/RecipeSearchComponent";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [featuredCategories, setfeaturedCategories] = useState([]);
   const token = useSelector(selectAccessToken);
+  const recipeActive = useSelector(selectRecipeStatus);
 
   useEffect(() => {
     navigation.setOptions({
@@ -61,8 +64,8 @@ const HomeScreen = () => {
       style={tw.style(`flex-1 bg-[${lightBeige}]`)}
     >
       <HeaderComponent />
+      {recipeActive ? <RecipeSearchComponent /> : <SearchComponent />}
 
-      <SearchComponent />
       <BodyComponent featuredCategories={featuredCategories} />
     </SafeAreaView>
   );

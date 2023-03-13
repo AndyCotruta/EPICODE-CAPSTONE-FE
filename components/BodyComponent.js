@@ -12,9 +12,13 @@ import {
   mintGreen,
 } from "../graphics/colours";
 import { BE_URL } from "@env";
+import { selectRecipeStatus } from "../redux/reducers/recipeSlice";
+import { useSelector } from "react-redux";
+import RecipeBodyComponent from "./Recipe/RecipeBodyComponent";
 
 const BodyComponent = ({ featuredCategories }) => {
   const [categories, setCategories] = useState([]);
+  const recipeActive = useSelector(selectRecipeStatus);
 
   const fetchCategories = async () => {
     try {
@@ -37,16 +41,22 @@ const BodyComponent = ({ featuredCategories }) => {
 
   return (
     <ScrollView style={tw.style(`bg-white`)}>
-      <CategoriesComponent categories={categories} />
-      {featuredCategories.map((category) => (
-        <FeaturedRowComponent
-          key={category._id}
-          id={category._id}
-          title={category.name}
-          description={category.short_description}
-          restaurants={category.restaurants}
-        />
-      ))}
+      {recipeActive ? (
+        <RecipeBodyComponent />
+      ) : (
+        <View>
+          <CategoriesComponent categories={categories} />
+          {featuredCategories.map((category) => (
+            <FeaturedRowComponent
+              key={category._id}
+              id={category._id}
+              title={category.name}
+              description={category.short_description}
+              restaurants={category.restaurants}
+            />
+          ))}
+        </View>
+      )}
     </ScrollView>
   );
 };
