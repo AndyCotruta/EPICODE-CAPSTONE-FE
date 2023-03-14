@@ -70,6 +70,9 @@ const MyProfileOptions = () => {
         style={tw.style(
           `flex flex-row items-center p-5  border-b  border-gray-200`
         )}
+        onPress={() => {
+          navigation.navigate("SharedOrder");
+        }}
       >
         <UserGroupIcon size={25} color={darkGreen} />
         <Text style={tw.style("px-4 font-bold")}>Shared Order</Text>

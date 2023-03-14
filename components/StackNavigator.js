@@ -13,6 +13,7 @@ import AnimationScreen from "../screens/AnimationScreen";
 import DeliveryScreen from "../screens/DeliveryScreen";
 import OrderHistoryScreen from "../screens/OrderHistoryScreen";
 import RecipeScreen from "../screens/Recipe/RecipeScreen";
+import SharedOrderScreen from "../screens/SharedOrderScreen";
 
 const StackNavigator = () => {
   const Stack = new createNativeStackNavigator();
@@ -45,6 +46,8 @@ const StackNavigator = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="MyProfile" component={MyProfileScreen} />
+          <Stack.Screen name="SharedOrder" component={SharedOrderScreen} />
+
           <Stack.Screen name="EditProfile" component={EditProfileScreen} />
           <Stack.Screen
             name="Recipe"
