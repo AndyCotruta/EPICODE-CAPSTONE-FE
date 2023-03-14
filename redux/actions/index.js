@@ -69,3 +69,21 @@ export const fetchRecipeByType = (type) => {
     }
   };
 };
+
+export const fetchCompleteRecipe = (recipeId) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        `https://api.spoonacular.com/recipes/${recipeId}/information?includeNutrition=false&apiKey=${SPOONACULAR_KEY}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+      } else {
+        console.log("Error fetching complete recipe");
+      }
+    } catch (error) {
+      console.log("Error fetching recipe by id: ", error);
+    }
+  };
+};

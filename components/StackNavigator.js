@@ -12,6 +12,7 @@ import EditProfileScreen from "../screens/EditProfileScreen";
 import AnimationScreen from "../screens/AnimationScreen";
 import DeliveryScreen from "../screens/DeliveryScreen";
 import OrderHistoryScreen from "../screens/OrderHistoryScreen";
+import RecipeScreen from "../screens/Recipe/RecipeScreen";
 
 const StackNavigator = () => {
   const Stack = new createNativeStackNavigator();
@@ -45,6 +46,11 @@ const StackNavigator = () => {
           />
           <Stack.Screen name="MyProfile" component={MyProfileScreen} />
           <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+          <Stack.Screen
+            name="Recipe"
+            component={RecipeScreen}
+            options={{ headerShown: false }}
+          />
         </>
       ) : (
         <>
