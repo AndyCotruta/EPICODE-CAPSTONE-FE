@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
 import RestaurantScreen from "../screens/RestaurantScreen";
 import BasketScreen from "../screens/BasketScreen";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectAccessToken } from "../redux/reducers/userSlice";
 import RegistrationScreen from "../screens/RegistrationScreen";
 import MyProfileScreen from "../screens/MyProfileScreen";
@@ -14,11 +14,43 @@ import DeliveryScreen from "../screens/DeliveryScreen";
 import OrderHistoryScreen from "../screens/OrderHistoryScreen";
 import RecipeScreen from "../screens/Recipe/RecipeScreen";
 import SharedOrderScreen from "../screens/SharedOrderScreen";
+import { io } from "socket.io-client";
+import { BE_URL } from "@env";
+import { addMessage } from "../redux/reducers/communicationSlice";
+
+const socket = io(`${BE_URL}`, { transports: ["websocket"] });
+// const socket = io(`http://localhost:3001`, { transports: ["websocket"] });
 
 const StackNavigator = () => {
   const Stack = new createNativeStackNavigator();
 
   const accessToken = useSelector(selectAccessToken);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    socket.on("connected", (message) => {
+      console.log(socket.connected);
+      console.log(message);
+      // socket.emit("sendMessage", {
+      //   message: "Hello Bamboo Bites",
+      // });
+      socket.on("newMessage", (message) => {
+        console.log(message);
+        try {
+          dispatch(addMessage(message));
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    });
+
+    // (async () => {
+    //   const { status } = await BarCodeScanner.requestPermissionsAsync();
+    //   setHasPermission(status === "granted");
+    // })();
+  }, [socket]);
+
   return (
     <Stack.Navigator>
       {accessToken !== null ? (

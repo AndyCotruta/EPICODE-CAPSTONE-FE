@@ -47,6 +47,7 @@
     "react-native-web": "~0.18.11",
     "react-redux": "^8.0.5",
     "redux-persist": "^6.0.0",
+    "socket.io-client": "^4.6.1",
     "tailwind-rn": "^4.2.0",
     "tailwindcss-react-native": "^1.7.10",
     "twrnc": "^3.6.0"

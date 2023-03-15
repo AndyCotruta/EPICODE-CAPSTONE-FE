@@ -3,8 +3,16 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import React, { useEffect } from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import QRCode from "react-native-qrcode-svg";
+import { io } from "socket.io-client";
+// import socket from "../utils/socket";
+import { BE_URL } from "@env";
 
-const SharedOrderScreen = () => {
+const socket = io(`${BE_URL}`, { transports: ["websocket"] });
+// const socket = io(`http://localhost:3001`, { transports: ["websocket"] });
+
+const SharedOrderScreen = (props) => {
+  const receivedMessage = props.message;
+  // const [receivedMessage, setReceivedMessage] = React.useState(null);
   const [openCamera, setOpenCamera] = React.useState(false);
   const [hasPermission, setHasPermission] = React.useState(false);
   const [scanData, setScanData] = React.useState(null);
@@ -33,6 +41,17 @@ const SharedOrderScreen = () => {
   };
 
   useEffect(() => {
+    socket.on("connected", (message) => {
+      //   console.log(message);
+      //   socket.emit("sendMessage", {
+      //     message: "Hello Bamboo Bites",
+      //   });
+      socket.on("newMessage", (message) => {
+        console.log(message);
+        setReceivedMessage(message);
+      });
+    });
+    // console.log(socket.connected);
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === "granted");
@@ -41,10 +60,22 @@ const SharedOrderScreen = () => {
 
   return (
     <View style={styles.container}>
+      {receivedMessage !== undefined && <Text>{receivedMessage.message}</Text>}
+      <Button
+        title="Send from Android"
+        onPress={() => {
+          socket.emit("sendMessage", {
+            message: "Hello Bamboo Bites",
+          });
+        }}
+      />
       <Button
         title="Open Camera"
         onPress={() => {
           setOpenCamera(true);
+          socket.emit("sendMessage", {
+            message: "Hello Bamboo Bites",
+          });
         }}
       />
       <QRCode value={JSON.stringify(complexObj)} />
