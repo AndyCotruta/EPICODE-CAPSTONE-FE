@@ -78,7 +78,11 @@ const StackNavigator = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="MyProfile" component={MyProfileScreen} />
-          <Stack.Screen name="SharedOrder" component={SharedOrderScreen} />
+          <Stack.Screen
+            name="SharedOrder"
+            component={SharedOrderScreen}
+            options={{ headerShown: false }}
+          />
 
           <Stack.Screen name="EditProfile" component={EditProfileScreen} />
           <Stack.Screen
