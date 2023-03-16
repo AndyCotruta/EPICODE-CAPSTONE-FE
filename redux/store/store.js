@@ -7,6 +7,7 @@ import userReducer from "../reducers/userSlice";
 import allRestaurantsReducer from "../reducers/allRestaurantsSlice";
 import recipeReducer from "../reducers/recipeSlice";
 import communicationReducer from "../reducers/communicationSlice";
+import sharedOrderReducer from "../reducers/sharedOrderSlice";
 
 const persistConfig = {
   key: "root",
@@ -20,6 +21,7 @@ const bigReducer = combineReducers({
   allRestaurants: allRestaurantsReducer,
   recipe: recipeReducer,
   communication: communicationReducer,
+  sharedOrder: sharedOrderReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, bigReducer);
