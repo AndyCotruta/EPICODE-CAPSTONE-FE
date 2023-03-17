@@ -25,6 +25,7 @@ import {
   lightOrange,
   mintGreen,
 } from "../graphics/colours";
+import { selectRestaurant } from "../redux/reducers/restaurantSlice";
 
 const RestaurantScreen = () => {
   const {
@@ -39,6 +40,7 @@ const RestaurantScreen = () => {
       dishes,
       lon,
       lat,
+      shared,
     },
   } = useRoute();
 
@@ -66,6 +68,7 @@ const RestaurantScreen = () => {
         dishes,
         lon,
         lat,
+        shared,
       })
     );
   }, []);
@@ -162,7 +165,7 @@ const RestaurantScreen = () => {
             )}
             className="px-4 pt-6 mb-3 font-bold text-xl"
           >
-            Menu
+            {shared ? "Shared Menu" : "Menu"}
           </Text>
           {dishes.map((dish) => (
             <DishRow

@@ -25,6 +25,8 @@ import {
   selectInitiatedBy,
 } from "../redux/reducers/sharedOrderSlice";
 import { fetchMyData } from "../redux/actions";
+import SharedOrderRestaurantsList from "../screens/SharedOrderRestaurantsList";
+import SharedBasket from "../screens/SharedBasket";
 
 const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 // const socket = io(`http://localhost:3001`, { transports: ["websocket"] });
@@ -104,6 +106,16 @@ const StackNavigator = () => {
           <Stack.Screen
             name="SharedLobby"
             component={SharedLobby}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SharedOrderRestaurantsList"
+            component={SharedOrderRestaurantsList}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SharedBasket"
+            component={SharedBasket}
             options={{ headerShown: false }}
           />
 

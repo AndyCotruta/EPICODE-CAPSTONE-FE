@@ -21,12 +21,14 @@ import {
   lightOrange,
   mintGreen,
 } from "../graphics/colours";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectAllRestaurants } from "../redux/reducers/allRestaurantsSlice";
 import { useNavigation } from "@react-navigation/native";
+import { setRestaurant } from "../redux/reducers/restaurantSlice";
 
-const SearchComponent = () => {
+const SearchComponent = ({ shared }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const [focused, setFocused] = useState("false");
   const [searchValue, setSearchValue] = useState("");
@@ -44,7 +46,11 @@ const SearchComponent = () => {
   return (
     <View>
       <View
-        style={tw.style("flex-row items-center  pb-4 mx-4")}
+        style={
+          shared
+            ? tw.style("flex-row items-center  pb-4")
+            : tw.style("flex-row items-center  pb-4 mx-4")
+        }
         className="flex-row items-center  pb-2 mx-4"
       >
         <View
@@ -87,21 +93,43 @@ const SearchComponent = () => {
             <TouchableOpacity
               key={i}
               style={tw.style("")}
-              onPress={() => {
-                navigation.navigate("Restaurant", {
-                  id: result.id,
-                  imgUrl: result.image,
-                  title: result.name,
-                  rating: result.rating,
-                  genre: result.genre,
-                  address: result.address,
-                  short_description: result.short_description,
-                  dishes: result.dishes,
-                  lon: result.lon,
-                  lat: result.lat,
-                });
-                setSearchValue("");
-              }}
+              onPress={
+                shared
+                  ? () => {
+                      dispatch(
+                        setRestaurant({
+                          id: result.id,
+                          imgUrl: result.image,
+                          title: result.name,
+                          rating: result.rating,
+                          genre: result.genre,
+                          address: result.address,
+                          short_description: result.short_description,
+                          dishes: result.dishes,
+                          lon: result.lon,
+                          lat: result.lat,
+                        })
+                      );
+                      navigation.navigate("Basket", {
+                        shared: true,
+                      });
+                    }
+                  : () => {
+                      navigation.navigate("Restaurant", {
+                        id: result.id,
+                        imgUrl: result.image,
+                        title: result.name,
+                        rating: result.rating,
+                        genre: result.genre,
+                        address: result.address,
+                        short_description: result.short_description,
+                        dishes: result.dishes,
+                        lon: result.lon,
+                        lat: result.lat,
+                      });
+                      setSearchValue("");
+                    }
+              }
             >
               <View
                 style={tw.style(

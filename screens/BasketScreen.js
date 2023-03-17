@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRestaurant } from "../redux/reducers/restaurantSlice";
 import {
@@ -28,6 +28,10 @@ import { addUserData, selectAccessToken } from "../redux/reducers/userSlice";
 import { fetchMyData } from "../redux/actions";
 
 const BasketScreen = () => {
+  const {
+    params: { shared },
+  } = useRoute();
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -84,22 +88,42 @@ const BasketScreen = () => {
         <View
           style={tw.style(`${Platform.OS === "android" ? "pt-12" : "pt-2"}`)}
         >
-          <Text style={tw.style("text-3xl font-bold text-center")}>Basket</Text>
+          <Text style={tw.style("text-3xl font-bold text-center")}>
+            {shared ? "Shared Basket" : "Basket"}
+          </Text>
           <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Restaurant", {
-                id: restaurant.id,
-                imgUrl: restaurant.imgUrl,
-                title: restaurant.title,
-                rating: restaurant.rating,
-                genre: restaurant.genre,
-                address: restaurant.address,
-                short_description: restaurant.short_description,
-                dishes: restaurant.dishes,
-                long: restaurant.lat,
-                lat: restaurant.lat,
-              });
-            }}
+            onPress={
+              shared
+                ? () => {
+                    navigation.navigate("Restaurant", {
+                      id: restaurant.id,
+                      imgUrl: restaurant.imgUrl,
+                      title: restaurant.title,
+                      rating: restaurant.rating,
+                      genre: restaurant.genre,
+                      address: restaurant.address,
+                      short_description: restaurant.short_description,
+                      dishes: restaurant.dishes,
+                      long: restaurant.lat,
+                      lat: restaurant.lat,
+                      shared: true,
+                    });
+                  }
+                : () => {
+                    navigation.navigate("Restaurant", {
+                      id: restaurant.id,
+                      imgUrl: restaurant.imgUrl,
+                      title: restaurant.title,
+                      rating: restaurant.rating,
+                      genre: restaurant.genre,
+                      address: restaurant.address,
+                      short_description: restaurant.short_description,
+                      dishes: restaurant.dishes,
+                      long: restaurant.lat,
+                      lat: restaurant.lat,
+                    });
+                  }
+            }
           >
             <Text style={tw.style("text-center text-gray-400")}>
               {restaurant.title}

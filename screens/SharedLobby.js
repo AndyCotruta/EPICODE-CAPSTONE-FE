@@ -105,7 +105,7 @@ const SharedLobby = () => {
             `bg-[${darkOrange}] p-4 rounded-3xl shadow-md w-40 mt-5`
           )}
           onPress={() => {
-            navigation.goBack();
+            navigation.navigate("SharedOrderRestaurantsList");
           }}
         >
           <Text style={tw.style("text-white text-center font-bold")}>
