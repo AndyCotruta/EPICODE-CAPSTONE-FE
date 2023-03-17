@@ -10,16 +10,20 @@ import {
   selectInitiatedBy,
   selectSharedOrderUsers,
 } from "../redux/reducers/sharedOrderSlice";
+import { selectUserData } from "../redux/reducers/userSlice";
 
 const SharedLobby = () => {
   const navigation = useNavigation();
 
+  const userData = useSelector(selectUserData);
   const initiatedBy = useSelector(selectInitiatedBy);
   const connectedUsers = useSelector(selectSharedOrderUsers);
 
   const [complexObj, setComplexObj] = useState({
-    name: "Andy",
-    email: "test@email.com",
+    _id: userData._id,
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    avatar: userData.avatar,
   });
 
   return (
@@ -66,7 +70,7 @@ const SharedLobby = () => {
         </Text>
         <View style={tw.style("flex-row items-center")}>
           {connectedUsers.map((user) => (
-            <View style={tw.style("flex items-center")}>
+            <View style={tw.style("flex items-center")} key={user._id}>
               <Image
                 style={tw.style("w-20 h-20 rounded-full shadow-md")}
                 source={{ uri: user.avatar }}

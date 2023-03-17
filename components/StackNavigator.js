@@ -23,6 +23,7 @@ import {
   addSharedOrderUsers,
   selectInitiatedBy,
 } from "../redux/reducers/sharedOrderSlice";
+import { fetchMyData } from "../redux/actions";
 
 const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 // const socket = io(`http://localhost:3001`, { transports: ["websocket"] });
@@ -46,17 +47,10 @@ const StackNavigator = () => {
       // });
       socket.on("newMessage", (message) => {
         console.log(message);
-        try {
-          dispatch(addMessage(message));
-          dispatch(addSharedOrderUsers(message.message));
-          console.log("Message id: ", message.message._id);
-          console.log("User id: ", userData._id);
-          if (message?.message._id === userData._id) {
-            navigation.navigate("SharedLobby");
-          }
-        } catch (error) {
-          console.log(error);
-        }
+        console.log("User data: " + userData);
+        console.log("Initiated by: " + initiatedBy);
+        dispatch(addMessage(message));
+        dispatch(addSharedOrderUsers(message.message));
       });
     });
 
@@ -65,6 +59,10 @@ const StackNavigator = () => {
     //   setHasPermission(status === "granted");
     // })();
   }, [socket]);
+
+  useEffect(() => {
+    dispatch(fetchMyData(accessToken));
+  }, [accessToken]);
 
   return (
     <Stack.Navigator>

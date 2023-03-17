@@ -27,7 +27,10 @@ import {
 } from "react-native-heroicons/outline";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { addInitiatedBy } from "../redux/reducers/sharedOrderSlice";
+import {
+  addInitiatedBy,
+  selectInitiatedBy,
+} from "../redux/reducers/sharedOrderSlice";
 import { selectUserData } from "../redux/reducers/userSlice";
 
 const socket = io(`${BE_URL}`, { transports: ["websocket"] });
@@ -39,7 +42,7 @@ const SharedOrderScreen = () => {
   const userData = useSelector(selectUserData);
   const [openCamera, setOpenCamera] = React.useState(false);
   const [hasPermission, setHasPermission] = React.useState(false);
-  const [scanData, setScanData] = React.useState(null);
+  const [scanData, setScanData] = React.useState();
   const [complexObj, setComplexObj] = useState({
     _id: userData._id,
     firstName: userData.firstName,
@@ -47,24 +50,20 @@ const SharedOrderScreen = () => {
     avatar: userData.avatar,
   });
   const [newSharedOrder, setNewSharedOrder] = useState(false);
-
-  let isHandlingScan = false;
+  const initiatedBy = useSelector(selectInitiatedBy);
 
   const handleBarCodeScanned = ({ type, data }) => {
-    if (isHandlingScan) {
-      return;
-    }
-    isHandlingScan = true;
+    const obj = eval("(" + data + ")");
+    console.log(obj);
+    dispatch(addInitiatedBy(obj));
     setScanData(data);
-    console.log(`Data: `, JSON.parse(data));
+
+    console.log(`Data: ${data}`);
     console.log(`Type: ${type}`);
     socket.emit("sendMessage", {
       message: complexObj,
     });
-    setOpenCamera(false);
-    setTimeout(() => {
-      isHandlingScan = false;
-    }, 10000);
+    navigation.navigate("SharedLobby");
   };
 
   useEffect(() => {
@@ -79,7 +78,7 @@ const SharedOrderScreen = () => {
       {openCamera ? (
         <BarCodeScanner
           style={StyleSheet.absoluteFillObject}
-          onBarCodeScanned={handleBarCodeScanned}
+          onBarCodeScanned={scanData ? undefined : handleBarCodeScanned}
         />
       ) : (
         <SafeAreaView style={tw.style(`flex-1 bg-[${lightBeige}] p-4`)}>

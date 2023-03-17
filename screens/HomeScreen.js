@@ -5,7 +5,11 @@ import BodyComponent from "../components/BodyComponent";
 import HeaderComponent from "../components/HeaderComponent";
 import SearchComponent from "../components/SearchComponent";
 import tw from "twrnc";
-import { addUserData, selectAccessToken } from "../redux/reducers/userSlice";
+import {
+  addUserData,
+  selectAccessToken,
+  selectUserData,
+} from "../redux/reducers/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Text, View } from "react-native";
 import {
@@ -21,6 +25,17 @@ import { fetchMyData } from "../redux/actions";
 import { setAllRestaurants } from "../redux/reducers/allRestaurantsSlice";
 import { selectRecipeStatus } from "../redux/reducers/recipeSlice";
 import RecipeSearchComponent from "../components/Recipe/RecipeSearchComponent";
+import { io } from "socket.io-client";
+
+import { addMessage } from "../redux/reducers/communicationSlice";
+import SharedLobby from "../screens/SharedLobby";
+
+import {
+  addSharedOrderUsers,
+  selectInitiatedBy,
+} from "../redux/reducers/sharedOrderSlice";
+
+const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -28,6 +43,32 @@ const HomeScreen = () => {
   const [featuredCategories, setfeaturedCategories] = useState([]);
   const token = useSelector(selectAccessToken);
   const recipeActive = useSelector(selectRecipeStatus);
+
+  const userData = useSelector(selectUserData);
+  const initiatedBy = useSelector(selectInitiatedBy);
+
+  // useEffect(() => {
+  //   socket.on("connected", (message) => {
+  //     console.log(socket.connected);
+  //     console.log(message);
+  //     // socket.emit("sendMessage", {
+  //     //   message: "Hello Bamboo Bites",
+  //     // });
+  //     socket.on("newMessage", (message) => {
+  //       console.log(message);
+
+  //       dispatch(addMessage(message));
+  //       dispatch(addSharedOrderUsers(message.message));
+
+  //       navigation.navigate("SharedLobby");
+  //     });
+  //   });
+
+  //   // (async () => {
+  //   //   const { status } = await BarCodeScanner.requestPermissionsAsync();
+  //   //   setHasPermission(status === "granted");
+  //   // })();
+  // }, [socket]);
 
   useEffect(() => {
     navigation.setOptions({

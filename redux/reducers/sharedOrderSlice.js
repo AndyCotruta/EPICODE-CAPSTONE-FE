@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  initiatedBy: "",
+  initiatedBy: null,
   users: [],
   order: {
     restaurantId: "",
