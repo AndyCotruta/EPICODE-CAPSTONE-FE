@@ -11,6 +11,10 @@ import {
   selectSharedOrderUsers,
 } from "../redux/reducers/sharedOrderSlice";
 import { selectUserData } from "../redux/reducers/userSlice";
+import { io } from "socket.io-client";
+import { BE_URL } from "@env";
+
+const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 
 const SharedLobby = () => {
   const navigation = useNavigation();
@@ -86,7 +90,10 @@ const SharedLobby = () => {
             `bg-[${darkGreen}] p-4 rounded-3xl shadow-md w-40 mt-5`
           )}
           onPress={() => {
-            navigation.goBack();
+            socket.emit("disconnectMe", {
+              message: complexObj,
+            });
+            navigation.navigate("SharedOrder");
           }}
         >
           <Text style={tw.style("text-white text-center font-bold")}>

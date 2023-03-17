@@ -21,6 +21,7 @@ import SharedLobby from "../screens/SharedLobby";
 import { useNavigation } from "@react-navigation/native";
 import {
   addSharedOrderUsers,
+  removeSharedOrderUser,
   selectInitiatedBy,
 } from "../redux/reducers/sharedOrderSlice";
 import { fetchMyData } from "../redux/actions";
@@ -51,6 +52,10 @@ const StackNavigator = () => {
         console.log("Initiated by: " + initiatedBy);
         dispatch(addMessage(message));
         dispatch(addSharedOrderUsers(message.message));
+      });
+      socket.on("disconnectUser", (message) => {
+        console.log("Remove this id: " + message.message._id);
+        dispatch(removeSharedOrderUser(message.message._id));
       });
     });
 

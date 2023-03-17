@@ -63,6 +63,7 @@ const SharedOrderScreen = () => {
     socket.emit("sendMessage", {
       message: complexObj,
     });
+    setOpenCamera(false);
     navigation.navigate("SharedLobby");
   };
 

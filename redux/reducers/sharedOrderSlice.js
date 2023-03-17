@@ -20,10 +20,14 @@ export const sharedOrderSlice = createSlice({
     addSharedOrderUsers: (state, action) => {
       state.users = [...state.users, action.payload];
     },
+    removeSharedOrderUser: (state, action) => {
+      state.users = state.users.filter((user) => user._id !== action.payload);
+    },
   },
 });
 
-export const { addInitiatedBy, addSharedOrderUsers } = sharedOrderSlice.actions;
+export const { addInitiatedBy, addSharedOrderUsers, removeSharedOrderUser } =
+  sharedOrderSlice.actions;
 
 export const selectInitiatedBy = (state) => state.sharedOrder.initiatedBy;
 export const selectSharedOrderUsers = (state) => state.sharedOrder.users;
