@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import QRCode from "react-native-qrcode-svg";
+
 import { io } from "socket.io-client";
 import { BE_URL } from "@env";
 import tw from "twrnc";
@@ -40,19 +40,31 @@ const SharedOrderScreen = () => {
   const [openCamera, setOpenCamera] = React.useState(false);
   const [hasPermission, setHasPermission] = React.useState(false);
   const [scanData, setScanData] = React.useState(null);
-  const [complexObj, setComplexObj] = React.useState({
-    name: "Andy",
-    email: "test@email.com",
+  const [complexObj, setComplexObj] = useState({
+    _id: userData._id,
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    avatar: userData.avatar,
   });
   const [newSharedOrder, setNewSharedOrder] = useState(false);
 
+  let isHandlingScan = false;
+
   const handleBarCodeScanned = ({ type, data }) => {
+    if (isHandlingScan) {
+      return;
+    }
+    isHandlingScan = true;
     setScanData(data);
     console.log(`Data: `, JSON.parse(data));
     console.log(`Type: ${type}`);
     socket.emit("sendMessage", {
-      message: JSON.parse(data),
+      message: complexObj,
     });
+    setOpenCamera(false);
+    setTimeout(() => {
+      isHandlingScan = false;
+    }, 10000);
   };
 
   useEffect(() => {
@@ -67,7 +79,7 @@ const SharedOrderScreen = () => {
       {openCamera ? (
         <BarCodeScanner
           style={StyleSheet.absoluteFillObject}
-          onBarCodeScanned={scanData ? undefined : handleBarCodeScanned}
+          onBarCodeScanned={handleBarCodeScanned}
         />
       ) : (
         <SafeAreaView style={tw.style(`flex-1 bg-[${lightBeige}] p-4`)}>
@@ -95,73 +107,42 @@ const SharedOrderScreen = () => {
             source={require("../assets/shared.png")}
           />
 
-          {newSharedOrder ? (
-            <View style={tw.style("flex items-center")}>
-              <Text
-                style={tw.style(
-                  `text-lg text-[${darkOrange}] text-center font-bold`
-                )}
-              >
-                Share this QR Code with your friends
-              </Text>
-              <View style={tw.style("mt-5")}>
-                <QRCode
-                  size={200}
-                  backgroundColor={lightBeige}
-                  value={JSON.stringify(complexObj)}
-                />
-              </View>
+          <View>
+            <Text
+              style={tw.style(
+                `text-center text-xl text-[${darkGreen}] font-bold mb-10`
+              )}
+            >
+              Share an order with your friends and enjoy your lunch together!
+            </Text>
+            <View style={tw.style("flex-row justify-between mt-10")}>
               <TouchableOpacity
                 style={tw.style(
-                  `bg-[${darkGreen}] p-4 rounded-3xl shadow-md w-50 mt-5`
+                  `flex-row items-center bg-[${darkOrange}] p-4 rounded-3xl shadow-md w-40 justify-center`
                 )}
                 onPress={() => {
-                  setNewSharedOrder(false);
+                  navigation.navigate("SharedLobby");
+                  dispatch(addInitiatedBy(userData));
                 }}
               >
-                <Text style={tw.style("text-white text-center font-bold")}>
-                  Cancel
+                <PlusCircleIcon size={20} color="white" />
+                <Text style={tw.style("text-white font-bold ml-4")}>New</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={tw.style(
+                  `flex-row items-center bg-[${mintGreen}] p-4 rounded-3xl shadow-md w-40 justify-center`
+                )}
+                onPress={() => {
+                  setOpenCamera(true);
+                }}
+              >
+                <UserPlusIcon size={20} color={darkGreen} />
+                <Text style={tw.style(`text-[${darkGreen}] font-bold ml-4`)}>
+                  Join
                 </Text>
               </TouchableOpacity>
             </View>
-          ) : (
-            <View>
-              <Text
-                style={tw.style(
-                  `text-center text-xl text-[${darkGreen}] font-bold mb-10`
-                )}
-              >
-                Share an order with your friends and enjoy your lunch together!
-              </Text>
-              <View style={tw.style("flex-row justify-between mt-10")}>
-                <TouchableOpacity
-                  style={tw.style(
-                    `flex-row items-center bg-[${darkOrange}] p-4 rounded-3xl shadow-md w-40 justify-center`
-                  )}
-                  onPress={() => {
-                    setNewSharedOrder(true);
-                    dispatch(addInitiatedBy(userData._id));
-                  }}
-                >
-                  <PlusCircleIcon size={20} color="white" />
-                  <Text style={tw.style("text-white font-bold ml-4")}>New</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={tw.style(
-                    `flex-row items-center bg-[${mintGreen}] p-4 rounded-3xl shadow-md w-40 justify-center`
-                  )}
-                  onPress={() => {
-                    setOpenCamera(true);
-                  }}
-                >
-                  <UserPlusIcon size={20} color={darkGreen} />
-                  <Text style={tw.style(`text-[${darkGreen}] font-bold ml-4`)}>
-                    Join
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          )}
+          </View>
 
           {/* <Button
         title="Send from Android"

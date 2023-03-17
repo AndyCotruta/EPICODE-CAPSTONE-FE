@@ -5,7 +5,7 @@ import HomeScreen from "../screens/HomeScreen";
 import RestaurantScreen from "../screens/RestaurantScreen";
 import BasketScreen from "../screens/BasketScreen";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAccessToken } from "../redux/reducers/userSlice";
+import { selectAccessToken, selectUserData } from "../redux/reducers/userSlice";
 import RegistrationScreen from "../screens/RegistrationScreen";
 import MyProfileScreen from "../screens/MyProfileScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
@@ -17,6 +17,12 @@ import SharedOrderScreen from "../screens/SharedOrderScreen";
 import { io } from "socket.io-client";
 import { BE_URL } from "@env";
 import { addMessage } from "../redux/reducers/communicationSlice";
+import SharedLobby from "../screens/SharedLobby";
+import { useNavigation } from "@react-navigation/native";
+import {
+  addSharedOrderUsers,
+  selectInitiatedBy,
+} from "../redux/reducers/sharedOrderSlice";
 
 const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 // const socket = io(`http://localhost:3001`, { transports: ["websocket"] });
@@ -25,8 +31,11 @@ const StackNavigator = () => {
   const Stack = new createNativeStackNavigator();
 
   const accessToken = useSelector(selectAccessToken);
+  const userData = useSelector(selectUserData);
+  const initiatedBy = useSelector(selectInitiatedBy);
 
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   useEffect(() => {
     socket.on("connected", (message) => {
@@ -39,6 +48,12 @@ const StackNavigator = () => {
         console.log(message);
         try {
           dispatch(addMessage(message));
+          dispatch(addSharedOrderUsers(message.message));
+          console.log("Message id: ", message.message._id);
+          console.log("User id: ", userData._id);
+          if (message?.message._id === userData._id) {
+            navigation.navigate("SharedLobby");
+          }
         } catch (error) {
           console.log(error);
         }
@@ -81,6 +96,11 @@ const StackNavigator = () => {
           <Stack.Screen
             name="SharedOrder"
             component={SharedOrderScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SharedLobby"
+            component={SharedLobby}
             options={{ headerShown: false }}
           />
 
