@@ -41,7 +41,7 @@ const MyProfileOptions = () => {
           `flex flex-row items-center p-5  border-b  border-gray-200`
         )}
         onPress={() => {
-          navigation.navigate("Basket");
+          navigation.navigate("Basket", { shared: false });
         }}
       >
         <ShoppingBagIcon size={25} color={darkGreen} />

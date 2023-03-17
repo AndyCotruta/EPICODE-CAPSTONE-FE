@@ -75,7 +75,7 @@ const RestaurantScreen = () => {
 
   return (
     <>
-      <BasketIcon />
+      <BasketIcon shared={shared} />
       <ScrollView style={tw.style(`bg-[${lightBeige}]`)}>
         <View>
           <Image
@@ -176,6 +176,7 @@ const RestaurantScreen = () => {
               price={dish.price}
               image={dish.image}
               restaurantId={id}
+              shared={shared}
             />
           ))}
         </View>

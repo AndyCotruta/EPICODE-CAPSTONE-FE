@@ -15,18 +15,36 @@ import {
   lightOrange,
   mintGreen,
 } from "../graphics/colours";
+import {
+  selectSharedOrderDishes,
+  selectSharedOrderTotal,
+} from "../redux/reducers/sharedOrderSlice";
 
-const BasketIcon = () => {
-  const items = useSelector(selectBasketItems);
+const BasketIcon = ({ shared }) => {
   const navigation = useNavigation();
-  const basketTotal = useSelector(selectBasketTotal);
 
-  if (items.length === 0) return null;
+  const items = useSelector(selectBasketItems);
+  const sharedOrderItems = useSelector(selectSharedOrderDishes);
+
+  const basketTotal = useSelector(selectBasketTotal);
+  const sharedOrderTotal = useSelector(selectSharedOrderTotal);
+
+  if (shared === true) {
+    if (sharedOrderItems.length === 0) {
+      return null;
+    }
+  } else if (items.length === 0) return null;
 
   return (
     <View style={tw.style("absolute bottom-6 w-full z-50")}>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Basket")}
+        onPress={
+          shared
+            ? () => {
+                navigation.navigate("Basket", { shared: true });
+              }
+            : () => navigation.navigate("Basket")
+        }
         style={tw.style(
           `mx-5 bg-[${lightOrange}] p-4 rounded-lg flex-row items-center`
         )}
@@ -36,7 +54,7 @@ const BasketIcon = () => {
             `text-white font-extrabold text-lg rounded-lg bg-[${darkOrange}] py-1 px-2`
           )}
         >
-          {items.length}
+          {shared ? sharedOrderItems.length : items.length}
         </Text>
         <Text
           style={tw.style(
@@ -46,7 +64,7 @@ const BasketIcon = () => {
           View Basket
         </Text>
         <Text style={tw.style("text-lg text-white font-extrabold")}>
-          ${basketTotal}
+          ${shared ? sharedOrderTotal : basketTotal}
         </Text>
       </TouchableOpacity>
     </View>

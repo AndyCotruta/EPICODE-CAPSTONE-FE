@@ -26,6 +26,12 @@ import { darkGreen, darkOrange, lightBeige } from "../graphics/colours";
 import { BE_URL } from "@env";
 import { addUserData, selectAccessToken } from "../redux/reducers/userSlice";
 import { fetchMyData } from "../redux/actions";
+import {
+  addSharedOrderRestaurantId,
+  removeSharedOrderDishes,
+  selectSharedOrderDishes,
+  selectSharedOrderTotal,
+} from "../redux/reducers/sharedOrderSlice";
 
 const BasketScreen = () => {
   const {
@@ -36,10 +42,18 @@ const BasketScreen = () => {
   const dispatch = useDispatch();
 
   const basketTotal = useSelector(selectBasketTotal);
+  const sharedOrderTotal = useSelector(selectSharedOrderTotal);
+
   const restaurant = useSelector(selectRestaurant);
+
   const items = useSelector(selectBasketItems);
+  const sharedOrderItems = useSelector(selectSharedOrderDishes);
+
   const token = useSelector(selectAccessToken);
+
   const [groupedItemsInBasket, setGroupedItemsInBasket] = useState([]);
+  const [groupedSharedOrderItemsInBasket, setGroupedSharedOrderItemsInBasket] =
+    useState([]);
 
   useEffect(() => {
     const groupedItems = items.reduce((results, item) => {
@@ -49,7 +63,16 @@ const BasketScreen = () => {
     setGroupedItemsInBasket(groupedItems);
   }, [items]);
 
+  useEffect(() => {
+    const groupedSharedOrderItems = sharedOrderItems.reduce((results, item) => {
+      (results[item.id] = results[item.id] || []).push(item);
+      return results;
+    }, {});
+    setGroupedSharedOrderItemsInBasket(groupedSharedOrderItems);
+  }, [sharedOrderItems]);
+
   const dishes = items.map((item) => item.id);
+  const sharedOrderDishes = sharedOrderItems.map((item) => item.id);
 
   const handlePlaceOrder = async () => {
     try {
@@ -161,7 +184,9 @@ const BasketScreen = () => {
           </TouchableOpacity>
         </View>
         <ScrollView>
-          {Object.entries(groupedItemsInBasket).map(([key, items]) => (
+          {Object.entries(
+            shared ? groupedSharedOrderItemsInBasket : groupedItemsInBasket
+          ).map(([key, items]) => (
             <View
               style={tw.style(
                 `flex flex-row items-center bg-[${lightBeige}] p-4 mb-4 rounded-xl`
@@ -184,14 +209,25 @@ const BasketScreen = () => {
               </View>
 
               <TouchableOpacity
-                onPress={() => {
-                  if (items.length <= 1) {
-                    dispatch(removeFromBasket({ id: key }));
-                    dispatch(addRestautantId(null));
-                  } else {
-                    dispatch(removeFromBasket({ id: key }));
-                  }
-                }}
+                onPress={
+                  shared
+                    ? () => {
+                        if (items.length <= 1) {
+                          dispatch(removeSharedOrderDishes({ id: key }));
+                          dispatch(addSharedOrderRestaurantId(null));
+                        } else {
+                          dispatch(removeSharedOrderDishes({ id: key }));
+                        }
+                      }
+                    : () => {
+                        if (items.length <= 1) {
+                          dispatch(removeFromBasket({ id: key }));
+                          dispatch(addRestautantId(null));
+                        } else {
+                          dispatch(removeFromBasket({ id: key }));
+                        }
+                      }
+                }
               >
                 <Text
                   style={tw.style(
@@ -208,7 +244,9 @@ const BasketScreen = () => {
       <View style={tw.style(`px-4 bg-[${lightBeige}]`)}>
         <View style={tw.style("flex-row justify-between py-4")}>
           <Text style={tw.style("text-gray-400")}>Subtotal</Text>
-          <Text style={tw.style("text-gray-400")}>${basketTotal}</Text>
+          <Text style={tw.style("text-gray-400")}>
+            ${shared ? sharedOrderTotal : basketTotal}
+          </Text>
         </View>
         <View style={tw.style("flex-row justify-between pb-4")}>
           <Text style={tw.style("text-gray-400")}>Delivery Fee</Text>
@@ -219,7 +257,10 @@ const BasketScreen = () => {
             Total Price
           </Text>
           <Text style={tw.style(`font-bold text-[${darkGreen}]`)}>
-            ${(((basketTotal + 5.99) * 100) / 100).toFixed(2)}
+            $
+            {shared
+              ? (((sharedOrderTotal + 5.99) * 100) / 100).toFixed(2)
+              : (((basketTotal + 5.99) * 100) / 100).toFixed(2)}
           </Text>
         </View>
         <TouchableOpacity
