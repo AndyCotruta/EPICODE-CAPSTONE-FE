@@ -4,7 +4,7 @@ const initialState = {
   initiatedBy: null,
   users: [],
   order: {
-    restaurantId: "",
+    restaurantId: null,
     dishes: [],
     totalPrice: "",
   },

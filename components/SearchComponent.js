@@ -98,7 +98,7 @@ const SearchComponent = ({ shared }) => {
                   ? () => {
                       dispatch(
                         setRestaurant({
-                          id: result.id,
+                          id: result._id,
                           imgUrl: result.image,
                           title: result.name,
                           rating: result.rating,
@@ -116,7 +116,7 @@ const SearchComponent = ({ shared }) => {
                     }
                   : () => {
                       navigation.navigate("Restaurant", {
-                        id: result.id,
+                        id: result._id,
                         imgUrl: result.image,
                         title: result.name,
                         rating: result.rating,
