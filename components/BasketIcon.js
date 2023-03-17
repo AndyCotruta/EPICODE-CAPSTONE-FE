@@ -43,7 +43,7 @@ const BasketIcon = ({ shared }) => {
             ? () => {
                 navigation.navigate("Basket", { shared: true });
               }
-            : () => navigation.navigate("Basket")
+            : () => navigation.navigate("Basket", { shared: false })
         }
         style={tw.style(
           `mx-5 bg-[${lightOrange}] p-4 rounded-lg flex-row items-center`
