@@ -30,6 +30,11 @@ const SharedLobby = () => {
     avatar: userData.avatar,
   });
 
+  const [waitingScreen] = useState({
+    initiatedBy,
+    connectedUsers,
+  });
+
   return (
     <SafeAreaView style={tw.style(`flex-1 bg-[${lightBeige}] p-4`)}>
       <View style={tw.style("flex items-center")}>
@@ -84,7 +89,13 @@ const SharedLobby = () => {
           ))}
         </View>
       </View>
-      <View style={tw.style("flex-row items-center justify-between")}>
+      <View
+        style={tw.style(
+          userData._id === initiatedBy._id
+            ? "flex-row items-center justify-between"
+            : "flex items-center"
+        )}
+      >
         <TouchableOpacity
           style={tw.style(
             `bg-[${darkGreen}] p-4 rounded-3xl shadow-md w-40 mt-5`
@@ -100,18 +111,24 @@ const SharedLobby = () => {
             Cancel
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={tw.style(
-            `bg-[${darkOrange}] p-4 rounded-3xl shadow-md w-40 mt-5`
-          )}
-          onPress={() => {
-            navigation.navigate("SharedOrderRestaurantsList");
-          }}
-        >
-          <Text style={tw.style("text-white text-center font-bold")}>
-            Continue
-          </Text>
-        </TouchableOpacity>
+        {userData._id === initiatedBy._id && (
+          <TouchableOpacity
+            style={tw.style(
+              `bg-[${darkOrange}] p-4 rounded-3xl shadow-md w-40 mt-5`
+            )}
+            onPress={() => {
+              socket.emit("waitingScreen", {
+                message: waitingScreen,
+              });
+
+              navigation.navigate("SharedOrderRestaurantsList");
+            }}
+          >
+            <Text style={tw.style("text-white text-center font-bold")}>
+              Continue
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
     </SafeAreaView>
   );

@@ -27,6 +27,7 @@ import {
 import { fetchMyData } from "../redux/actions";
 import SharedOrderRestaurantsList from "../screens/SharedOrderRestaurantsList";
 import SharedBasket from "../screens/SharedBasket";
+import WaitingScreen from "../screens/WaitingScreen";
 
 const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 // const socket = io(`http://localhost:3001`, { transports: ["websocket"] });
@@ -58,6 +59,13 @@ const StackNavigator = () => {
       socket.on("disconnectUser", (message) => {
         console.log("Remove this id: " + message.message._id);
         dispatch(removeSharedOrderUser(message.message._id));
+      });
+      socket.on("waitingScreen", (message) => {
+        console.log("Waiting screen object: " + message);
+        dispatch(fetchMyData(accessToken));
+        if (userData._id !== initiatedBy._id) {
+          navigation.navigate("WaitingScreen");
+        }
       });
     });
 
@@ -106,6 +114,11 @@ const StackNavigator = () => {
           <Stack.Screen
             name="SharedLobby"
             component={SharedLobby}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="WaitingScreen"
+            component={WaitingScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
