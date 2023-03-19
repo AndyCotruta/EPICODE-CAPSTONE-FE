@@ -51,23 +51,16 @@ const HomeScreen = () => {
   //   socket.on("connected", (message) => {
   //     console.log(socket.connected);
   //     console.log(message);
-  //     // socket.emit("sendMessage", {
-  //     //   message: "Hello Bamboo Bites",
-  //     // });
+  //     console.log("User Id: ", userData._id);
+  //     console.log("Initiated by: " + initiatedBy._id);
   //     socket.on("newMessage", (message) => {
   //       console.log(message);
-
+  //       console.log("User data: " + userData);
+  //       console.log("Initiated by: " + initiatedBy);
   //       dispatch(addMessage(message));
   //       dispatch(addSharedOrderUsers(message.message));
-
-  //       navigation.navigate("SharedLobby");
   //     });
   //   });
-
-  //   // (async () => {
-  //   //   const { status } = await BarCodeScanner.requestPermissionsAsync();
-  //   //   setHasPermission(status === "granted");
-  //   // })();
   // }, [socket]);
 
   useEffect(() => {

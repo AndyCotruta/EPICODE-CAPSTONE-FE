@@ -24,11 +24,16 @@ import tw from "twrnc";
 import { XCircleIcon } from "react-native-heroicons/solid";
 import { darkGreen, darkOrange, lightBeige } from "../graphics/colours";
 import { BE_URL } from "@env";
-import { addUserData, selectAccessToken } from "../redux/reducers/userSlice";
+import {
+  addUserData,
+  selectAccessToken,
+  selectUserData,
+} from "../redux/reducers/userSlice";
 import { fetchMyData } from "../redux/actions";
 import {
   addSharedOrderRestaurantId,
   removeSharedOrderDishes,
+  selectInitiatedBy,
   selectSharedOrderDishes,
   selectSharedOrderTotal,
 } from "../redux/reducers/sharedOrderSlice";
@@ -37,6 +42,9 @@ const BasketScreen = () => {
   const {
     params: { shared },
   } = useRoute();
+
+  const initiatedBy = useSelector(selectInitiatedBy);
+  const userData = useSelector(selectUserData);
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -263,16 +271,49 @@ const BasketScreen = () => {
               : (((basketTotal + 5.99) * 100) / 100).toFixed(2)}
           </Text>
         </View>
-        <TouchableOpacity
-          style={tw.style(`bg-[${darkOrange}] rounded-xl p-4 mb-4`)}
-          onPress={async () => {
-            await handlePlaceOrder();
-          }}
-        >
-          <Text style={tw.style("text-center text-white font-bold text-lg")}>
-            Place Order
-          </Text>
-        </TouchableOpacity>
+        {/* {userData._id === initiatedBy._id ? (
+          <TouchableOpacity
+            style={tw.style(`bg-[${darkOrange}] rounded-xl p-4 mb-4`)}
+            onPress={async () => {
+              await handlePlaceOrder();
+            }}
+          >
+            <Text style={tw.style("text-center text-white font-bold text-lg")}>
+              Place Order
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          ""
+        )} */}
+        {shared ? (
+          userData._id === initiatedBy._id ? (
+            <TouchableOpacity
+              style={tw.style(`bg-[${darkOrange}] rounded-xl p-4 mb-4`)}
+              onPress={async () => {
+                await handlePlaceOrder();
+              }}
+            >
+              <Text
+                style={tw.style("text-center text-white font-bold text-lg")}
+              >
+                Place Order
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            ""
+          )
+        ) : (
+          <TouchableOpacity
+            style={tw.style(`bg-[${darkOrange}] rounded-xl p-4 mb-4`)}
+            onPress={async () => {
+              await handlePlaceOrder();
+            }}
+          >
+            <Text style={tw.style("text-center text-white font-bold text-lg")}>
+              Place Order
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
     </SafeAreaView>
   );

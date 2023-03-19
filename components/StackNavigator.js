@@ -62,8 +62,10 @@ const StackNavigator = () => {
         dispatch(removeSharedOrderUser(message.message._id));
       });
       socket.on("waitingScreen", (message) => {
-        console.log("Waiting screen object: " + message);
+        console.log("Waiting screen object: ", message);
         dispatch(fetchMyData(accessToken));
+        console.log("User Id: ", userData._id);
+        console.log("Initiated by: " + initiatedBy._id);
         if (userData._id !== initiatedBy._id) {
           navigation.navigate("WaitingScreen");
         }
