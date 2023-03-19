@@ -25,6 +25,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAllRestaurants } from "../redux/reducers/allRestaurantsSlice";
 import { useNavigation } from "@react-navigation/native";
 import { setRestaurant } from "../redux/reducers/restaurantSlice";
+import { io } from "socket.io-client";
+import { BE_URL } from "@env";
+
+const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 
 const SearchComponent = ({ shared }) => {
   const navigation = useNavigation();
@@ -113,6 +117,7 @@ const SearchComponent = ({ shared }) => {
                       navigation.navigate("Basket", {
                         shared: true,
                       });
+                      socket.emit("moveToSharedBasket", { message: result });
                     }
                   : () => {
                       navigation.navigate("Restaurant", {

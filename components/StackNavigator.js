@@ -28,6 +28,7 @@ import { fetchMyData } from "../redux/actions";
 import SharedOrderRestaurantsList from "../screens/SharedOrderRestaurantsList";
 import SharedBasket from "../screens/SharedBasket";
 import WaitingScreen from "../screens/WaitingScreen";
+import { setRestaurant } from "../redux/reducers/restaurantSlice";
 
 const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 // const socket = io(`http://localhost:3001`, { transports: ["websocket"] });
@@ -65,6 +66,30 @@ const StackNavigator = () => {
         dispatch(fetchMyData(accessToken));
         if (userData._id !== initiatedBy._id) {
           navigation.navigate("WaitingScreen");
+        }
+      });
+      socket.on("moveToSharedBasket", (message) => {
+        console.log("Move to Shared basket: ", message);
+        console.log(message.message._id);
+        dispatch(fetchMyData(accessToken));
+        if (userData._id !== initiatedBy._id) {
+          dispatch(
+            setRestaurant({
+              id: message.message._id,
+              imgUrl: message.message.image,
+              title: message.message.name,
+              rating: message.message.rating,
+              genre: message.message.genre,
+              address: message.message.address,
+              short_description: message.message.short_description,
+              dishes: message.message.dishes,
+              lon: message.message.lon,
+              lat: message.message.lat,
+            })
+          );
+          navigation.navigate("Basket", {
+            shared: true,
+          });
         }
       });
     });
