@@ -17,8 +17,8 @@ const ActiveOrder = ({ shared }) => {
   const [info, setInfo] = useState(false);
   const activeOrderRestaurant = userData.activeOrder.restaurantId;
 
-  const sharedOrder = userData.sharedOrder.order;
-  const sharedOrderRestaurant = userData.sharedOrder.order.restaurantId;
+  const sharedOrder = userData.sharedOrder?.order;
+  const sharedOrderRestaurant = userData.sharedOrder?.order.restaurantId;
 
   const array1 = userData.activeOrder.restaurantId.dishes;
   const array2 = userData.activeOrder.dishes;
@@ -32,16 +32,16 @@ const ActiveOrder = ({ shared }) => {
     .filter((item) => array2.includes(item._id.toString()))
     .map((item) => ({ ...item, count: count[item._id.toString()] }));
 
-  const array3 = sharedOrderRestaurant.dishes;
-  const array4 = sharedOrder.dishes;
+  const array3 = sharedOrderRestaurant?.dishes;
+  const array4 = sharedOrder?.dishes;
 
-  const count2 = array4.reduce((acc, id) => {
+  const count2 = array4?.reduce((acc, id) => {
     acc[id] = (acc[id] || 0) + 1;
     return acc;
   }, {});
 
   const newArray2 = array3
-    .filter((item) => array4.includes(item._id.toString()))
+    ?.filter((item) => array4?.includes(item._id.toString()))
     .map((item) => ({ ...item, count: count2[item._id.toString()] }));
 
   const handleMove = () => {

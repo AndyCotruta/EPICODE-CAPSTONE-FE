@@ -38,7 +38,7 @@ const OrderHistoryScreen = () => {
             <ActiveOrder shared={"true"} />
           </View>
         ) : (
-          <View>
+          <View style={tw.style("px-4")}>
             <Text style={tw.style("text-3xl font-bold my-3")}>
               Active Shared Order
             </Text>
