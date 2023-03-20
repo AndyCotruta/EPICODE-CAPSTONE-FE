@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addUserData,
   moveToDelivery,
+  refreshOrder,
   selectAccessToken,
   selectUserData,
 } from "../redux/reducers/userSlice";
@@ -81,7 +82,6 @@ const StackNavigator = () => {
         console.log("User data: ", userData);
         console.log("Initiated by: ", initiatedBy);
         console.log("Message.message._id: ", message.message._id);
-        dispatch(fetchMyData(accessToken));
 
         dispatch(
           setRestaurant({
@@ -113,6 +113,11 @@ const StackNavigator = () => {
         console.log("Move To Delivery Screen: ", message);
         dispatch(moveToDelivery(true));
         dispatch(fetchMyData(accessToken));
+      });
+      socket.on("moveSharedOrderToHistory", (message) => {
+        console.log("Move this shared order to history: ", message);
+        console.log("Access token: ", message);
+        dispatch(refreshOrder(true));
       });
     });
 

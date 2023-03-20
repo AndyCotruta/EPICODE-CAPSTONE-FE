@@ -1,7 +1,11 @@
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAccessToken, selectUserData } from "../redux/reducers/userSlice";
+import {
+  selectAccessToken,
+  selectRefreshOrder,
+  selectUserData,
+} from "../redux/reducers/userSlice";
 import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "twrnc";
 import { darkGreen, lightBeige } from "../graphics/colours";
@@ -12,12 +16,17 @@ import {
   moveToHistory,
 } from "../redux/actions";
 import { useNavigation } from "@react-navigation/native";
+import { io } from "socket.io-client";
+import { BE_URL } from "@env";
+
+const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 
 const ActiveOrder = ({ shared }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const userData = useSelector(selectUserData);
   const token = useSelector(selectAccessToken);
+  const refreshOrder = useSelector(selectRefreshOrder);
   const [info, setInfo] = useState(false);
   const activeOrderRestaurant = userData.activeOrder.restaurantId;
 
@@ -64,8 +73,21 @@ const ActiveOrder = ({ shared }) => {
       users: [userData.sharedOrder.users],
     };
     dispatch(moveSharedOrderToHistory(token, body));
-    navigation.navigate("Order");
+    socket.emit("moveSharedOrderToHistory", { token });
+
+    // navigation.navigate("Order");
   };
+
+  useEffect(() => {
+    console.log("Because refreshOrder is: ", refreshOrder);
+    console.log(
+      "We are here and we are fetching user data with token: " + token
+    );
+    if (refreshOrder === true) {
+      dispatch(fetchMyData(token));
+      navigation.navigate("Order");
+    }
+  }, []);
 
   return (
     <View style={tw.style("px-4")}>
