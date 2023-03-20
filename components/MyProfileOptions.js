@@ -12,12 +12,13 @@ import {
   PresentationChartBarIcon,
 } from "react-native-heroicons/outline";
 import { darkGreen, lightBeige, mintGreen } from "../graphics/colours";
-import { addAccessToken } from "../redux/reducers/userSlice";
+import { addAccessToken, moveToDelivery } from "../redux/reducers/userSlice";
 import { useNavigation } from "@react-navigation/native";
 
 const MyProfileOptions = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
   return (
     <View style={tw.style(`bg-[${lightBeige}] rounded-xl`)}>
       <TouchableOpacity
@@ -41,6 +42,7 @@ const MyProfileOptions = () => {
           `flex flex-row items-center p-5  border-b  border-gray-200`
         )}
         onPress={() => {
+          dispatch(moveToDelivery(false));
           navigation.navigate("Basket", { shared: false });
         }}
       >
