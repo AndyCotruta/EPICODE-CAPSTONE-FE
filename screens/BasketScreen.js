@@ -143,7 +143,10 @@ const BasketScreen = () => {
         const data = await response.json();
         dispatch(addUserData(data));
         socket.emit("moveToDeliveryScreen", { data });
-        navigation.navigate("Animation");
+        navigation.navigate("Animation", {
+          shared: true,
+          sharedRestaurant: restaurant,
+        });
         dispatch(fetchMyData(token));
       } else {
         console.log("Error while creating the shared order");

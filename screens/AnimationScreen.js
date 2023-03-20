@@ -10,15 +10,22 @@ import {
 } from "../graphics/colours";
 import * as Animatable from "react-native-animatable";
 import * as Progress from "react-native-progress";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import restaurantSlice from "../redux/reducers/restaurantSlice";
 
 const AnimationScreen = () => {
+  const {
+    params: { shared, sharedRestaurant },
+  } = useRoute();
+
   const navigation = useNavigation();
 
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate("Delivery");
+      navigation.navigate("Delivery", {
+        shared,
+        sharedRestaurant,
+      });
     }, 4000);
   }, []);
 
