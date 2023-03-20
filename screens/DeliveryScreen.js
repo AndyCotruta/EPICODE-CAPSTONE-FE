@@ -86,7 +86,7 @@ const DeliveryScreen = () => {
           <Text style={tw.style("text-gray-400 text-xs pt-4")}>
             Your<Text>{shared ? " shared" : ""}</Text> order at{" "}
             <Text style={tw.style(`text-[${darkGreen}] font-bold`)}>
-              {shared ? sharedRestaurant.name : restaurant.title}
+              {shared ? sharedRestaurant : restaurant.title}
             </Text>{" "}
             is being prepared
           </Text>

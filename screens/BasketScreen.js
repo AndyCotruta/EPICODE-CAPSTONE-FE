@@ -33,7 +33,9 @@ import {
 import { fetchMyData } from "../redux/actions";
 import {
   addSharedOrderRestaurantId,
+  addSharedOrderUsers,
   removeSharedOrderDishes,
+  resetSharedOrder,
   selectInitiatedBy,
   selectSharedOrder,
   selectSharedOrderDetails,
@@ -122,6 +124,8 @@ const BasketScreen = () => {
     }
   };
 
+  const restaurantName = restaurant.title;
+
   const handlePlaceSharedOrder = async () => {
     try {
       const sharingOrder = {
@@ -145,9 +149,10 @@ const BasketScreen = () => {
         socket.emit("moveToDeliveryScreen", { data });
         navigation.navigate("Animation", {
           shared: true,
-          sharedRestaurant: restaurant,
+          sharedRestaurant: restaurantName,
         });
         dispatch(fetchMyData(token));
+        dispatch(resetSharedOrder());
       } else {
         console.log("Error while creating the shared order");
       }
@@ -158,7 +163,10 @@ const BasketScreen = () => {
 
   useEffect(() => {
     if (moveToDelivery === true) {
-      navigation.navigate("Animation");
+      navigation.navigate("Animation", {
+        shared: true,
+        sharedRestaurant: restaurantName,
+      });
     }
   }, [moveToDelivery]);
 

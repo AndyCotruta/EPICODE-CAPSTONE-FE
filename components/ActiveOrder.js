@@ -78,7 +78,7 @@ const ActiveOrder = ({ shared }) => {
             ? () => {
                 navigation.navigate("Delivery", {
                   shared: true,
-                  sharedRestaurant: sharedOrderRestaurant,
+                  sharedRestaurant: sharedOrderRestaurant.name,
                 });
               }
             : () => {

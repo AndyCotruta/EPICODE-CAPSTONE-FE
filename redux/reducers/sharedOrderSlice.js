@@ -41,6 +41,9 @@ export const sharedOrderSlice = createSlice({
       }
       state.order.dishes = newBasket;
     },
+    resetSharedOrder: (state, action) => {
+      state = initialState;
+    },
   },
 });
 
@@ -51,6 +54,7 @@ export const {
   addSharedOrderRestaurantId,
   addSharedOrderDishes,
   removeSharedOrderDishes,
+  resetSharedOrder,
 } = sharedOrderSlice.actions;
 
 export const selectInitiatedBy = (state) => state.sharedOrder.initiatedBy;
