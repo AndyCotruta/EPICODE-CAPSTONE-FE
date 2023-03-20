@@ -101,15 +101,30 @@ const ActiveOrder = ({ shared }) => {
               {shared ? sharedOrderRestaurant.name : activeOrderRestaurant.name}
             </Text>
           </View>
-          {userData._id === userData.sharedOrder.initiatedBy._id && (
-            <TouchableOpacity
-              style={tw.style("self-start")}
-              onPress={() => {
-                setInfo(!info);
-              }}
-            >
-              <InformationCircleIcon size={25} color={darkGreen} />
-            </TouchableOpacity>
+          {shared ? (
+            <View style={tw.style("self-start")}>
+              {userData._id === userData.sharedOrder.initiatedBy._id && (
+                <TouchableOpacity
+                  onPress={() => {
+                    setInfo(!info);
+                  }}
+                >
+                  <InformationCircleIcon size={25} color={darkGreen} />
+                </TouchableOpacity>
+              )}
+            </View>
+          ) : (
+            <View style={tw.style("self-start")}>
+              {shared !== "true" && (
+                <TouchableOpacity
+                  onPress={() => {
+                    setInfo(!info);
+                  }}
+                >
+                  <InformationCircleIcon size={25} color={darkGreen} />
+                </TouchableOpacity>
+              )}
+            </View>
           )}
         </View>
         {shared === "true" && (
