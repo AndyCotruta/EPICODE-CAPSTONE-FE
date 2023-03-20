@@ -10,6 +10,7 @@ import { XMarkIcon } from "react-native-heroicons/solid";
 import * as Progress from "react-native-progress";
 import MapComponent from "../components/MapComponent";
 import { selectAccessToken } from "../redux/reducers/userSlice";
+import { fetchMyData } from "../redux/actions";
 
 const DeliveryScreen = () => {
   const navigation = useNavigation();
