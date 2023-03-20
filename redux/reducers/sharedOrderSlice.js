@@ -56,6 +56,7 @@ export const {
 export const selectInitiatedBy = (state) => state.sharedOrder.initiatedBy;
 export const selectSharedOrderUsers = (state) => state.sharedOrder.users;
 export const selectSharedOrderDetails = (state) => state.sharedOrder.order;
+export const selectSharedOrder = (state) => state.sharedOrder;
 
 export const selectSharedOrderRestaurant = (state) =>
   state.sharedOrder.order.restaurantId;

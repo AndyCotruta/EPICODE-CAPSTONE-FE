@@ -27,6 +27,7 @@ import { BE_URL } from "@env";
 import {
   addUserData,
   selectAccessToken,
+  selectMoveToDelivery,
   selectUserData,
 } from "../redux/reducers/userSlice";
 import { fetchMyData } from "../redux/actions";
@@ -34,6 +35,8 @@ import {
   addSharedOrderRestaurantId,
   removeSharedOrderDishes,
   selectInitiatedBy,
+  selectSharedOrder,
+  selectSharedOrderDetails,
   selectSharedOrderDishes,
   selectSharedOrderTotal,
 } from "../redux/reducers/sharedOrderSlice";
@@ -65,6 +68,10 @@ const BasketScreen = () => {
   const [groupedItemsInBasket, setGroupedItemsInBasket] = useState([]);
   const [groupedSharedOrderItemsInBasket, setGroupedSharedOrderItemsInBasket] =
     useState([]);
+
+  const sharedOrder = useSelector(selectSharedOrder);
+
+  const moveToDelivery = useSelector(selectMoveToDelivery);
 
   useEffect(() => {
     const groupedItems = items.reduce((results, item) => {
@@ -105,7 +112,7 @@ const BasketScreen = () => {
         const data = await response.json();
         dispatch(addUserData(data));
       } else {
-        ("Error while creating the active order");
+        console.log("Error while creating the active order");
       }
 
       navigation.navigate("Animation");
@@ -115,6 +122,43 @@ const BasketScreen = () => {
       console.log(error);
     }
   };
+
+  const handlePlaceSharedOrder = async () => {
+    try {
+      const sharingOrder = {
+        dishes: sharedOrder.order.dishes.map((dish) => dish.id),
+        restaurantId: sharedOrder.order.restaurantId.restaurantId,
+        totalPrice: sharedOrderTotal,
+
+        users: sharedOrder.users,
+      };
+      const response = await fetch(`${BE_URL}/users/me/sharedOrder`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sharingOrder),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(addUserData(data));
+        socket.emit("moveToDeliveryScreen", { data });
+        navigation.navigate("Animation");
+        dispatch(fetchMyData(token));
+      } else {
+        console.log("Error while creating the shared order");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (moveToDelivery === true) {
+      navigation.navigate("Animation");
+    }
+  }, [moveToDelivery]);
 
   return (
     <SafeAreaView style={tw.style(`flex-1 bg-[${lightBeige}]`)}>
@@ -303,8 +347,12 @@ const BasketScreen = () => {
           userData._id === initiatedBy._id ? (
             <TouchableOpacity
               style={tw.style(`bg-[${darkOrange}] rounded-xl p-4 mb-4`)}
-              onPress={async () => {
-                await handlePlaceOrder();
+              onPress={() => {
+                console.log(
+                  "We are handling the place shared order because shared is: ",
+                  shared
+                );
+                handlePlaceSharedOrder();
               }}
             >
               <Text
@@ -319,8 +367,12 @@ const BasketScreen = () => {
         ) : (
           <TouchableOpacity
             style={tw.style(`bg-[${darkOrange}] rounded-xl p-4 mb-4`)}
-            onPress={async () => {
-              await handlePlaceOrder();
+            onPress={() => {
+              console.log(
+                "We are handling the place order because shared is: ",
+                shared
+              );
+              handlePlaceOrder();
             }}
           >
             <Text style={tw.style("text-center text-white font-bold text-lg")}>

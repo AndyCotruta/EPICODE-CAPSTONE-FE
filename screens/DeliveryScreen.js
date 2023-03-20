@@ -4,15 +4,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "twrnc";
 import { darkGreen, lightBeige } from "../graphics/colours";
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectRestaurant } from "../redux/reducers/restaurantSlice";
 import { XMarkIcon } from "react-native-heroicons/solid";
 import * as Progress from "react-native-progress";
 import MapComponent from "../components/MapComponent";
+import { selectAccessToken } from "../redux/reducers/userSlice";
 
 const DeliveryScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const restaurant = useSelector(selectRestaurant);
+  const accessToken = useSelector(selectAccessToken);
   const [mapUrl, setMapUrl] = useState("");
   const fetchMap = async () => {
     try {
@@ -31,6 +35,7 @@ const DeliveryScreen = () => {
 
   useEffect(() => {
     fetchMap();
+    dispatch(fetchMyData(accessToken));
   }, []);
 
   return (

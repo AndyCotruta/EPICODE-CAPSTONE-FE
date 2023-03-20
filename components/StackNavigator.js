@@ -7,6 +7,7 @@ import BasketScreen from "../screens/BasketScreen";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addUserData,
+  moveToDelivery,
   selectAccessToken,
   selectUserData,
 } from "../redux/reducers/userSlice";
@@ -107,6 +108,11 @@ const StackNavigator = () => {
         console.log("Remove My Dish: ", message);
         const { id } = message;
         dispatch(removeSharedOrderDishes({ id }));
+      });
+      socket.on("moveToDeliveryScreen", (message) => {
+        console.log("Move To Delivery Screen: ", message);
+        dispatch(moveToDelivery(true));
+        dispatch(fetchMyData(accessToken));
       });
     });
 
