@@ -6,7 +6,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "twrnc";
 import { darkGreen, lightBeige } from "../graphics/colours";
 import { InformationCircleIcon } from "react-native-heroicons/outline";
-import { fetchMyData, moveToHistory } from "../redux/actions";
+import {
+  fetchMyData,
+  moveSharedOrderToHistory,
+  moveToHistory,
+} from "../redux/actions";
 import { useNavigation } from "@react-navigation/native";
 
 const ActiveOrder = ({ shared }) => {
@@ -54,6 +58,15 @@ const ActiveOrder = ({ shared }) => {
     navigation.navigate("Order");
   };
 
+  const handleSharedMove = () => {
+    const body = {
+      orderId: sharedOrder._id,
+      users: [userData.sharedOrder.users],
+    };
+    dispatch(moveSharedOrderToHistory(token, body));
+    navigation.navigate("Order");
+  };
+
   return (
     <View style={tw.style("px-4")}>
       <Text style={tw.style("text-3xl font-bold mb-3")}>
@@ -79,9 +92,15 @@ const ActiveOrder = ({ shared }) => {
             style={tw.style(
               "absolute right-4 top-15 bg-white p-4 rounded-xl shadow-xl z-50"
             )}
-            onPress={() => {
-              handleMove();
-            }}
+            onPress={
+              shared
+                ? () => {
+                    handleSharedMove();
+                  }
+                : () => {
+                    handleMove();
+                  }
+            }
           >
             <Text>Mark as delivered</Text>
           </TouchableOpacity>

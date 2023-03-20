@@ -46,6 +46,33 @@ export const moveToHistory = (token, order) => {
   };
 };
 
+export const moveSharedOrderToHistory = (token, body) => {
+  return async (dispatch) => {
+    try {
+      console.log(
+        "This is what we're trying to send to sharedOrderHistory: ",
+        body
+      );
+      const response = await fetch(`${BE_URL}/users/me/sharedOrderHistory`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(fetchMyData(token));
+      } else {
+        console.log("Error fetching order history");
+      }
+    } catch (error) {
+      console.log("Error moving shared order to history: ", error);
+    }
+  };
+};
+
 export const fetchRecipeByType = (type) => {
   return async (dispatch) => {
     try {
