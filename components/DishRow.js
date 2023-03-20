@@ -54,7 +54,7 @@ const DishRow = ({
   const dispatch = useDispatch();
 
   const addItemToBasket = () => {
-    console.log("SharedRestaurant id is: ", basketRestaurant);
+    console.log("Restaurant id is: ", basketRestaurant);
     if (basketRestaurant === null) {
       console.log("This is why we are passing this id: ", restaurantId);
       dispatch(addRestautantId({ restaurantId }));

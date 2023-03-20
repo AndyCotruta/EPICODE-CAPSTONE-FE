@@ -12,6 +12,8 @@ import {
   lightOrange,
   mintGreen,
 } from "../graphics/colours";
+import { useDispatch } from "react-redux";
+import { setRestaurant } from "../redux/reducers/restaurantSlice";
 
 const RestaurantCard = ({
   id,
@@ -26,10 +28,25 @@ const RestaurantCard = ({
   lat,
 }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   return (
     <TouchableOpacity
       style={tw.style(`bg-[${lightBeige}] rounded-xl h-full w-64 mr-4`)}
       onPress={() => {
+        dispatch(
+          setRestaurant({
+            id,
+            imgUrl,
+            title,
+            rating,
+            genre,
+            address,
+            short_description,
+            dishes,
+            lon,
+            lat,
+          })
+        );
         navigation.navigate("Restaurant", {
           id,
           imgUrl,

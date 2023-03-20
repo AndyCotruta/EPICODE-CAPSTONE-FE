@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "twrnc";
 import { darkGreen, lightBeige } from "../graphics/colours";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRestaurant } from "../redux/reducers/restaurantSlice";
 import { XMarkIcon } from "react-native-heroicons/solid";
@@ -13,6 +13,10 @@ import { selectAccessToken } from "../redux/reducers/userSlice";
 import { fetchMyData } from "../redux/actions";
 
 const DeliveryScreen = () => {
+  const {
+    params: { shared, sharedRestaurant },
+  } = useRoute();
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -80,9 +84,9 @@ const DeliveryScreen = () => {
             color={darkGreen}
           />
           <Text style={tw.style("text-gray-400 text-xs pt-4")}>
-            Your order at{" "}
+            Your<Text>{shared ? " shared" : ""}</Text> order at{" "}
             <Text style={tw.style(`text-[${darkGreen}] font-bold`)}>
-              {restaurant.title}
+              {shared ? sharedRestaurant.name : restaurant.title}
             </Text>{" "}
             is being prepared
           </Text>

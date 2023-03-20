@@ -111,13 +111,12 @@ const BasketScreen = () => {
       if (response.ok) {
         const data = await response.json();
         dispatch(addUserData(data));
+        navigation.navigate("Animation");
+        dispatch(refreshBasket());
+        dispatch(fetchMyData(token));
       } else {
         console.log("Error while creating the active order");
       }
-
-      navigation.navigate("Animation");
-      dispatch(refreshBasket());
-      dispatch(fetchMyData(token));
     } catch (error) {
       console.log(error);
     }

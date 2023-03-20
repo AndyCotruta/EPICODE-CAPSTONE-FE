@@ -120,6 +120,20 @@ const SearchComponent = ({ shared }) => {
                       socket.emit("moveToSharedBasket", { message: result });
                     }
                   : () => {
+                      dispatch(
+                        setRestaurant({
+                          id: result._id,
+                          imgUrl: result.image,
+                          title: result.name,
+                          rating: result.rating,
+                          genre: result.genre,
+                          address: result.address,
+                          short_description: result.short_description,
+                          dishes: result.dishes,
+                          lon: result.lon,
+                          lat: result.lat,
+                        })
+                      );
                       navigation.navigate("Restaurant", {
                         id: result._id,
                         imgUrl: result.image,
