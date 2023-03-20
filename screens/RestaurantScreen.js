@@ -55,24 +55,6 @@ const RestaurantScreen = () => {
     });
   }, []);
 
-  useEffect(() => {
-    dispatch(
-      setRestaurant({
-        id,
-        imgUrl,
-        title,
-        rating,
-        genre,
-        address,
-        short_description,
-        dishes,
-        lon,
-        lat,
-        shared,
-      })
-    );
-  }, []);
-
   return (
     <>
       <BasketIcon shared={shared} />

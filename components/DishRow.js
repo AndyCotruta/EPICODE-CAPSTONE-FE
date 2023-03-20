@@ -26,6 +26,10 @@ import {
   selectSharedOrderDishesWithId,
   selectSharedOrderRestaurant,
 } from "../redux/reducers/sharedOrderSlice";
+import { io } from "socket.io-client";
+import { BE_URL } from "@env";
+
+const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 
 const DishRow = ({
   id,
@@ -72,14 +76,16 @@ const DishRow = ({
     if (sharedOrderRestaurant === null) {
       console.log("This is why we are passing this id: ", restaurantId);
       dispatch(addSharedOrderRestaurantId({ restaurantId }));
-      dispatch(addSharedOrderDishes({ id, name, description, price, image }));
+      // dispatch(addSharedOrderDishes({ id, name, description, price, image }));
+      socket.emit("addMyDish", { id, name, description, price, image });
     } else if (
       sharedOrderRestaurant !== null &&
       restaurantId === sharedOrderRestaurant.restaurantId
     ) {
       console.log("This is why we are passing this id: ", restaurantId);
       dispatch(addSharedOrderRestaurantId({ restaurantId }));
-      dispatch(addSharedOrderDishes({ id, name, description, price, image }));
+      // dispatch(addSharedOrderDishes({ id, name, description, price, image }));
+      socket.emit("addMyDish", { id, name, description, price, image });
     } else {
       setAlert(!alert);
     }
@@ -96,7 +102,8 @@ const DishRow = ({
 
   const removeItemFromSharedBasket = () => {
     if (sharedOrderItems.length <= 1) {
-      dispatch(removeSharedOrderDishes({ id }));
+      // dispatch(removeSharedOrderDishes({ id }));
+      socket.emit("removeMyDish", { id });
       dispatch(addSharedOrderRestaurantId(null));
     } else {
       dispatch(removeSharedOrderDishes({ id }));

@@ -37,6 +37,9 @@ import {
   selectSharedOrderDishes,
   selectSharedOrderTotal,
 } from "../redux/reducers/sharedOrderSlice";
+import { io } from "socket.io-client";
+
+const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 
 const BasketScreen = () => {
   const {
@@ -123,9 +126,16 @@ const BasketScreen = () => {
             {shared ? "Shared Basket" : "Basket"}
           </Text>
           <TouchableOpacity
+            // onPress={() => {
+            //   console.log("Shared is: ", shared);
+            // }}
             onPress={
               shared
                 ? () => {
+                    console.log(
+                      "We should navigate to Restaurant because shared:",
+                      shared
+                    );
                     navigation.navigate("Restaurant", {
                       id: restaurant.id,
                       imgUrl: restaurant.imgUrl,
@@ -138,9 +148,11 @@ const BasketScreen = () => {
                       long: restaurant.lat,
                       lat: restaurant.lat,
                       shared: true,
+                      sharedView: true,
                     });
                   }
                 : () => {
+                    console.log("Shared:", shared);
                     navigation.navigate("Restaurant", {
                       id: restaurant.id,
                       imgUrl: restaurant.imgUrl,
@@ -221,10 +233,12 @@ const BasketScreen = () => {
                   shared
                     ? () => {
                         if (items.length <= 1) {
-                          dispatch(removeSharedOrderDishes({ id: key }));
+                          // dispatch(removeSharedOrderDishes({ id: key }));
+                          socket.emit("removeMyDish", { id: key });
                           dispatch(addSharedOrderRestaurantId(null));
                         } else {
-                          dispatch(removeSharedOrderDishes({ id: key }));
+                          // dispatch(removeSharedOrderDishes({ id: key }));
+                          socket.emit("removeMyDish", { id: key });
                         }
                       }
                     : () => {

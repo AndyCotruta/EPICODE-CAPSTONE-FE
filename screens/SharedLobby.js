@@ -30,11 +30,6 @@ const SharedLobby = () => {
     avatar: userData.avatar,
   });
 
-  const [waitingScreen] = useState({
-    initiatedBy,
-    connectedUsers,
-  });
-
   return (
     <SafeAreaView style={tw.style(`flex-1 bg-[${lightBeige}] p-4`)}>
       <View style={tw.style("flex items-center")}>
@@ -117,10 +112,6 @@ const SharedLobby = () => {
               `bg-[${darkOrange}] p-4 rounded-3xl shadow-md w-40 mt-5`
             )}
             onPress={() => {
-              socket.emit("waitingScreen", {
-                message: waitingScreen,
-              });
-
               navigation.navigate("SharedOrderRestaurantsList");
             }}
           >

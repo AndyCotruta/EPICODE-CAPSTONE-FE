@@ -32,6 +32,7 @@ import {
   selectInitiatedBy,
 } from "../redux/reducers/sharedOrderSlice";
 import { selectUserData } from "../redux/reducers/userSlice";
+import { setRestaurant } from "../redux/reducers/restaurantSlice";
 
 const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 
@@ -61,10 +62,24 @@ const SharedOrderScreen = () => {
     console.log(`Data: ${data}`);
     console.log(`Type: ${type}`);
     socket.emit("sendMessage", {
-      message: complexObj,
+      complexObj,
+      obj,
     });
+    // dispatch(
+    //   setRestaurant({
+    //     id: null,
+    //     imgUrl: null,
+    //     title: null,
+    //     rating: null,
+    //     genre: null,
+    //     address: null,
+    //     short_description: null,
+    //     dishes: null,
+    //   })
+    // );
     setOpenCamera(false);
-    navigation.navigate("SharedLobby");
+    navigation.navigate("WaitingScreen");
+    setScanData();
   };
 
   useEffect(() => {

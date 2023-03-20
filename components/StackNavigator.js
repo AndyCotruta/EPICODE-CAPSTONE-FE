@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
 import RestaurantScreen from "../screens/RestaurantScreen";
 import BasketScreen from "../screens/BasketScreen";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAccessToken, selectUserData } from "../redux/reducers/userSlice";
+import {
+  addUserData,
+  selectAccessToken,
+  selectUserData,
+} from "../redux/reducers/userSlice";
 import RegistrationScreen from "../screens/RegistrationScreen";
 import MyProfileScreen from "../screens/MyProfileScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
@@ -20,7 +24,10 @@ import { addMessage } from "../redux/reducers/communicationSlice";
 import SharedLobby from "../screens/SharedLobby";
 import { useNavigation } from "@react-navigation/native";
 import {
+  addInitiatedBy,
+  addSharedOrderDishes,
   addSharedOrderUsers,
+  removeSharedOrderDishes,
   removeSharedOrderUser,
   selectInitiatedBy,
 } from "../redux/reducers/sharedOrderSlice";
@@ -40,6 +47,10 @@ const StackNavigator = () => {
   const userData = useSelector(selectUserData);
   const initiatedBy = useSelector(selectInitiatedBy);
 
+  const [connectedUsers, setConnectedUsers] = useState([]);
+  const [host, setHost] = useState();
+  const [currentUser, setCurrentUser] = useState();
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -52,47 +63,50 @@ const StackNavigator = () => {
       // });
       socket.on("newMessage", (message) => {
         console.log(message);
-        console.log("User data: " + userData);
-        console.log("Initiated by: " + initiatedBy);
+        console.log("User data: ", userData);
+        console.log("Initiated by: ", initiatedBy);
         dispatch(addMessage(message));
-        dispatch(addSharedOrderUsers(message.message));
+        dispatch(addSharedOrderUsers(message.complexObj));
+        setConnectedUsers([...connectedUsers, message.complexObj]);
+        setHost(message.obj);
+        setCurrentUser(message.obj);
       });
       socket.on("disconnectUser", (message) => {
         console.log("Remove this id: " + message.message._id);
         dispatch(removeSharedOrderUser(message.message._id));
       });
-      socket.on("waitingScreen", (message) => {
-        console.log("Waiting screen object: ", message);
-        dispatch(fetchMyData(accessToken));
-        console.log("User Id: ", userData._id);
-        console.log("Initiated by: " + initiatedBy._id);
-        if (userData._id !== initiatedBy._id) {
-          navigation.navigate("WaitingScreen");
-        }
-      });
       socket.on("moveToSharedBasket", (message) => {
         console.log("Move to Shared basket: ", message);
-        console.log(message.message._id);
+        console.log("User data: ", userData);
+        console.log("Initiated by: ", initiatedBy);
+        console.log("Message.message._id: ", message.message._id);
         dispatch(fetchMyData(accessToken));
-        if (userData._id !== initiatedBy._id) {
-          dispatch(
-            setRestaurant({
-              id: message.message._id,
-              imgUrl: message.message.image,
-              title: message.message.name,
-              rating: message.message.rating,
-              genre: message.message.genre,
-              address: message.message.address,
-              short_description: message.message.short_description,
-              dishes: message.message.dishes,
-              lon: message.message.lon,
-              lat: message.message.lat,
-            })
-          );
-          navigation.navigate("Basket", {
+
+        dispatch(
+          setRestaurant({
+            id: message.message._id,
+            imgUrl: message.message.image,
+            title: message.message.name,
+            rating: message.message.rating,
+            genre: message.message.genre,
+            address: message.message.address,
+            short_description: message.message.short_description,
+            dishes: message.message.dishes,
+            lon: message.message.lon,
+            lat: message.message.lat,
             shared: true,
-          });
-        }
+            sharedView: true,
+          })
+        );
+      });
+      socket.on("addMyDish", (message) => {
+        console.log("Add My Dish: ", message);
+        dispatch(addSharedOrderDishes(message));
+      });
+      socket.on("removeMyDish", (message) => {
+        console.log("Remove My Dish: ", message);
+        const { id } = message;
+        dispatch(removeSharedOrderDishes({ id }));
       });
     });
 
@@ -104,7 +118,7 @@ const StackNavigator = () => {
 
   useEffect(() => {
     dispatch(fetchMyData(accessToken));
-  }, [accessToken]);
+  }, []);
 
   return (
     <Stack.Navigator>
