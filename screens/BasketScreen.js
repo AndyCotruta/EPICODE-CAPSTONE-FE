@@ -152,7 +152,6 @@ const BasketScreen = () => {
           sharedRestaurant: restaurantName,
         });
         dispatch(fetchMyData(token));
-        dispatch(resetSharedOrder());
       } else {
         console.log("Error while creating the shared order");
       }

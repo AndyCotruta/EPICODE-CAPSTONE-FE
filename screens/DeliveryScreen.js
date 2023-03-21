@@ -9,8 +9,9 @@ import { selectRestaurant } from "../redux/reducers/restaurantSlice";
 import { XMarkIcon } from "react-native-heroicons/solid";
 import * as Progress from "react-native-progress";
 import MapComponent from "../components/MapComponent";
-import { selectAccessToken } from "../redux/reducers/userSlice";
+import { moveToDelivery, selectAccessToken } from "../redux/reducers/userSlice";
 import { fetchMyData } from "../redux/actions";
+import { resetSharedOrder } from "../redux/reducers/sharedOrderSlice";
 
 const DeliveryScreen = () => {
   const {
@@ -51,6 +52,8 @@ const DeliveryScreen = () => {
             `bg-[${darkGreen}] w-8 h-8 rounded-full flex items-center justify-center`
           )}
           onPress={() => {
+            dispatch(resetSharedOrder());
+            dispatch(moveToDelivery(false));
             navigation.navigate("Home");
           }}
         >
