@@ -8,7 +8,7 @@ import {
   GlobeEuropeAfricaIcon,
 } from "react-native-heroicons/outline";
 
-const DashboardPlan = () => {
+const DashboardPlan = ({ active, setActive }) => {
   const plans = [
     {
       icon: <CircleStackIcon size={30} color="black" />,
@@ -38,7 +38,12 @@ const DashboardPlan = () => {
         style={tw.style("")}
       >
         {plans.map((plan) => (
-          <MyPlanCard key={plan.label} plan={plan} />
+          <MyPlanCard
+            key={plan.label}
+            plan={plan}
+            active={active}
+            setActive={setActive}
+          />
         ))}
       </ScrollView>
     </View>

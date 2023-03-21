@@ -12,9 +12,10 @@ import {
   CircleStackIcon,
   ChartPieIcon,
 } from "react-native-heroicons/solid";
+import { useNavigation } from "@react-navigation/native";
 
-const DashboardButtons = () => {
-  const [active, setActive] = useState("Home");
+const DashboardButtons = ({ active, setActive }) => {
+  const navigation = useNavigation();
 
   return (
     <View style={tw.style("px-4 py-2 flex-row justify-between items-center")}>
@@ -46,7 +47,7 @@ const DashboardButtons = () => {
       </View>
       <TouchableOpacity
         style={tw.style(
-          "w-20 h-20 flex items-center justify-center bg-red-500  rounded-full"
+          "w-20 h-20 flex items-center justify-center bg-[#F94F46]  rounded-full"
         )}
       >
         <PlusIcon size={20} color="white" />

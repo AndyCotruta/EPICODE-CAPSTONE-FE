@@ -16,14 +16,14 @@ const DashboardHeader = () => {
   return (
     <View style={tw.style("flex-row justify-between items-center p-4")}>
       <Image
-        style={tw.style("w-15 h-15 rounded-full mr-4")}
+        style={tw.style("w-15 h-15 rounded-full")}
         source={{ uri: userData.avatar }}
       />
       <View style={tw.style("flex-1")}>
-        <Text style={tw.style("text-gray-400")}>
+        <Text style={tw.style("text-gray-400 text-center")}>
           Hello, {userData.firstName}!
         </Text>
-        <Text style={tw.style("font-bold")}>{formattedDate}</Text>
+        <Text style={tw.style("font-bold text-center")}>{formattedDate}</Text>
       </View>
 
       <View
