@@ -11,6 +11,9 @@ import { parse, format } from "date-fns";
 import FoodSummaryDays from "./FoodSummaryDays";
 import CaloriesChart from "./CaloriesChart";
 import WaterIntake from "./WaterIntake";
+import Breakfast from "./Breakfast";
+import Lunch from "./Lunch";
+import Dinner from "./Dinner";
 
 const FoodSummary = () => {
   return (
@@ -24,6 +27,15 @@ const FoodSummary = () => {
       </View>
       <View style={tw.style("px-4")}>
         <WaterIntake />
+      </View>
+      <View style={tw.style("px-4")}>
+        <Breakfast />
+      </View>
+      <View style={tw.style("px-4")}>
+        <Lunch />
+      </View>
+      <View style={tw.style("px-4")}>
+        <Dinner />
       </View>
     </ScrollView>
   );
