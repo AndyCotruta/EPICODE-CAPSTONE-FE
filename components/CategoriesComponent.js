@@ -13,11 +13,7 @@ const CategoriesComponent = ({ categories }) => {
       showsHorizontalScrollIndicator={false}
     >
       {categories.map((category) => (
-        <CategoryCard
-          key={category._id}
-          imgUrl={category.image}
-          title={category.name}
-        />
+        <CategoryCard key={category._id} category={category} />
       ))}
     </ScrollView>
   );
