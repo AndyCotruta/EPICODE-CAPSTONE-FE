@@ -58,7 +58,7 @@ const SharedLobby = () => {
         </Text>
         <View style={tw.style("flex items-center")}>
           <Image
-            style={tw.style("w-20 h-20 rounded-full shadow-md")}
+            style={tw.style("w-20 h-20 rounded-full")}
             source={{ uri: initiatedBy.avatar }}
           />
           <Text style={tw.style("font-bold")}>{initiatedBy.firstName}</Text>

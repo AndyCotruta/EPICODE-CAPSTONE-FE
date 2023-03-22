@@ -20,7 +20,7 @@ const OrderHistoryScreen = () => {
             <ActiveOrder />
           </View>
         ) : (
-          <View>
+          <View style={tw.style("mt-3 px-4")}>
             <Text style={tw.style("text-3xl font-bold mb-3")}>
               Active Order
             </Text>

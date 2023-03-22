@@ -104,7 +104,10 @@ const ActiveOrder = ({ shared }) => {
                 });
               }
             : () => {
-                navigation.navigate("Delivery");
+                navigation.navigate("Delivery", {
+                  shared: false,
+                  sharedRestaurant: null,
+                });
               }
         }
         style={tw.style(` bg-[${lightBeige}] p-4 rounded-xl shadow-md`)}

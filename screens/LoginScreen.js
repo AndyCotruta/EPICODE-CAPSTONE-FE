@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Button,
   Image,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -172,7 +173,13 @@ const LoginScreen = () => {
 
       <View style={tw.style(`w-80 bg-[${lightBeige}] p-4 mb-7 rounded-md`)}>
         <TextInput
-          style={focused ? styles.focused : styles.placeholder}
+          style={
+            Platform.OS === "web"
+              ? focused
+                ? styles.focused
+                : styles.placeholder
+              : tw.style("")
+          }
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           placeholder="email"
@@ -185,7 +192,13 @@ const LoginScreen = () => {
       </View>
       <View style={tw.style(`w-80 bg-[${lightBeige}] p-4 mb-7 rounded-md`)}>
         <TextInput
-          style={focused ? styles.focused : styles.placeholder}
+          style={
+            Platform.OS === "web"
+              ? focused
+                ? styles.focused
+                : styles.placeholder
+              : tw.style("")
+          }
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           secureTextEntry={true}
@@ -270,7 +283,6 @@ const styles = StyleSheet.create({
     color: "black",
   },
   focused: {
-    outlineWidth: 0,
     color: "black",
   },
 });

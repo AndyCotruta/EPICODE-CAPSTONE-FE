@@ -1,5 +1,4 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import localStorage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import basketReducer from "../reducers/basketSlice";
 import restaurantReducer from "../reducers/restaurantSlice";
@@ -8,10 +7,11 @@ import allRestaurantsReducer from "../reducers/allRestaurantsSlice";
 import recipeReducer from "../reducers/recipeSlice";
 import communicationReducer from "../reducers/communicationSlice";
 import sharedOrderReducer from "../reducers/sharedOrderSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const persistConfig = {
   key: "root",
-  storage: localStorage,
+  storage: AsyncStorage,
 };
 
 const bigReducer = combineReducers({

@@ -84,7 +84,7 @@ const WaitingScreen = () => {
           <Text style={tw.style("font-bold")}>{initiatedBy.firstName}</Text>
         </View>
         <View style={tw.style("flex-1")}>
-          <Text style={tw.style("text-start text-xl font-bold")}>
+          <Text style={tw.style("text-left text-xl font-bold")}>
             Connected users
           </Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>

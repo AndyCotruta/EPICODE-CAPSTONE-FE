@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Image,
   ScrollView,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import tw from "twrnc";
@@ -70,7 +71,7 @@ const SearchComponent = ({ shared }) => {
           />
 
           <TextInput
-            style={focused ? styles.focused : styles.placeholder}
+            style={tw.style("flex-1")}
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             value={searchValue}
@@ -177,7 +178,6 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   focused: {
-    outlineWidth: 0,
     flex: 1,
     color: "gray",
   },

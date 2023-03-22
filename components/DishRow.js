@@ -117,9 +117,8 @@ const DishRow = ({
           setIsPressed(!isPressed);
         }}
         style={tw.style(
-          `bg-[${lightBeige}] border-t p-4 border-[${mintGreen}] ${
-            isPressed && "border-b-0"
-          }`
+          `bg-[${lightBeige}] border-t p-4 border-[${mintGreen}] 
+          `
         )}
         className="bg-white border p-4 border-gray-200"
       >
