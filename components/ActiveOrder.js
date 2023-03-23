@@ -90,10 +90,12 @@ const ActiveOrder = ({ shared }) => {
     const body = {
       orderId: sharedOrder._id,
       users: [userData.sharedOrder.users],
+      initiatedBy: userData.sharedOrder.initiatedBy,
     };
     mySharedDishes.forEach((food) => dispatch(addDailyFood(token, food)));
     dispatch(moveSharedOrderToHistory(token, body));
     socket.emit("moveSharedOrderToHistory", { token });
+    dispatch(addDailyFood(mySharedDishes));
     dispatch(addMySharedDishes());
     // navigation.navigate("Order");
   };
@@ -170,31 +172,16 @@ const ActiveOrder = ({ shared }) => {
                 : activeOrderRestaurant?.name}
             </Text>
           </View>
-          {shared ? (
-            <View style={tw.style("self-start")}>
-              {userData._id === userData.sharedOrder?.initiatedBy._id && (
-                <TouchableOpacity
-                  onPress={() => {
-                    setInfo(!info);
-                  }}
-                >
-                  <InformationCircleIcon size={25} color={darkGreen} />
-                </TouchableOpacity>
-              )}
-            </View>
-          ) : (
-            <View style={tw.style("self-start")}>
-              {shared !== "true" && (
-                <TouchableOpacity
-                  onPress={() => {
-                    setInfo(!info);
-                  }}
-                >
-                  <InformationCircleIcon size={25} color={darkGreen} />
-                </TouchableOpacity>
-              )}
-            </View>
-          )}
+
+          <View style={tw.style("self-start")}>
+            <TouchableOpacity
+              onPress={() => {
+                setInfo(!info);
+              }}
+            >
+              <InformationCircleIcon size={25} color={darkGreen} />
+            </TouchableOpacity>
+          </View>
         </View>
         {shared === "true" && (
           <View>

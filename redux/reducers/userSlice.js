@@ -25,6 +25,10 @@ export const userSlice = createSlice({
       state.refreshOrder = action.payload;
     },
     addMySharedDishes: (state, action) => {
+      console.log(
+        "This is the initial state of mySharedDishes: ",
+        state.mySharedDishes
+      );
       const existingDishIndex = state.mySharedDishes.findIndex(
         (dish) => dish.title === action.payload.title
       );
