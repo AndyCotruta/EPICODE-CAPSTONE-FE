@@ -3,10 +3,16 @@ import React, { useState } from "react";
 import tw from "twrnc";
 import ProgressCircle from "react-native-progress/Circle";
 import * as Progress from "react-native-progress";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../../redux/reducers/userSlice";
 
 const CaloriesChart = () => {
+  const userData = useSelector(selectUserData);
+  const dailyFood = userData.dailyFood;
+  let dailyCalories = 0;
+  dailyFood.forEach((food) => (dailyCalories += parseInt(food.calories)));
   const [caloriesGoal, setCaloriesGoal] = useState(2300);
-  const [consumedCalories, setConsumedCaloriesGoal] = useState(700);
+  const [consumedCalories, setConsumedCaloriesGoal] = useState(dailyCalories);
   const [remainingCalories, setRemainingCaloriesGoal] = useState(
     caloriesGoal - consumedCalories
   );

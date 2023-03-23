@@ -129,10 +129,6 @@ const StackNavigator = () => {
     // })();
   }, [socket]);
 
-  useEffect(() => {
-    dispatch(fetchMyData(accessToken));
-  }, []);
-
   return (
     <Stack.Navigator>
       {accessToken !== null ? (

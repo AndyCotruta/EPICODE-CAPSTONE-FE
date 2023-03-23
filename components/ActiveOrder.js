@@ -11,6 +11,7 @@ import tw from "twrnc";
 import { darkGreen, lightBeige } from "../graphics/colours";
 import { InformationCircleIcon } from "react-native-heroicons/outline";
 import {
+  addDailyFood,
   fetchMyData,
   moveSharedOrderToHistory,
   moveToHistory,
@@ -33,7 +34,7 @@ const ActiveOrder = ({ shared }) => {
   const sharedOrder = userData.sharedOrder?.order;
   const sharedOrderRestaurant = userData.sharedOrder?.order.restaurantId;
 
-  const array1 = userData.activeOrder?.restaurantId.dishes;
+  const array1 = userData.activeOrder?.restaurantId?.dishes;
   const array2 = userData.activeOrder?.dishes;
 
   const count = array2?.reduce((acc, id) => {
@@ -62,6 +63,21 @@ const ActiveOrder = ({ shared }) => {
     const order = {
       orderId: activeOrderId,
     };
+
+    const dailyFood = [];
+    newArray.forEach((dish) => {
+      dailyFood.push({
+        type: "order",
+        title: dish.name,
+        image: dish.image,
+        calories: dish.calories,
+        amount: dish.count,
+      });
+    });
+
+    dailyFood.forEach((food) => dispatch(addDailyFood(token, food)));
+
+    console.log("This is what dailyFood looks like: ", dailyFood);
     dispatch(moveToHistory(token, order));
 
     navigation.navigate("Order");
@@ -72,6 +88,18 @@ const ActiveOrder = ({ shared }) => {
       orderId: sharedOrder._id,
       users: [userData.sharedOrder.users],
     };
+    const dailyFood = [];
+    newArray2.forEach((dish) => {
+      dailyFood.push({
+        type: "order",
+        title: dish.name,
+        image: dish.image,
+        calories: dish.calories,
+        amount: dish.count,
+      });
+    });
+
+    dailyFood.forEach((food) => dispatch(addDailyFood(token, food)));
     dispatch(moveSharedOrderToHistory(token, body));
     socket.emit("moveSharedOrderToHistory", { token });
 
@@ -136,18 +164,20 @@ const ActiveOrder = ({ shared }) => {
             style={tw.style("w-20 h-20 rounded-xl mr-4 mb-1")}
             source={
               shared
-                ? { uri: sharedOrderRestaurant.image }
-                : { uri: activeOrderRestaurant.image }
+                ? { uri: sharedOrderRestaurant?.image }
+                : { uri: activeOrderRestaurant?.image }
             }
           />
           <View style={tw.style("flex-1 flex-row justify-between")}>
             <Text style={tw.style(`text-[${darkGreen}] text-lg font-bold`)}>
-              {shared ? sharedOrderRestaurant.name : activeOrderRestaurant.name}
+              {shared
+                ? sharedOrderRestaurant?.name
+                : activeOrderRestaurant?.name}
             </Text>
           </View>
           {shared ? (
             <View style={tw.style("self-start")}>
-              {userData._id === userData.sharedOrder.initiatedBy._id && (
+              {userData._id === userData.sharedOrder?.initiatedBy._id && (
                 <TouchableOpacity
                   onPress={() => {
                     setInfo(!info);
@@ -223,7 +253,7 @@ const ActiveOrder = ({ shared }) => {
                   </Text>
                 </View>
               ))
-            : newArray.map((activeOrderDish) => (
+            : newArray?.map((activeOrderDish) => (
                 <View
                   style={tw.style("flex-row items-center mt-4")}
                   key={activeOrderDish._id}

@@ -9,10 +9,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const OrderHistory = () => {
   const userData = useSelector(selectUserData);
+  const orderHistory = userData.orderHistory;
 
   return (
     <View style={tw.style("")}>
-      {userData.orderHistory
+      {orderHistory
         .slice()
         .reverse()
         .map((order, i) => (
@@ -30,8 +31,14 @@ const OrderHistory = () => {
                 {order.restaurantId?.name}
               </Text>
               <View>
-                <Text>{format(new Date(order?.createdAt), "hh:mm a")}</Text>
-                <Text>{format(new Date(order?.createdAt), "do MMM")}</Text>
+                <Text>
+                  {order.createdAt &&
+                    format(new Date(order?.createdAt), "HH:mm")}
+                </Text>
+                <Text>
+                  {order.createdAt &&
+                    format(new Date(order?.createdAt), "do MMM")}
+                </Text>
               </View>
             </View>
           </View>

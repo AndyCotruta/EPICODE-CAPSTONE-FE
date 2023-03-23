@@ -113,7 +113,7 @@ const BasketScreen = () => {
       if (response.ok) {
         const data = await response.json();
         dispatch(addUserData(data));
-        navigation.navigate("Animation");
+        navigation.navigate("Animation", { shared: false });
         dispatch(refreshBasket());
         dispatch(fetchMyData(token));
       } else {

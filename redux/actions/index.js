@@ -23,9 +23,33 @@ export const fetchMyData = (token) => {
   };
 };
 
+export const addDailyFood = (token, dailyFood) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`${BE_URL}/users/me/dailyFood`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dailyFood),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("User with daily food data: ", data);
+      } else {
+        console.log("Error posting new daily food");
+      }
+    } catch (error) {
+      console.log("Error while posting new daily food", error);
+    }
+  };
+};
+
 export const moveToHistory = (token, order) => {
   return async (dispatch) => {
     try {
+      console.log("We are getting here: moveToHistory");
       const response = await fetch(`${BE_URL}/users/me/orderHistory`, {
         method: "POST",
         headers: {
