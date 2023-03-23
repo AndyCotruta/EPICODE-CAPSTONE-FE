@@ -157,6 +157,7 @@ const RestaurantScreen = () => {
               description={dish.short_description}
               price={dish.price}
               image={dish.image}
+              calories={dish.calories}
               restaurantId={id}
               shared={shared}
             />

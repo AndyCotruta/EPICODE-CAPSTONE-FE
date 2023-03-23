@@ -1,6 +1,11 @@
 import { BE_URL, SPOONACULAR_KEY } from "@env";
-import { addUserData } from "../reducers/userSlice";
+import {
+  addUserData,
+  selectAccessToken,
+  selectUserData,
+} from "../reducers/userSlice";
 import { addBreakfast, addLunch, addDinner } from "../reducers/recipeSlice";
+import { useSelector } from "react-redux";
 
 export const fetchMyData = (token) => {
   return async (dispatch) => {

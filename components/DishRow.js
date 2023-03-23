@@ -28,6 +28,12 @@ import {
 } from "../redux/reducers/sharedOrderSlice";
 import { io } from "socket.io-client";
 import { BE_URL } from "@env";
+import {
+  addMySharedDishes,
+  removeMySharedDishes,
+  selectMySharedDishes,
+  selectUserData,
+} from "../redux/reducers/userSlice";
 
 const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 
@@ -37,12 +43,15 @@ const DishRow = ({
   description,
   price,
   image,
+  calories,
   restaurantId,
   shared,
 }) => {
   const [alert, setAlert] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
 
+  const userData = useSelector(selectUserData);
+  const userId = userData._id;
   const items = useSelector((state) => selectBasketItemsWithId(state, id));
   const sharedOrderItems = useSelector((state) =>
     selectSharedOrderDishesWithId(state, id)
@@ -77,15 +86,30 @@ const DishRow = ({
       console.log("This is why we are passing this id: ", restaurantId);
       dispatch(addSharedOrderRestaurantId({ restaurantId }));
       // dispatch(addSharedOrderDishes({ id, name, description, price, image }));
+      const dailyFood = {
+        type: "order",
+        title: name,
+        image: image,
+        calories: calories,
+      };
+
       socket.emit("addMyDish", { id, name, description, price, image });
+      dispatch(addMySharedDishes(dailyFood));
     } else if (
       sharedOrderRestaurant !== null &&
       restaurantId === sharedOrderRestaurant.restaurantId
     ) {
       console.log("This is why we are passing this id: ", restaurantId);
+      const dailyFood = {
+        type: "order",
+        title: name,
+        image: image,
+        calories: calories,
+      };
       dispatch(addSharedOrderRestaurantId({ restaurantId }));
       // dispatch(addSharedOrderDishes({ id, name, description, price, image }));
       socket.emit("addMyDish", { id, name, description, price, image });
+      dispatch(addMySharedDishes(dailyFood));
     } else {
       setAlert(!alert);
     }
@@ -103,9 +127,24 @@ const DishRow = ({
   const removeItemFromSharedBasket = () => {
     if (sharedOrderItems.length <= 1) {
       // dispatch(removeSharedOrderDishes({ id }));
+      const dailyFood = {
+        type: "order",
+        title: name,
+        image: image,
+        calories: calories,
+      };
+      dispatch(removeMySharedDishes(dailyFood));
       socket.emit("removeMyDish", { id });
       dispatch(addSharedOrderRestaurantId(null));
     } else {
+      const dailyFood = {
+        type: "order",
+        title: name,
+        image: image,
+        calories: calories,
+      };
+      dispatch(removeMySharedDishes(dailyFood));
+
       dispatch(removeSharedOrderDishes({ id }));
     }
   };

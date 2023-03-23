@@ -2,7 +2,9 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addMySharedDishes,
   selectAccessToken,
+  selectMySharedDishes,
   selectRefreshOrder,
   selectUserData,
 } from "../redux/reducers/userSlice";
@@ -28,6 +30,7 @@ const ActiveOrder = ({ shared }) => {
   const userData = useSelector(selectUserData);
   const token = useSelector(selectAccessToken);
   const refreshOrder = useSelector(selectRefreshOrder);
+  const mySharedDishes = useSelector(selectMySharedDishes);
   const [info, setInfo] = useState(false);
   const activeOrderRestaurant = userData.activeOrder?.restaurantId;
 
@@ -88,21 +91,10 @@ const ActiveOrder = ({ shared }) => {
       orderId: sharedOrder._id,
       users: [userData.sharedOrder.users],
     };
-    const dailyFood = [];
-    newArray2.forEach((dish) => {
-      dailyFood.push({
-        type: "order",
-        title: dish.name,
-        image: dish.image,
-        calories: dish.calories,
-        amount: dish.count,
-      });
-    });
-
-    dailyFood.forEach((food) => dispatch(addDailyFood(token, food)));
+    mySharedDishes.forEach((food) => dispatch(addDailyFood(token, food)));
     dispatch(moveSharedOrderToHistory(token, body));
     socket.emit("moveSharedOrderToHistory", { token });
-
+    dispatch(addMySharedDishes());
     // navigation.navigate("Order");
   };
 
@@ -116,6 +108,9 @@ const ActiveOrder = ({ shared }) => {
       navigation.navigate("Order");
     }
   }, []);
+
+  console.log("Array3 is: ", array3);
+  console.log("Array 4 is: ", array4);
 
   return (
     <View style={tw.style("px-4")}>
@@ -247,6 +242,7 @@ const ActiveOrder = ({ shared }) => {
 
                   <Text style={tw.style("flex-1 mr-4")}>
                     {activeOrderDish.name}
+                    {activeOrderDish.userId}
                   </Text>
                   <Text style={tw.style(`text-[${darkGreen}] font-bold`)}>
                     ${activeOrderDish.count * activeOrderDish.price}
