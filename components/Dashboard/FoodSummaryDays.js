@@ -30,7 +30,7 @@ const FoodSummary = () => {
     );
     if (scrollToIndex !== -1 && scrollViewRef.current) {
       scrollViewRef.current.scrollTo({
-        x: scrollToIndex * containerWidth * 0.875,
+        x: scrollToIndex * containerWidth - 2.5 * containerWidth,
         animated: true,
       });
     }
