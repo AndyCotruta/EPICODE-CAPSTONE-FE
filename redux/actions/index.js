@@ -6,8 +6,14 @@ import {
   selectAccessToken,
   selectUserData,
 } from "../reducers/userSlice";
-import { addBreakfast, addLunch, addDinner } from "../reducers/recipeSlice";
-import { useSelector } from "react-redux";
+import {
+  addBreakfast,
+  addLunch,
+  addDinner,
+  setRecipeActive,
+  addActiveRecipe,
+} from "../reducers/recipeSlice";
+import { setRestaurant } from "../reducers/restaurantSlice";
 
 export const fetchMyData = (token) => {
   return async (dispatch) => {
@@ -91,6 +97,18 @@ export const moveSharedOrderToHistory = (token, body) => {
       if (response.ok) {
         const data = await response.json();
         dispatch(fetchMyData(token));
+        dispatch(
+          setRestaurant({
+            id: null,
+            imgUrl: null,
+            title: null,
+            rating: null,
+            genre: null,
+            address: null,
+            short_description: null,
+            dishes: null,
+          })
+        );
       } else {
         console.log("Error fetching order history");
       }
@@ -133,6 +151,7 @@ export const fetchCompleteRecipe = (recipeId) => {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
+        dispatch(addActiveRecipe(data));
       } else {
         console.log("Error fetching complete recipe");
       }
