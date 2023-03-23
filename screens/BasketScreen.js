@@ -357,10 +357,6 @@ const BasketScreen = () => {
             <TouchableOpacity
               style={tw.style(`bg-[${darkOrange}] rounded-xl p-4 mb-4`)}
               onPress={() => {
-                console.log(
-                  "We are handling the place shared order because shared is: ",
-                  shared
-                );
                 handlePlaceSharedOrder();
               }}
             >

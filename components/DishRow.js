@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import tw from "twrnc";
 import { MinusCircleIcon, PlusCircleIcon } from "react-native-heroicons/solid";
@@ -83,9 +83,8 @@ const DishRow = ({
   const addItemToSharedBasket = () => {
     console.log("SharedRestaurant id is: ", sharedOrderRestaurant);
     if (sharedOrderRestaurant === null) {
-      console.log("This is why we are passing this id: ", restaurantId);
       dispatch(addSharedOrderRestaurantId({ restaurantId }));
-      // dispatch(addSharedOrderDishes({ id, name, description, price, image }));
+
       const dailyFood = {
         type: "order",
         title: name,
@@ -99,7 +98,6 @@ const DishRow = ({
       sharedOrderRestaurant !== null &&
       restaurantId === sharedOrderRestaurant.restaurantId
     ) {
-      console.log("This is why we are passing this id: ", restaurantId);
       const dailyFood = {
         type: "order",
         title: name,
@@ -107,9 +105,8 @@ const DishRow = ({
         calories: calories,
       };
       dispatch(addSharedOrderRestaurantId({ restaurantId }));
-      // dispatch(addSharedOrderDishes({ id, name, description, price, image }));
-      socket.emit("addMyDish", { id, name, description, price, image });
       dispatch(addMySharedDishes(dailyFood));
+      socket.emit("addMyDish", { id, name, description, price, image });
     } else {
       setAlert(!alert);
     }

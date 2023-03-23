@@ -77,7 +77,7 @@ const ActiveOrder = ({ shared }) => {
         amount: dish.count,
       });
     });
-
+    console.log("We are firing this when we click on move order to history");
     dailyFood.forEach((food) => dispatch(addDailyFood(token, food)));
 
     console.log("This is what dailyFood looks like: ", dailyFood);
@@ -89,30 +89,14 @@ const ActiveOrder = ({ shared }) => {
   const handleSharedMove = () => {
     const body = {
       orderId: sharedOrder._id,
-      users: [userData.sharedOrder.users],
-      initiatedBy: userData.sharedOrder.initiatedBy,
+      users: userData.sharedOrder.users.map((user) => user._id),
+      initiatedBy: userData.sharedOrder.initiatedBy._id,
     };
     mySharedDishes.forEach((food) => dispatch(addDailyFood(token, food)));
     dispatch(moveSharedOrderToHistory(token, body));
-    socket.emit("moveSharedOrderToHistory", { token });
-    dispatch(addDailyFood(mySharedDishes));
-    dispatch(addMySharedDishes());
+
     // navigation.navigate("Order");
   };
-
-  useEffect(() => {
-    console.log("Because refreshOrder is: ", refreshOrder);
-    console.log(
-      "We are here and we are fetching user data with token: " + token
-    );
-    if (refreshOrder === true) {
-      dispatch(fetchMyData(token));
-      navigation.navigate("Order");
-    }
-  }, []);
-
-  console.log("Array3 is: ", array3);
-  console.log("Array 4 is: ", array4);
 
   return (
     <View style={tw.style("px-4")}>

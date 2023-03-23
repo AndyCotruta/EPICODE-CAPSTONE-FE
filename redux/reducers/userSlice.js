@@ -25,10 +25,6 @@ export const userSlice = createSlice({
       state.refreshOrder = action.payload;
     },
     addMySharedDishes: (state, action) => {
-      console.log(
-        "This is the initial state of mySharedDishes: ",
-        state.mySharedDishes
-      );
       const existingDishIndex = state.mySharedDishes.findIndex(
         (dish) => dish.title === action.payload.title
       );
@@ -39,7 +35,6 @@ export const userSlice = createSlice({
       }
     },
     removeMySharedDishes: (state, action) => {
-      console.log("This is what redux receives: ", action.payload);
       const existingDishIndex = state.mySharedDishes.findIndex(
         (dish) => dish.title === action.payload.title
       );
@@ -52,6 +47,9 @@ export const userSlice = createSlice({
         }
       }
     },
+    resetMySharedDishes: (state, action) => {
+      state.mySharedDishes = action.payload;
+    },
   },
 });
 
@@ -62,6 +60,7 @@ export const {
   refreshOrder,
   addMySharedDishes,
   removeMySharedDishes,
+  resetMySharedDishes,
 } = userSlice.actions;
 
 export const selectAccessToken = (state) => state.user.accessToken;

@@ -66,9 +66,6 @@ const StackNavigator = () => {
       //   message: "Hello Bamboo Bites",
       // });
       socket.on("newMessage", (message) => {
-        console.log(message);
-        console.log("User data: ", userData);
-        console.log("Initiated by: ", initiatedBy);
         dispatch(addMessage(message));
         dispatch(addSharedOrderUsers(message.complexObj));
         setConnectedUsers([...connectedUsers, message.complexObj]);
@@ -76,15 +73,9 @@ const StackNavigator = () => {
         setCurrentUser(message.obj);
       });
       socket.on("disconnectUser", (message) => {
-        console.log("Remove this id: " + message.message._id);
         dispatch(removeSharedOrderUser(message.message._id));
       });
       socket.on("moveToSharedBasket", (message) => {
-        console.log("Move to Shared basket: ", message);
-        console.log("User data: ", userData);
-        console.log("Initiated by: ", initiatedBy);
-        console.log("Message.message._id: ", message.message._id);
-
         dispatch(
           setRestaurant({
             id: message.message._id,
@@ -103,23 +94,15 @@ const StackNavigator = () => {
         );
       });
       socket.on("addMyDish", (message) => {
-        console.log("Add My Dish: ", message);
         dispatch(addSharedOrderDishes(message));
       });
       socket.on("removeMyDish", (message) => {
-        console.log("Remove My Dish: ", message);
         const { id } = message;
         dispatch(removeSharedOrderDishes({ id }));
       });
       socket.on("moveToDeliveryScreen", (message) => {
-        console.log("Move To Delivery Screen: ", message);
         dispatch(moveToDelivery(true));
         dispatch(fetchMyData(accessToken));
-      });
-      socket.on("moveSharedOrderToHistory", (message) => {
-        console.log("Move this shared order to history: ", message);
-        console.log("Access token: ", message);
-        dispatch(refreshOrder(true));
       });
     });
 

@@ -1,6 +1,8 @@
 import { BE_URL, SPOONACULAR_KEY } from "@env";
 import {
+  addMySharedDishes,
   addUserData,
+  resetMySharedDishes,
   selectAccessToken,
   selectUserData,
 } from "../reducers/userSlice";
@@ -41,7 +43,7 @@ export const addDailyFood = (token, dailyFood) => {
       });
       if (response.ok) {
         const data = await response.json();
-        console.log("User with daily food data: ", data);
+        dispatch(resetMySharedDishes([]));
       } else {
         console.log("Error posting new daily food");
       }
@@ -78,10 +80,6 @@ export const moveToHistory = (token, order) => {
 export const moveSharedOrderToHistory = (token, body) => {
   return async (dispatch) => {
     try {
-      console.log(
-        "This is what we're trying to send to sharedOrderHistory: ",
-        body
-      );
       const response = await fetch(`${BE_URL}/users/me/sharedOrderHistory`, {
         method: "POST",
         headers: {
