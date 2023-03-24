@@ -65,7 +65,7 @@ const CustomRecipeScreen = () => {
             <View
               key={i}
               style={tw.style(
-                `flex-row  items-center bg-[${darkGreen}] mx-1 p-2 rounded-l-full rounded-r-full`
+                `flex-row  items-center bg-[${darkGreen}] mr-2 p-2 rounded-l-full rounded-r-full`
               )}
             >
               <Text style={tw.style("font-bold text-white px-4")}>
