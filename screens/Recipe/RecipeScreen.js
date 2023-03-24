@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCompleteRecipe } from "../../redux/actions";
+import { fetchCompleteRecipe, fetchRecipeCalories } from "../../redux/actions";
 import {
   ChevronLeftIcon,
   HeartIcon,
@@ -72,7 +72,7 @@ const RecipeScreen = () => {
               <View style={tw.style("flex-row items-center mx-2")}>
                 <ClockIcon size={20} color="gray" />
                 <Text style={tw.style("text-gray-500 ml-1")}>
-                  {recipeData.readyInMinutes} min
+                  {recipeData?.readyInMinutes} min
                 </Text>
               </View>
               <View style={tw.style("flex-row items-center mx-2")}>
@@ -272,6 +272,10 @@ const RecipeScreen = () => {
             style={tw.style(
               `flex justify-center items-center bg-[${darkOrange}] w-70 h-20 my-2 mt-4 p-5 rounded-3xl`
             )}
+            onPress={() => {
+              dispatch(fetchRecipeCalories(recipe.id));
+              navigation.navigate("RecipeCooked");
+            }}
           >
             <Text style={tw.style("text-white font-bold text-2xl")}>
               Recipe Cooked!

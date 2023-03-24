@@ -41,6 +41,7 @@ import { setRestaurant } from "../redux/reducers/restaurantSlice";
 import DashboardScreen from "../screens/DashboardScreen";
 import CategoryScreen from "../screens/CategoryScreen";
 import CustomRecipeScreen from "../screens/Recipe/CustomRecipeScreen";
+import RecipeCooked from "../screens/Recipe/RecipeCooked";
 
 const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 // const socket = io(`http://localhost:3001`, { transports: ["websocket"] });
@@ -185,6 +186,11 @@ const StackNavigator = () => {
           <Stack.Screen
             name="CustomRecipe"
             component={CustomRecipeScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="RecipeCooked"
+            component={RecipeCooked}
             options={{ headerShown: false }}
           />
         </>

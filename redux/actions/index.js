@@ -12,6 +12,7 @@ import {
   addDinner,
   setRecipeActive,
   addActiveRecipe,
+  addRecipeNutrition,
 } from "../reducers/recipeSlice";
 import { setRestaurant } from "../reducers/restaurantSlice";
 
@@ -150,13 +151,32 @@ export const fetchCompleteRecipe = (recipeId) => {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+
         dispatch(addActiveRecipe(data));
       } else {
         console.log("Error fetching complete recipe");
       }
     } catch (error) {
       console.log("Error fetching recipe by id: ", error);
+    }
+  };
+};
+
+export const fetchRecipeCalories = (recipeId) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        `https://api.spoonacular.com/recipes/${recipeId}/nutritionWidget.json?apiKey=${SPOONACULAR_KEY}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+
+        dispatch(addRecipeNutrition(data));
+      } else {
+        console.log("Error fetching recipe calories");
+      }
+    } catch (error) {
+      console.log("Error fetching recipe calories by id: ", error);
     }
   };
 };
