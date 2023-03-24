@@ -8,8 +8,11 @@ import {
   lightOrange,
 } from "../../graphics/colours";
 import { ArrowRightIcon } from "react-native-heroicons/outline";
+import { useNavigation } from "@react-navigation/native";
 
 const CustomRecipeCard = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={tw.style("h-45")}>
       <View
@@ -21,7 +24,12 @@ const CustomRecipeCard = () => {
           Find recipes based on what you already have at
           <Text style={tw.style("font-bold")}> home</Text>
         </Text>
-        <TouchableOpacity style={tw.style("flex-row items-center mt-2")}>
+        <TouchableOpacity
+          style={tw.style("flex-row items-center mt-2")}
+          onPress={() => {
+            navigation.navigate("CustomRecipe");
+          }}
+        >
           <Text style={tw.style(`text-[${darkOrange}] text-base font-bold`)}>
             Let's try
           </Text>
