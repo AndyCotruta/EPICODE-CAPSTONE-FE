@@ -9,6 +9,7 @@ const initialState = {
   },
   activeRecipe: null,
   recipeNutrition: null,
+  recipesByIngredients: [],
 };
 
 export const recipeSlice = createSlice({
@@ -33,6 +34,9 @@ export const recipeSlice = createSlice({
     addRecipeNutrition: (state, action) => {
       state.recipeNutrition = action.payload;
     },
+    addRecipesByIngredients: (state, action) => {
+      state.recipesByIngredients = action.payload;
+    },
   },
 });
 
@@ -43,6 +47,7 @@ export const {
   addLunch,
   addActiveRecipe,
   addRecipeNutrition,
+  addRecipesByIngredients,
 } = recipeSlice.actions;
 
 export const selectRecipeStatus = (state) => state.recipe.active;
@@ -53,5 +58,8 @@ export const selectDinner = (state) => state.recipe.mainCategories.dinner;
 
 export const selectActiveRecipe = (state) => state.recipe.activeRecipe;
 export const selectRecipeNutrition = (state) => state.recipe.recipeNutrition;
+
+export const selectRecipesByIngredients = (state) =>
+  state.recipe.recipesByIngredients;
 
 export default recipeSlice.reducer;

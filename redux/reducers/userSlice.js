@@ -25,6 +25,7 @@ export const userSlice = createSlice({
       state.refreshOrder = action.payload;
     },
     addMySharedDishes: (state, action) => {
+      console.log("Redux is receiving: " + action.payload);
       const existingDishIndex = state.mySharedDishes.findIndex(
         (dish) => dish.title === action.payload.title
       );

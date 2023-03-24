@@ -1,4 +1,4 @@
-import { BE_URL, SPOONACULAR_KEY } from "@env";
+import { BE_URL, SPOONACULAR_KEY, RAPID_API_SPOONACULAR } from "@env";
 import {
   addMySharedDishes,
   addUserData,
@@ -13,6 +13,7 @@ import {
   setRecipeActive,
   addActiveRecipe,
   addRecipeNutrition,
+  addRecipesByIngredients,
 } from "../reducers/recipeSlice";
 import { setRestaurant } from "../reducers/restaurantSlice";
 
@@ -51,6 +52,7 @@ export const addDailyFood = (token, dailyFood) => {
       if (response.ok) {
         const data = await response.json();
         dispatch(resetMySharedDishes([]));
+        dispatch(fetchMyData(token));
       } else {
         console.log("Error posting new daily food");
       }
@@ -123,7 +125,15 @@ export const fetchRecipeByType = (type) => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${type}&apiKey=${SPOONACULAR_KEY}`
+        `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?query=${type}`,
+        {
+          method: "GET",
+          headers: {
+            "X-RapidAPI-Key": RAPID_API_SPOONACULAR,
+            "X-RapidAPI-Host":
+              "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+          },
+        }
       );
       if (response.ok) {
         const data = await response.json();
@@ -147,7 +157,15 @@ export const fetchCompleteRecipe = (recipeId) => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        `https://api.spoonacular.com/recipes/${recipeId}/information?includeNutrition=false&apiKey=${SPOONACULAR_KEY}`
+        `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${recipeId}/information`,
+        {
+          method: "GET",
+          headers: {
+            "X-RapidAPI-Key": RAPID_API_SPOONACULAR,
+            "X-RapidAPI-Host":
+              "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+          },
+        }
       );
       if (response.ok) {
         const data = await response.json();
@@ -166,17 +184,52 @@ export const fetchRecipeCalories = (recipeId) => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        `https://api.spoonacular.com/recipes/${recipeId}/nutritionWidget.json?apiKey=${SPOONACULAR_KEY}`
+        `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${recipeId}/nutritionWidget.json`,
+        {
+          method: "GET",
+          headers: {
+            "X-RapidAPI-Key": RAPID_API_SPOONACULAR,
+            "X-RapidAPI-Host":
+              "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+          },
+        }
       );
       if (response.ok) {
         const data = await response.json();
-
+        console.log(data);
         dispatch(addRecipeNutrition(data));
       } else {
         console.log("Error fetching recipe calories");
       }
     } catch (error) {
       console.log("Error fetching recipe calories by id: ", error);
+    }
+  };
+};
+
+export const fetchRecipeByIngredients = (ingredients) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients=${ingredients}`,
+        {
+          method: "GET",
+          headers: {
+            "X-RapidAPI-Key": RAPID_API_SPOONACULAR,
+            "X-RapidAPI-Host":
+              "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        dispatch(addRecipesByIngredients(data));
+      } else {
+        console.log("Error fetching recipe by ingredients");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 };

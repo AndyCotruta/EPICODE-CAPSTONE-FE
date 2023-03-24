@@ -10,11 +10,25 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "twrnc";
 import { MagnifyingGlassIcon, XMarkIcon } from "react-native-heroicons/outline";
-import { darkGreen, darkOrange, mintGreen } from "../../graphics/colours";
+import {
+  darkGreen,
+  darkOrange,
+  lightBeige,
+  mintGreen,
+} from "../../graphics/colours";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRecipeByIngredients } from "../../redux/actions";
+import { selectRecipesByIngredients } from "../../redux/reducers/recipeSlice";
+import { useNavigation } from "@react-navigation/native";
 
 const CustomRecipeScreen = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   const [searchValue, setSearchValue] = useState("");
   const [ingredients, setIngredients] = useState([]);
+
+  const recipesByIngredients = useSelector(selectRecipesByIngredients);
 
   return (
     <SafeAreaView style={tw.style("flex-1 bg-white  p-4")}>
@@ -27,7 +41,7 @@ const CustomRecipeScreen = () => {
           Custom Recipe
         </Text>
         <Image
-          style={tw.style("w-80 h-70")}
+          style={tw.style("w-70 h-60")}
           source={require("../../assets/cooking.png")}
         />
       </View>
@@ -88,14 +102,40 @@ const CustomRecipeScreen = () => {
           {ingredients?.length > 0 && (
             <TouchableOpacity
               style={tw.style(
-                `items-center bg-[${darkOrange}] w-60 my-5 p-5 rounded-3xl`
+                `items-center bg-[${darkOrange}] w-60 my-4 p-5 rounded-3xl`
               )}
+              onPress={() => {
+                dispatch(fetchRecipeByIngredients(ingredients));
+              }}
             >
               <Text style={tw.style("text-white font-bold")}>LET'S COOK</Text>
             </TouchableOpacity>
           )}
         </View>
       </View>
+      {recipesByIngredients?.length > 0 && (
+        <ScrollView style={tw.style("")}>
+          {recipesByIngredients.map((recipe) => (
+            <TouchableOpacity
+              key={recipe.id}
+              style={tw.style(
+                `bg-[${lightBeige}] mb-4 p-4 rounded-xl flex-row items-center`
+              )}
+              onPress={() => {
+                navigation.navigate("Recipe", { recipe });
+              }}
+            >
+              <Image
+                style={tw.style("w-15 h-15 mr-4 rounded-xl")}
+                source={{ uri: recipe.image }}
+              />
+              <Text style={tw.style(` text-lg font-bold flex-1`)}>
+                {recipe.title}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };

@@ -32,7 +32,7 @@ const RecipeScreen = () => {
 
   useEffect(() => {
     dispatch(fetchCompleteRecipe(recipe.id));
-  }, []);
+  }, [recipe]);
 
   return (
     <SafeAreaView style={tw.style("flex-1 bg-white p-4")}>

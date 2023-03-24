@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   focused: {
-    outlineWidth: 0,
     flex: 1,
     color: "gray",
   },

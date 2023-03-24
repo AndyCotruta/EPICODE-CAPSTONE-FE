@@ -39,7 +39,7 @@ const RecipeCooked = () => {
     amount: servings,
     title: recipeData.title,
     image: recipeData.image,
-    calories: recipeNutrititon.calories,
+    calories: parseInt(recipeNutrititon.calories.replace("k", "")) * servings,
   };
 
   return (
