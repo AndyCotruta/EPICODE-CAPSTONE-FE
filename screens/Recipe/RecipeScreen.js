@@ -257,8 +257,8 @@ const RecipeScreen = () => {
 
             <Text style={tw.style("font-bold")}>Step by step guide:</Text>
             <View>
-              {recipeData.analyzedInstructions[0].steps.map((stepp) => (
-                <View>
+              {recipeData.analyzedInstructions[0].steps.map((stepp, i) => (
+                <View key={i}>
                   <Text>
                     {stepp.number}. {stepp.step}
                   </Text>

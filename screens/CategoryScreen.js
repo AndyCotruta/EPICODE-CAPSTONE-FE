@@ -4,6 +4,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import tw from "twrnc";
 import { darkGreen, lightBeige } from "../graphics/colours";
 import { ArrowLeftIcon, StarIcon } from "react-native-heroicons/solid";
+import { useDispatch } from "react-redux";
+import { setRestaurant } from "../redux/reducers/restaurantSlice";
 
 const CategoryScreen = () => {
   const {
@@ -11,6 +13,7 @@ const CategoryScreen = () => {
   } = useRoute();
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   return (
     <ScrollView style={tw.style("bg-white")}>
@@ -50,6 +53,20 @@ const CategoryScreen = () => {
               `bg-[${lightBeige}] flex-row items-center rounded-xl shadow-md mb-4`
             )}
             onPress={() => {
+              dispatch(
+                setRestaurant({
+                  id: restaurant._id,
+                  imgUrl: restaurant.image,
+                  title: restaurant.name,
+                  rating: restaurant.rating,
+                  genre: restaurant.genre,
+                  address: restaurant.address,
+                  short_description: restaurant.short_description,
+                  dishes: restaurant.dishes,
+                  lon: restaurant.lon,
+                  lat: restaurant.lat,
+                })
+              );
               navigation.navigate("Restaurant", {
                 id: restaurant._id,
                 imgUrl: restaurant.image,
