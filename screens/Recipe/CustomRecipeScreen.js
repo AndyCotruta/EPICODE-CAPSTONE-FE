@@ -113,6 +113,11 @@ const CustomRecipeScreen = () => {
           )}
         </View>
       </View>
+      {ingredients.length === 0 && recipesByIngredients.length !== 0 && (
+        <View style={tw.style("mb-5")}>
+          <Text style={tw.style("text-lg font-bold")}>Latest search:</Text>
+        </View>
+      )}
       {recipesByIngredients?.length > 0 && (
         <ScrollView style={tw.style("")}>
           {recipesByIngredients.map((recipe) => (
