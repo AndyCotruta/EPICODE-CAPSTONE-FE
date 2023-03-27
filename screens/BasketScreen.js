@@ -101,7 +101,7 @@ const BasketScreen = () => {
         dishes: dishes,
         totalPrice: basketTotal + 5.99,
       };
-      console.log(activeOrder);
+
       const response = await fetch(`${BE_URL}/users/me/activeOrder`, {
         method: "POST",
         headers: {
@@ -373,10 +373,6 @@ const BasketScreen = () => {
           <TouchableOpacity
             style={tw.style(`bg-[${darkOrange}] rounded-xl p-4 mb-4`)}
             onPress={() => {
-              console.log(
-                "We are handling the place order because shared is: ",
-                shared
-              );
               handlePlaceOrder();
             }}
           >

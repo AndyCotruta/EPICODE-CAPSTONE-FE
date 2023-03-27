@@ -63,16 +63,13 @@ const DishRow = ({
   const dispatch = useDispatch();
 
   const addItemToBasket = () => {
-    console.log("Restaurant id is: ", basketRestaurant);
     if (basketRestaurant === null) {
-      console.log("This is why we are passing this id: ", restaurantId);
       dispatch(addRestautantId({ restaurantId }));
       dispatch(addToBasket({ id, name, description, price, image }));
     } else if (
       basketRestaurant !== null &&
       restaurantId === basketRestaurant.restaurantId
     ) {
-      console.log("This is why we are passing this id: ", restaurantId);
       dispatch(addRestautantId({ restaurantId }));
       dispatch(addToBasket({ id, name, description, price, image }));
     } else {
@@ -81,7 +78,6 @@ const DishRow = ({
   };
 
   const addItemToSharedBasket = () => {
-    console.log("SharedRestaurant id is: ", sharedOrderRestaurant);
     if (sharedOrderRestaurant === null) {
       dispatch(addSharedOrderRestaurantId({ restaurantId }));
 

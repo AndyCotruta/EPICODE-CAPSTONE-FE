@@ -42,17 +42,14 @@ const HeaderComponent = () => {
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
+          style={tw.style(
+            "bg-white rounded-full h-11 w-11 flex justify-center items-center"
+          )}
           onPress={() => {
             dispatch(setRecipeActive(!recipeActive));
           }}
         >
-          <Image
-            style={tw.style(`h-11 w-11 bg-[${lightBeige}] p-4 rounded-full`)}
-            // className="h-7 w-7 bg-gray-300 p-4 rounded-full"
-            source={{
-              uri: "https://links.papareact.com/wru",
-            }}
-          />
+          <Text>O</Text>
         </TouchableOpacity>
       )}
 
