@@ -29,7 +29,7 @@ const FoodSummary = ({ activeDay, setActiveDay }) => {
     );
     if (scrollToIndex !== -1 && scrollViewRef.current) {
       scrollViewRef.current.scrollTo({
-        x: scrollToIndex * containerWidth - 2.5 * containerWidth,
+        x: scrollToIndex * containerWidth - 2.45 * containerWidth,
         animated: true,
       });
     }
