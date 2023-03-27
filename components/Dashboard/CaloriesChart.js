@@ -13,13 +13,13 @@ const CaloriesChart = ({ filteredByDay }) => {
     caloriesGoal - consumedCalories
   );
   const remainingPercentage = Math.round(
-    (remainingCalories / caloriesGoal) * 100
+    (consumedCalories / caloriesGoal) * 100
   );
 
   useEffect(() => {
     let dailyCalories = 0;
     filteredByDay.forEach((food) => {
-      dailyCalories += parseInt(food.calories);
+      dailyCalories += parseInt(food.calories) * food.amount;
     });
     setConsumedCalories(dailyCalories);
   }, [filteredByDay]);

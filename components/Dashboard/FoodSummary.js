@@ -40,15 +40,27 @@ const FoodSummary = () => {
       <View style={tw.style("px-4")}>
         <WaterIntake />
       </View>
-      <View style={tw.style("px-4")}>
-        <Breakfast filteredByDay={filteredByDay} />
-      </View>
-      <View style={tw.style("px-4")}>
-        <Lunch filteredByDay={filteredByDay} />
-      </View>
-      <View style={tw.style("px-4")}>
-        <Dinner filteredByDay={filteredByDay} />
-      </View>
+      {filteredByDay.length === 0 ? (
+        <View
+          style={tw.style(
+            "h-20 bg-[#FBFBFB] shadow-md rounded-3xl my-2 mx-4 p-5 flex justify-center"
+          )}
+        >
+          <Text>There is no data for today</Text>
+        </View>
+      ) : (
+        <View>
+          <View style={tw.style("px-4")}>
+            <Breakfast filteredByDay={filteredByDay} />
+          </View>
+          <View style={tw.style("px-4")}>
+            <Lunch filteredByDay={filteredByDay} />
+          </View>
+          <View style={tw.style("px-4")}>
+            <Dinner filteredByDay={filteredByDay} />
+          </View>
+        </View>
+      )}
     </ScrollView>
   );
 };
