@@ -30,14 +30,14 @@ const CaloriesChart = ({ filteredByDay }) => {
 
   return (
     <View style={tw.style("h-50 bg-[#EBF9FC] mt-6 rounded-3xl p-5 ")}>
-      <View style={tw.style("flex-row justify-around items-center")}>
-        <View style={tw.style("flex items-center")}>
-          <Text style={tw.style("font-bold text-lg")}>
+      <View style={tw.style("flex-row justify-between items-center")}>
+        <View style={tw.style("flex items-center w-20")}>
+          <Text style={tw.style("font-bold text-base")}>
             {consumedCalories} kcal
           </Text>
           <Text style={tw.style("text-gray-400 text-xs")}>Consumed</Text>
         </View>
-        <View style={tw.style("flex items-center")}>
+        <View style={tw.style("flex-1 items-center")}>
           <ProgressCircle
             progress={(caloriesGoal - remainingCalories) / caloriesGoal}
             size={80}
@@ -49,8 +49,8 @@ const CaloriesChart = ({ filteredByDay }) => {
           <Text style={tw.style("font-bold text-xl")}>{caloriesGoal} kcal</Text>
           <Text style={tw.style("text-gray-400 text-xs")}>Goal</Text>
         </View>
-        <View style={tw.style("flex items-center")}>
-          <Text style={tw.style("font-bold text-lg")}>
+        <View style={tw.style("flex items-center w-20")}>
+          <Text style={tw.style("font-bold text-base")}>
             {remainingCalories} kcal
           </Text>
           <Text style={tw.style("text-gray-400 text-xs")}>Remaining</Text>
