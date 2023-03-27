@@ -1,25 +1,32 @@
 import { View, Text } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import tw from "twrnc";
 import ProgressCircle from "react-native-progress/Circle";
 import * as Progress from "react-native-progress";
 import { useSelector } from "react-redux";
 import { selectUserData } from "../../redux/reducers/userSlice";
 
-const CaloriesChart = () => {
-  const userData = useSelector(selectUserData);
-  const dailyFood = userData.dailyFood;
-  let dailyCalories = 0;
-  dailyFood.forEach((food) => (dailyCalories += parseInt(food.calories)));
+const CaloriesChart = ({ filteredByDay }) => {
   const [caloriesGoal, setCaloriesGoal] = useState(2300);
-  const [consumedCalories, setConsumedCaloriesGoal] = useState(dailyCalories);
-  const [remainingCalories, setRemainingCaloriesGoal] = useState(
+  const [consumedCalories, setConsumedCalories] = useState(0);
+  const [remainingCalories, setRemainingCalories] = useState(
     caloriesGoal - consumedCalories
   );
-
   const remainingPercentage = Math.round(
     (remainingCalories / caloriesGoal) * 100
   );
+
+  useEffect(() => {
+    let dailyCalories = 0;
+    filteredByDay.forEach((food) => {
+      dailyCalories += parseInt(food.calories);
+    });
+    setConsumedCalories(dailyCalories);
+  }, [filteredByDay]);
+
+  useEffect(() => {
+    setRemainingCalories(caloriesGoal - consumedCalories);
+  }, [caloriesGoal, consumedCalories]);
 
   return (
     <View style={tw.style("h-50 bg-[#EBF9FC] mt-6 rounded-3xl p-5 ")}>

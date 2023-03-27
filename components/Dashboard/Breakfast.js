@@ -5,16 +5,12 @@ import { selectUserData } from "../../redux/reducers/userSlice";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 
-const Breakfast = () => {
-  const userData = useSelector(selectUserData);
-  const dailyFood = userData.dailyFood;
-  console.log(dailyFood);
-  const breakfastFood = dailyFood.filter(
+const Breakfast = ({ filteredByDay }) => {
+  const breakfastFood = filteredByDay.filter(
     (food) =>
       parseInt(format(new Date(food.createdAt), "HH")) >= 7 &&
       parseInt(format(new Date(food.createdAt), "HH")) < 12
   );
-  console.log(breakfastFood);
 
   return (
     <View style={tw.style("h-50 bg-[#FBFBFB] shadow-md rounded-3xl my-2 p-5")}>

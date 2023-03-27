@@ -5,16 +5,12 @@ import { selectUserData } from "../../redux/reducers/userSlice";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 
-const Dinner = () => {
-  const userData = useSelector(selectUserData);
-  const dailyFood = userData.dailyFood;
-  console.log(dailyFood);
-  const dinnerFood = dailyFood.filter(
+const Dinner = ({ filteredByDay }) => {
+  const dinnerFood = filteredByDay.filter(
     (food) =>
       parseInt(format(new Date(food.createdAt), "HH")) > 15 &&
       parseInt(format(new Date(food.createdAt), "HH")) <= 24
   );
-  console.log(dinnerFood);
 
   return (
     <View style={tw.style("h-50 bg-[#FBFBFB] shadow-md rounded-3xl my-2 p-5")}>
@@ -22,7 +18,7 @@ const Dinner = () => {
       <Text style={tw.style("text-gray-400 text-xs")}>Dishes:</Text>
       {dinnerFood?.map((food) => (
         <TouchableOpacity
-          kex={food._id}
+          key={food._id}
           style={tw.style("flex-row justify-between items-center py-2")}
         >
           <Text>{food.amount}x</Text>

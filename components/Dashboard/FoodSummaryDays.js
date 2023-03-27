@@ -9,7 +9,7 @@ import React, { useRef, useEffect, useState } from "react";
 import tw from "twrnc";
 import { parse, format } from "date-fns";
 
-const FoodSummary = () => {
+const FoodSummary = ({ activeDay, setActiveDay }) => {
   const scrollViewRef = useRef(null);
   const { width: screenWidth } = useWindowDimensions();
   const today = new Date();
@@ -17,7 +17,6 @@ const FoodSummary = () => {
   const month = today.getMonth();
   const numDays = new Date(year, month + 1, 0).getDate();
   const [containerWidth, setContainerWidth] = useState(screenWidth / 6);
-  const [selectedDate, setSelectedDate] = useState(today);
 
   const days = Array.from(
     { length: numDays },
@@ -26,7 +25,7 @@ const FoodSummary = () => {
 
   useEffect(() => {
     const scrollToIndex = days.findIndex(
-      (day) => day.getDate() === selectedDate.getDate()
+      (day) => day.getDate() === activeDay.getDate()
     );
     if (scrollToIndex !== -1 && scrollViewRef.current) {
       scrollViewRef.current.scrollTo({
@@ -34,7 +33,7 @@ const FoodSummary = () => {
         animated: true,
       });
     }
-  }, [scrollViewRef, selectedDate, days, containerWidth]);
+  }, [scrollViewRef, activeDay, days, containerWidth]);
 
   const onLayout = ({ nativeEvent }) => {
     const { width } = nativeEvent.layout;
@@ -42,7 +41,7 @@ const FoodSummary = () => {
   };
 
   const handleDayPress = (day) => {
-    setSelectedDate(day);
+    setActiveDay(day);
   };
 
   return (
@@ -58,7 +57,7 @@ const FoodSummary = () => {
             alignItems: "center",
             justifyContent: "center",
             backgroundColor:
-              day.getDate() === selectedDate.getDate() ? "black" : "white",
+              day.getDate() === activeDay.getDate() ? "black" : "white",
             paddingHorizontal: 16,
             paddingVertical: 8,
             width: containerWidth,
@@ -73,8 +72,7 @@ const FoodSummary = () => {
         >
           <Text
             style={{
-              color:
-                day.getDate() === selectedDate.getDate() ? "white" : "black",
+              color: day.getDate() === activeDay.getDate() ? "white" : "black",
               fontWeight: "bold",
             }}
           >
@@ -82,7 +80,7 @@ const FoodSummary = () => {
           </Text>
           <Text
             style={{
-              color: day.getDate() === selectedDate.getDate() ? "gray" : "gray",
+              color: day.getDate() === activeDay.getDate() ? "gray" : "gray",
             }}
           >
             {format(day, "EE")}
