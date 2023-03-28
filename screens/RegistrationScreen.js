@@ -54,8 +54,7 @@ const RegistrationScreen = () => {
         config
       );
       if (response) {
-        const data = response.data.accessToken;
-        console.log(data);
+        const data = response.data;
         dispatch(addAccessToken(data));
         navigation.navigate("Home");
       } else {
@@ -182,7 +181,6 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   focused: {
-    outlineWidth: 0,
     color: "gray",
   },
 });

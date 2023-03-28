@@ -116,11 +116,15 @@ const LoginScreen = () => {
   };
 
   useEffect(() => {
-    handleGoogleLogin();
+    if (googleUserData !== null) {
+      handleGoogleLogin();
+    }
   }, [googleUserData]);
 
   useEffect(() => {
-    fetchGoogleData();
+    if (accessToken !== null) {
+      fetchGoogleData();
+    }
   }, [accessToken]);
 
   useEffect(() => {
@@ -138,7 +142,6 @@ const LoginScreen = () => {
       );
       if (response) {
         const data = response.data.accessToken;
-        console.log(data);
         dispatch(addAccessToken(data));
         navigation.navigate("Home");
       } else {
