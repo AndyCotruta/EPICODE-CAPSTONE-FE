@@ -118,7 +118,11 @@ const StackNavigator = () => {
     <Stack.Navigator>
       {accessToken !== null ? (
         <>
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name="Category"
             component={CategoryScreen}
@@ -178,11 +182,11 @@ const StackNavigator = () => {
           />
 
           <Stack.Screen name="EditProfile" component={EditProfileScreen} />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="Recipe"
             component={RecipeScreen}
             options={{ headerShown: false }}
-          />
+          /> */}
           <Stack.Screen
             name="CustomRecipe"
             component={CustomRecipeScreen}

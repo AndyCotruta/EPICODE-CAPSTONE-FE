@@ -3,10 +3,11 @@ import React from "react";
 import tw from "twrnc";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
-import { BellIcon } from "react-native-heroicons/outline";
+import { BellIcon, UserIcon } from "react-native-heroicons/outline";
 import { parse, format } from "date-fns";
 import { selectUserData } from "../../redux/reducers/userSlice";
 import { useNavigation } from "@react-navigation/native";
+import { darkGreen } from "../../graphics/colours";
 
 const DashboardHeader = () => {
   const userData = useSelector(selectUserData);

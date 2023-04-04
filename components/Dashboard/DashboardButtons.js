@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import React, { useState } from "react";
 import tw from "twrnc";
 import {
@@ -13,68 +13,77 @@ import {
   ChartPieIcon,
 } from "react-native-heroicons/solid";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const DashboardButtons = ({ active, setActive }) => {
+const DashboardButtons = ({ activeComponent, setActiveComponent }) => {
   const navigation = useNavigation();
 
   return (
     <View style={tw.style("px-4 py-2 flex-row justify-between items-center")}>
       <View
         style={tw.style(
-          "flex-row items-center justify-evenly bg-[#F1F4F9] h-15 w-3/9 rounded-l-full rounded-r-full"
+          "flex-row items-center justify-evenly bg-white h-15 w-3/9 rounded-l-full rounded-r-full"
         )}
       >
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Home");
+            setActiveComponent("Order");
           }}
         >
-          <HomeIcon
-            size={25}
-            color={active === "Home" ? "#1FA0AA" : "#D4D8E2"}
+          {/* color={activeComponent === "Order" ? "#1FA0AA" : "#D4D8E2"} */}
+
+          <Ionicons
+            name="fast-food"
+            size={24}
+            color={activeComponent === "Order" ? "#336b46" : "#D4D8E2"}
           />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            setActive("Food");
+            setActiveComponent("Recipe");
           }}
         >
-          <GlobeAmericasIcon
-            size={25}
-            color={active === "Food" ? "#1FA0AA" : "#D4D8E2"}
+          <MaterialCommunityIcons
+            name="food-turkey"
+            size={24}
+            color={activeComponent === "Recipe" ? "#336b46" : "#D4D8E2"}
           />
         </TouchableOpacity>
       </View>
       <TouchableOpacity
         style={tw.style(
-          "w-20 h-20 flex items-center justify-center bg-[#F94F46]  rounded-full"
+          "w-17 h-17 flex items-center justify-center bg-[#FBA536]  rounded-full"
         )}
+        onPress={() => {
+          setActiveComponent("Home");
+        }}
       >
-        <PlusIcon size={20} color="white" />
+        <HomeIcon size={25} color="white" />
       </TouchableOpacity>
       <View
         style={tw.style(
-          "flex-row items-center justify-evenly bg-[#F1F4F9] h-15 w-3/9 rounded-l-full rounded-r-full"
+          "flex-row items-center justify-evenly bg-white h-15 w-3/9 rounded-l-full rounded-r-full"
         )}
       >
         <TouchableOpacity
           onPress={() => {
-            setActive("Fitness");
-          }}
-        >
-          <CircleStackIcon
-            size={25}
-            color={active === "Fitness" ? "#1FA0AA" : "#D4D8E2"}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setActive("Chart");
+            setActiveComponent("Dashboard");
           }}
         >
           <ChartPieIcon
             size={25}
-            color={active === "Chart" ? "#1FA0AA" : "#D4D8E2"}
+            color={activeComponent === "Dashboard" ? "#336b46" : "#D4D8E2"}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            setActiveComponent("Fitness");
+          }}
+        >
+          <CircleStackIcon
+            size={25}
+            color={activeComponent === "Fitness" ? "#336b46" : "#D4D8E2"}
           />
         </TouchableOpacity>
       </View>

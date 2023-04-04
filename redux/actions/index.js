@@ -16,6 +16,7 @@ import {
   addRecipesByIngredients,
 } from "../reducers/recipeSlice";
 import { setRestaurant } from "../reducers/restaurantSlice";
+import { setFeaturedCategories } from "../reducers/allRestaurantsSlice";
 
 export const fetchMyData = (token) => {
   return async (dispatch) => {
@@ -241,7 +242,7 @@ export const fetchFeaturedCategories = () => {
       if (response) {
         const data = await response.json();
 
-        dispatch(setfeaturedCategories(data));
+        dispatch(setFeaturedCategories(data));
         const allRestaurants = data.flatMap((category) => category.restaurants);
 
         dispatch(setAllRestaurants(allRestaurants));

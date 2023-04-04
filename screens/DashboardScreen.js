@@ -17,9 +17,9 @@ const DashboardScreen = () => {
 
   return (
     <SafeAreaView style={tw.style("flex-1 bg-white")}>
-      <DashboardHeader />
-      {active === "Food" ? (
-        <FoodSummary />
+      <FoodSummary />
+      {/* {active === "Food" ? (
+    
       ) : (
         <ScrollView style={tw.style("bg-white")}>
           <DashboardActivities />
@@ -43,9 +43,7 @@ const DashboardScreen = () => {
             />
           </View>
         </ScrollView>
-      )}
-
-      <DashboardButtons active={active} setActive={setActive} />
+      )} */}
     </SafeAreaView>
   );
 };
