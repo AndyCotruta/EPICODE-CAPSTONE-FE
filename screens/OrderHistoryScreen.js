@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
 import { selectUserData } from "../redux/reducers/userSlice";
@@ -8,12 +8,27 @@ import { darkGreen, lightBeige } from "../graphics/colours";
 import ActiveOrder from "../components/ActiveOrder";
 import OrderHistory from "../components/OrderHistory";
 import SharedOrder from "../components/SharedOrder";
+import { ArrowLeftIcon } from "react-native-heroicons/outline";
+import { useNavigation } from "@react-navigation/native";
 
 const OrderHistoryScreen = () => {
+  const navigation = useNavigation();
+
   const userData = useSelector(selectUserData);
 
   return (
     <SafeAreaView style={tw.style("flex-1 bg-white")}>
+      <TouchableOpacity
+        style={tw.style(
+          `w-10 h-10 mx-4 my-4 bg-[${lightBeige}] rounded-full items-center justify-center`
+        )}
+        onPress={() => {
+          navigation.goBack();
+        }}
+      >
+        <ArrowLeftIcon size={20} color={darkGreen} />
+      </TouchableOpacity>
+
       <ScrollView style={tw.style("")}>
         {userData.activeOrder ? (
           <View style={tw.style("mt-3")}>
