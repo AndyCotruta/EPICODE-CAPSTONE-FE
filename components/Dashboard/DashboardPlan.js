@@ -31,7 +31,7 @@ const DashboardPlan = ({ active, setActive }) => {
   ];
 
   return (
-    <View style={tw.style("pl-4")}>
+    <View style={tw.style("")}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}

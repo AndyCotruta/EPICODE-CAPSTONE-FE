@@ -143,7 +143,7 @@ const LoginScreen = () => {
       if (response) {
         const data = response.data.accessToken;
         dispatch(addAccessToken(data));
-        navigation.navigate("Home");
+        navigation.navigate("LoginAnimation");
       } else {
         console.log("Error while trying to login");
       }

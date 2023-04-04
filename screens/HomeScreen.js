@@ -15,6 +15,7 @@ import DashboardButtons from "../components/Dashboard/DashboardButtons";
 import DashboardScreen from "./DashboardScreen";
 import RecipeBodyComponent from "../components/Recipe/RecipeBodyComponent";
 import HomeComponent from "../components/HomeComponent";
+import ManagementComponent from "../components/ManagementComponent";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ const HomeScreen = () => {
       {activeComponent === "Recipe" && <RecipeBodyComponent />}
       {activeComponent === "Dashboard" && <DashboardScreen />}
       {activeComponent === "Home" && <HomeComponent />}
+      {activeComponent === "Management" && <ManagementComponent />}
       <DashboardButtons
         activeComponent={activeComponent}
         setActiveComponent={setActiveComponent}

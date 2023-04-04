@@ -42,6 +42,7 @@ import DashboardScreen from "../screens/DashboardScreen";
 import CategoryScreen from "../screens/CategoryScreen";
 import CustomRecipeScreen from "../screens/Recipe/CustomRecipeScreen";
 import RecipeCooked from "../screens/Recipe/RecipeCooked";
+import LoginAnimation from "../screens/LoginAnimation";
 
 const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 // const socket = io(`http://localhost:3001`, { transports: ["websocket"] });
@@ -119,6 +120,11 @@ const StackNavigator = () => {
       {accessToken !== null ? (
         <>
           <Stack.Screen
+            name="LoginAnimation"
+            component={LoginAnimation}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name="Home"
             component={HomeScreen}
             options={{ headerShown: false }}
@@ -182,11 +188,7 @@ const StackNavigator = () => {
           />
 
           <Stack.Screen name="EditProfile" component={EditProfileScreen} />
-          {/* <Stack.Screen
-            name="Recipe"
-            component={RecipeScreen}
-            options={{ headerShown: false }}
-          /> */}
+
           <Stack.Screen
             name="CustomRecipe"
             component={CustomRecipeScreen}

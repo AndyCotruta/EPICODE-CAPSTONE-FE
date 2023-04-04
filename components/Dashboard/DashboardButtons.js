@@ -78,12 +78,12 @@ const DashboardButtons = ({ activeComponent, setActiveComponent }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            setActiveComponent("Fitness");
+            setActiveComponent("Management");
           }}
         >
           <CircleStackIcon
             size={25}
-            color={activeComponent === "Fitness" ? "#336b46" : "#D4D8E2"}
+            color={activeComponent === "Management" ? "#336b46" : "#D4D8E2"}
           />
         </TouchableOpacity>
       </View>

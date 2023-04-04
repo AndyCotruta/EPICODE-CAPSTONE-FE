@@ -23,7 +23,7 @@ const DashboardActivities = () => {
   ];
 
   return (
-    <View style={tw.style("pl-4")}>
+    <View style={tw.style("")}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
