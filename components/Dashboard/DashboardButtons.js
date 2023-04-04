@@ -26,7 +26,7 @@ const DashboardButtons = ({ active, setActive }) => {
       >
         <TouchableOpacity
           onPress={() => {
-            setActive("Home");
+            navigation.navigate("Home");
           }}
         >
           <HomeIcon

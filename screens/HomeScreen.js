@@ -21,7 +21,7 @@ import {
   mintGreen,
 } from "../graphics/colours";
 import { BE_URL } from "@env";
-import { fetchMyData } from "../redux/actions";
+import { fetchFeaturedCategories, fetchMyData } from "../redux/actions";
 import { setAllRestaurants } from "../redux/reducers/allRestaurantsSlice";
 import { selectRecipeStatus } from "../redux/reducers/recipeSlice";
 import RecipeSearchComponent from "../components/Recipe/RecipeSearchComponent";
@@ -34,6 +34,8 @@ import {
   addSharedOrderUsers,
   selectInitiatedBy,
 } from "../redux/reducers/sharedOrderSlice";
+import DashboardHeader from "../components/Dashboard/DashboardHeader";
+import DashboardButtons from "../components/Dashboard/DashboardButtons";
 
 const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 
@@ -44,51 +46,14 @@ const HomeScreen = () => {
   const token = useSelector(selectAccessToken);
   const recipeActive = useSelector(selectRecipeStatus);
 
-  const userData = useSelector(selectUserData);
-  const initiatedBy = useSelector(selectInitiatedBy);
-
-  // useEffect(() => {
-  //   socket.on("connected", (message) => {
-  //     console.log(socket.connected);
-  //     console.log(message);
-  //     console.log("User Id: ", userData._id);
-  //     console.log("Initiated by: " + initiatedBy._id);
-  //     socket.on("newMessage", (message) => {
-  //       console.log(message);
-  //       console.log("User data: " + userData);
-  //       console.log("Initiated by: " + initiatedBy);
-  //       dispatch(addMessage(message));
-  //       dispatch(addSharedOrderUsers(message.message));
-  //     });
-  //   });
-  // }, [socket]);
-
   useEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, []);
 
-  const fetchFeaturedCategories = async () => {
-    try {
-      const response = await fetch(`${BE_URL}/featuredCategories`);
-      if (response) {
-        const data = await response.json();
-
-        setfeaturedCategories(data);
-        const allRestaurants = data.flatMap((category) => category.restaurants);
-
-        dispatch(setAllRestaurants(allRestaurants));
-      } else {
-        console.log("Error fetching featured categories");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    fetchFeaturedCategories();
+    dispatch(fetchFeaturedCategories());
     dispatch(fetchMyData(token));
   }, [dispatch, token]);
 
@@ -97,10 +62,11 @@ const HomeScreen = () => {
       edges={["right", "left", "top"]}
       style={tw.style(`flex-1 bg-[${lightBeige}]`)}
     >
-      <HeaderComponent />
+      <DashboardHeader />
       {recipeActive ? <RecipeSearchComponent /> : <SearchComponent />}
 
       <BodyComponent featuredCategories={featuredCategories} />
+      <DashboardButtons />
     </SafeAreaView>
   );
 };

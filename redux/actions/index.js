@@ -233,3 +233,23 @@ export const fetchRecipeByIngredients = (ingredients) => {
     }
   };
 };
+
+export const fetchFeaturedCategories = () => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`${BE_URL}/featuredCategories`);
+      if (response) {
+        const data = await response.json();
+
+        dispatch(setfeaturedCategories(data));
+        const allRestaurants = data.flatMap((category) => category.restaurants);
+
+        dispatch(setAllRestaurants(allRestaurants));
+      } else {
+        console.log("Error fetching featured categories");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
