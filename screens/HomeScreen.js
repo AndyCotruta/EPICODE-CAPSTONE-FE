@@ -6,18 +6,16 @@ import tw from "twrnc";
 import { useSelector } from "react-redux";
 import { lightBeige } from "../graphics/colours";
 import { selectFeaturedCategories } from "../redux/reducers/allRestaurantsSlice";
-import { selectRecipeStatus } from "../redux/reducers/recipeSlice";
-import RecipeSearchComponent from "../components/Recipe/RecipeSearchComponent";
 import DashboardHeader from "../components/Dashboard/DashboardHeader";
 import DashboardButtons from "../components/Dashboard/DashboardButtons";
 import DashboardScreen from "./DashboardScreen";
 import RecipeBodyComponent from "../components/Recipe/RecipeBodyComponent";
 import HomeComponent from "../components/HomeComponent";
 import ManagementComponent from "../components/ManagementComponent";
+import * as Animatable from "react-native-animatable";
 
 const HomeScreen = () => {
   const featuredCategories = useSelector(selectFeaturedCategories);
-  const recipeActive = useSelector(selectRecipeStatus);
   const [activeComponent, setActiveComponent] = useState("Home");
 
   return (
@@ -26,7 +24,13 @@ const HomeScreen = () => {
       style={tw.style(`flex-1 bg-[${lightBeige}]`)}
     >
       <DashboardHeader />
-      {recipeActive ? <RecipeSearchComponent /> : <SearchComponent />}
+      {activeComponent === "Order" || activeComponent === "Recipe" ? (
+        <Animatable.View animation={"fadeInUp"} iterationCount={1}>
+          <SearchComponent activeComponent={activeComponent} shared={false} />
+        </Animatable.View>
+      ) : (
+        ""
+      )}
 
       {activeComponent === "Order" && (
         <BodyComponent featuredCategories={featuredCategories} />
