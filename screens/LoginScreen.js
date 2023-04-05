@@ -4,7 +4,6 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Button,
   Image,
   Platform,
 } from "react-native";
@@ -262,14 +261,6 @@ const LoginScreen = () => {
             Log In with Google
           </Text>
         </TouchableOpacity>
-        {/* <Button
-          style={tw.style("flex-grow-1")}
-          title="Click to login w google"
-          disabled={!request}
-          onPress={() => {
-            promptAsync({});
-          }}
-        /> */}
       </View>
     </LinearGradient>
   );

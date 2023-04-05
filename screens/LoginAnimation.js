@@ -14,6 +14,7 @@ import {
   fetchCategories,
   fetchFeaturedCategories,
   fetchMyData,
+  fetchRecipeByType,
 } from "../redux/actions";
 import { selectAccessToken } from "../redux/reducers/userSlice";
 
@@ -22,11 +23,13 @@ const LoginAnimation = () => {
   const dispatch = useDispatch();
 
   const token = useSelector(selectAccessToken);
+  const recipeTypes = ["Breakfast", "Lunch", "Dinner"];
 
   useEffect(() => {
     dispatch(fetchCategories());
     dispatch(fetchFeaturedCategories());
     dispatch(fetchMyData(token));
+    recipeTypes.map((recipeType) => dispatch(fetchRecipeByType(recipeType)));
     setTimeout(() => {
       navigation.navigate("Home");
     }, 4000);
