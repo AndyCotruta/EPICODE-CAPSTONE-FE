@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import React, { useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import tw from "twrnc";
@@ -10,11 +9,24 @@ import {
   lightOrange,
   mintGreen,
 } from "../graphics/colours";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchCategories,
+  fetchFeaturedCategories,
+  fetchMyData,
+} from "../redux/actions";
+import { selectAccessToken } from "../redux/reducers/userSlice";
 
 const LoginAnimation = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const token = useSelector(selectAccessToken);
 
   useEffect(() => {
+    dispatch(fetchCategories());
+    dispatch(fetchFeaturedCategories());
+    dispatch(fetchMyData(token));
     setTimeout(() => {
       navigation.navigate("Home");
     }, 4000);

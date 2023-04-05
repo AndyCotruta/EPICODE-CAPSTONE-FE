@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BodyComponent from "../components/BodyComponent";
 import SearchComponent from "../components/SearchComponent";
 import tw from "twrnc";
-import { selectAccessToken } from "../redux/reducers/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { lightBeige } from "../graphics/colours";
-import { fetchFeaturedCategories, fetchMyData } from "../redux/actions";
 import { selectFeaturedCategories } from "../redux/reducers/allRestaurantsSlice";
 import { selectRecipeStatus } from "../redux/reducers/recipeSlice";
 import RecipeSearchComponent from "../components/Recipe/RecipeSearchComponent";
@@ -18,17 +16,9 @@ import HomeComponent from "../components/HomeComponent";
 import ManagementComponent from "../components/ManagementComponent";
 
 const HomeScreen = () => {
-  const dispatch = useDispatch();
-
   const featuredCategories = useSelector(selectFeaturedCategories);
-  const token = useSelector(selectAccessToken);
   const recipeActive = useSelector(selectRecipeStatus);
-  const [activeComponent, setActiveComponent] = useState("Order");
-
-  useEffect(() => {
-    dispatch(fetchFeaturedCategories());
-    dispatch(fetchMyData(token));
-  }, []);
+  const [activeComponent, setActiveComponent] = useState("Home");
 
   return (
     <SafeAreaView
