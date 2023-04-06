@@ -2,7 +2,6 @@ import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "twrnc";
-import { darkGreen, darkOrange, lightBeige } from "../graphics/colours";
 import * as Progress from "react-native-progress";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,10 +12,7 @@ import { io } from "socket.io-client";
 import { BE_URL } from "@env";
 import { selectUserData } from "../redux/reducers/userSlice";
 import { useNavigation } from "@react-navigation/native";
-import {
-  selectRestaurant,
-  setRestaurant,
-} from "../redux/reducers/restaurantSlice";
+import { selectRestaurant } from "../redux/reducers/restaurantSlice";
 
 const socket = io(`${BE_URL}`, { transports: ["websocket"] });
 

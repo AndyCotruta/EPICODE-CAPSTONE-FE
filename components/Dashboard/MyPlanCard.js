@@ -1,19 +1,17 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import tw from "twrnc";
-import { useNavigation } from "@react-navigation/native";
 
-const MyPlanCard = ({ plan, active, setActive }) => {
-  const navigation = useNavigation();
-
+const MyPlanCard = ({ plan, activeComponent, setActiveComponent }) => {
   return (
     <TouchableOpacity
       style={tw.style(
         `bg-[${plan.color}] h-45 w-30 mr-4 rounded-3xl p-5 flex justify-between`
       )}
       onPress={() => {
-        if (plan.title === "Food") {
-          setActive(plan.title);
+        console.log(activeComponent);
+        if (activeComponent === "Home") {
+          setActiveComponent("Dashboard");
         }
       }}
     >

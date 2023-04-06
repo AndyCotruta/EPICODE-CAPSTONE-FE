@@ -2,9 +2,12 @@ import { View, Text, ScrollView } from "react-native";
 import React from "react";
 import tw from "twrnc";
 import CategoryCard from "./CategoryCard";
+import { useSelector } from "react-redux";
+import { selectCategories } from "../redux/reducers/allRestaurantsSlice";
 
-const CategoriesComponent = ({ categories }) => {
+const CategoriesComponent = () => {
   const imgUrl = "https://links.papareact.com/wru";
+  const categories = useSelector(selectCategories);
 
   return (
     <ScrollView
@@ -12,7 +15,7 @@ const CategoriesComponent = ({ categories }) => {
       horizontal
       showsHorizontalScrollIndicator={false}
     >
-      {categories.map((category) => (
+      {categories?.map((category) => (
         <CategoryCard key={category._id} category={category} />
       ))}
     </ScrollView>

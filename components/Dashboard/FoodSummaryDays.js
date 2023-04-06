@@ -1,13 +1,11 @@
 import {
-  View,
   Text,
   ScrollView,
   useWindowDimensions,
   TouchableOpacity,
 } from "react-native";
 import React, { useRef, useEffect, useState } from "react";
-import tw from "twrnc";
-import { parse, format } from "date-fns";
+import { format } from "date-fns";
 
 const FoodSummary = ({ activeDay, setActiveDay }) => {
   const scrollViewRef = useRef(null);

@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Image,
   ScrollView,
-  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import tw from "twrnc";
@@ -14,24 +13,13 @@ import {
   MagnifyingGlassIcon,
   AdjustmentsVerticalIcon,
 } from "react-native-heroicons/outline";
-import {
-  darkGreen,
-  darkOrange,
-  lightBeige,
-  lightBrown,
-  lightOrange,
-  mintGreen,
-} from "../graphics/colours";
+import { darkGreen } from "../graphics/colours";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllRestaurants } from "../redux/reducers/allRestaurantsSlice";
 import { useNavigation } from "@react-navigation/native";
 import { setRestaurant } from "../redux/reducers/restaurantSlice";
-import { io } from "socket.io-client";
-import { BE_URL } from "@env";
 
-const socket = io(`${BE_URL}`, { transports: ["websocket"] });
-
-const SearchComponent = ({ shared }) => {
+const SearchComponent = ({ shared, activeComponent }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -75,7 +63,10 @@ const SearchComponent = ({ shared }) => {
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             value={searchValue}
-            placeholder="Restaurants and cuisines"
+            placeholder={
+              (activeComponent === "Order" && "Restaurants and cuisines") ||
+              (activeComponent === "Recipe" && "Delicious recipes")
+            }
             onChangeText={(text) => {
               setSearchValue(text);
             }}

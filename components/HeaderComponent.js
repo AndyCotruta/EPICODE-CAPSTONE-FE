@@ -98,11 +98,6 @@ const HeaderComponent = () => {
         ) : (
           <UserIcon style={tw.style()} size={20} color={darkGreen} />
         )}
-
-        {/* <Image
-          style={tw.style("h-11 w-11 rounded-full")}
-          source={{ uri: userData.avatar }}
-        /> */}
       </TouchableOpacity>
     </View>
   );

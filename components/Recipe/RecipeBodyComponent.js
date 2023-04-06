@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { ScrollView } from "react-native";
 import React from "react";
 import CustomRecipeCard from "./CustomRecipeCard";
 import tw from "twrnc";
@@ -6,10 +6,10 @@ import RecipeGeneralCategories from "./RecipeGeneralCategories";
 
 const RecipeBodyComponent = () => {
   return (
-    <View style={tw.style("")}>
+    <ScrollView style={tw.style("bg-white")}>
       <CustomRecipeCard />
       <RecipeGeneralCategories />
-    </View>
+    </ScrollView>
   );
 };
 
