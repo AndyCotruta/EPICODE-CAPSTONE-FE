@@ -188,7 +188,11 @@ const StackNavigator = () => {
           />
 
           <Stack.Screen name="EditProfile" component={EditProfileScreen} />
-
+          <Stack.Screen
+            name="Recipe"
+            component={RecipeScreen}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name="CustomRecipe"
             component={CustomRecipeScreen}

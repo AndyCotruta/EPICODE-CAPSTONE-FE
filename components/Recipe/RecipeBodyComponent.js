@@ -6,7 +6,7 @@ import RecipeGeneralCategories from "./RecipeGeneralCategories";
 
 const RecipeBodyComponent = () => {
   return (
-    <ScrollView style={tw.style("")}>
+    <ScrollView style={tw.style("bg-white")}>
       <CustomRecipeCard />
       <RecipeGeneralCategories />
     </ScrollView>
