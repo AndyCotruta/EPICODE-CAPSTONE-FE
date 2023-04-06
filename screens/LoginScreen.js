@@ -4,7 +4,6 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Button,
   Image,
   Platform,
 } from "react-native";
@@ -143,7 +142,7 @@ const LoginScreen = () => {
       if (response) {
         const data = response.data.accessToken;
         dispatch(addAccessToken(data));
-        navigation.navigate("Home");
+        navigation.navigate("LoginAnimation");
       } else {
         console.log("Error while trying to login");
       }
@@ -262,14 +261,6 @@ const LoginScreen = () => {
             Log In with Google
           </Text>
         </TouchableOpacity>
-        {/* <Button
-          style={tw.style("flex-grow-1")}
-          title="Click to login w google"
-          disabled={!request}
-          onPress={() => {
-            promptAsync({});
-          }}
-        /> */}
       </View>
     </LinearGradient>
   );

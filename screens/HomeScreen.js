@@ -1,106 +1,73 @@
-import { useNavigation } from "@react-navigation/native";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BodyComponent from "../components/BodyComponent";
-import HeaderComponent from "../components/HeaderComponent";
 import SearchComponent from "../components/SearchComponent";
 import tw from "twrnc";
-import {
-  addUserData,
-  selectAccessToken,
-  selectUserData,
-} from "../redux/reducers/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { Text, View } from "react-native";
-import {
-  darkGreen,
-  darkOrange,
-  lightBeige,
-  lightBrown,
-  lightOrange,
-  mintGreen,
-} from "../graphics/colours";
-import { BE_URL } from "@env";
-import { fetchMyData } from "../redux/actions";
-import { setAllRestaurants } from "../redux/reducers/allRestaurantsSlice";
-import { selectRecipeStatus } from "../redux/reducers/recipeSlice";
-import RecipeSearchComponent from "../components/Recipe/RecipeSearchComponent";
-import { io } from "socket.io-client";
-
-import { addMessage } from "../redux/reducers/communicationSlice";
-import SharedLobby from "../screens/SharedLobby";
-
-import {
-  addSharedOrderUsers,
-  selectInitiatedBy,
-} from "../redux/reducers/sharedOrderSlice";
-
-const socket = io(`${BE_URL}`, { transports: ["websocket"] });
+import { useSelector } from "react-redux";
+import { lightBeige } from "../graphics/colours";
+import { selectFeaturedCategories } from "../redux/reducers/allRestaurantsSlice";
+import DashboardHeader from "../components/Dashboard/DashboardHeader";
+import DashboardButtons from "../components/Dashboard/DashboardButtons";
+import DashboardScreen from "./DashboardScreen";
+import RecipeBodyComponent from "../components/Recipe/RecipeBodyComponent";
+import HomeComponent from "../components/HomeComponent";
+import ManagementComponent from "../components/ManagementComponent";
+import * as Animatable from "react-native-animatable";
+import { useNavigation } from "@react-navigation/native";
+import { BackHandler } from "react-native";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const [featuredCategories, setfeaturedCategories] = useState([]);
-  const token = useSelector(selectAccessToken);
-  const recipeActive = useSelector(selectRecipeStatus);
 
-  const userData = useSelector(selectUserData);
-  const initiatedBy = useSelector(selectInitiatedBy);
-
-  // useEffect(() => {
-  //   socket.on("connected", (message) => {
-  //     console.log(socket.connected);
-  //     console.log(message);
-  //     console.log("User Id: ", userData._id);
-  //     console.log("Initiated by: " + initiatedBy._id);
-  //     socket.on("newMessage", (message) => {
-  //       console.log(message);
-  //       console.log("User data: " + userData);
-  //       console.log("Initiated by: " + initiatedBy);
-  //       dispatch(addMessage(message));
-  //       dispatch(addSharedOrderUsers(message.message));
-  //     });
-  //   });
-  // }, [socket]);
+  const featuredCategories = useSelector(selectFeaturedCategories);
+  const [activeComponent, setActiveComponent] = useState("Home");
 
   useEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
-  }, []);
-
-  const fetchFeaturedCategories = async () => {
-    try {
-      const response = await fetch(`${BE_URL}/featuredCategories`);
-      if (response) {
-        const data = await response.json();
-
-        setfeaturedCategories(data);
-        const allRestaurants = data.flatMap((category) => category.restaurants);
-
-        dispatch(setAllRestaurants(allRestaurants));
-      } else {
-        console.log("Error fetching featured categories");
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        if (activeComponent === "Home") {
+          BackHandler.exitApp();
+        } else {
+          setActiveComponent("Home");
+        }
+        return true;
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    );
 
-  useEffect(() => {
-    fetchFeaturedCategories();
-    dispatch(fetchMyData(token));
-  }, [dispatch, token]);
+    return () => backHandler.remove();
+  }, [activeComponent]);
 
   return (
     <SafeAreaView
       edges={["right", "left", "top"]}
       style={tw.style(`flex-1 bg-[${lightBeige}]`)}
     >
-      <HeaderComponent />
-      {recipeActive ? <RecipeSearchComponent /> : <SearchComponent />}
+      <DashboardHeader />
+      {activeComponent === "Order" || activeComponent === "Recipe" ? (
+        <Animatable.View animation={"fadeInUp"} iterationCount={1}>
+          <SearchComponent activeComponent={activeComponent} shared={false} />
+        </Animatable.View>
+      ) : (
+        ""
+      )}
 
-      <BodyComponent featuredCategories={featuredCategories} />
+      {activeComponent === "Order" && (
+        <BodyComponent featuredCategories={featuredCategories} />
+      )}
+      {activeComponent === "Recipe" && <RecipeBodyComponent />}
+      {activeComponent === "Dashboard" && <DashboardScreen />}
+      {activeComponent === "Home" && (
+        <HomeComponent
+          activeComponent={activeComponent}
+          setActiveComponent={setActiveComponent}
+        />
+      )}
+      {activeComponent === "Management" && <ManagementComponent />}
+      <DashboardButtons
+        activeComponent={activeComponent}
+        setActiveComponent={setActiveComponent}
+      />
     </SafeAreaView>
   );
 };

@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import tw from "twrnc";
 import ProgressCircle from "react-native-progress/Circle";
 import * as Progress from "react-native-progress";
-import { useSelector } from "react-redux";
-import { selectUserData } from "../../redux/reducers/userSlice";
 
 const CaloriesChart = ({ filteredByDay }) => {
   const [caloriesGoal, setCaloriesGoal] = useState(2300);

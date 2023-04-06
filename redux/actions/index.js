@@ -16,6 +16,11 @@ import {
   addRecipesByIngredients,
 } from "../reducers/recipeSlice";
 import { setRestaurant } from "../reducers/restaurantSlice";
+import {
+  setAllRestaurants,
+  setCategories,
+  setFeaturedCategories,
+} from "../reducers/allRestaurantsSlice";
 
 export const fetchMyData = (token) => {
   return async (dispatch) => {
@@ -227,6 +232,42 @@ export const fetchRecipeByIngredients = (ingredients) => {
         dispatch(addRecipesByIngredients(data));
       } else {
         console.log("Error fetching recipe by ingredients");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const fetchFeaturedCategories = () => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`${BE_URL}/featuredCategories`);
+      if (response) {
+        const data = await response.json();
+
+        dispatch(setFeaturedCategories(data));
+        const allRestaurants = data.flatMap((category) => category.restaurants);
+
+        dispatch(setAllRestaurants(allRestaurants));
+      } else {
+        console.log("Error fetching featured categories");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const fetchCategories = () => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`${BE_URL}/categories`);
+      if (response) {
+        const data = await response.json();
+        dispatch(setCategories(data));
+      } else {
+        console.log("Error while fetching categories");
       }
     } catch (error) {
       console.log(error);

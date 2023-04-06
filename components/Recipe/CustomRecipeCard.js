@@ -1,12 +1,7 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import tw from "twrnc";
-import {
-  brightOrange,
-  darkOrange,
-  lightBeige,
-  lightOrange,
-} from "../../graphics/colours";
+import { brightOrange, darkOrange, lightBeige } from "../../graphics/colours";
 import { ArrowRightIcon } from "react-native-heroicons/outline";
 import { useNavigation } from "@react-navigation/native";
 
@@ -14,7 +9,7 @@ const CustomRecipeCard = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={tw.style("h-45")}>
+    <View style={tw.style("h-45 bg-white")}>
       <View
         style={tw.style(
           `bg-[${brightOrange}] w-5/6 h-40 rounded-r-full mt-4 p-4 flex justify-center`

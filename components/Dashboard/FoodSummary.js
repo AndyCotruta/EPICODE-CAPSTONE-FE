@@ -1,13 +1,7 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  useWindowDimensions,
-  TouchableOpacity,
-} from "react-native";
-import React, { useRef, useEffect, useState } from "react";
+import { View, Text, ScrollView } from "react-native";
+import React, { useState } from "react";
 import tw from "twrnc";
-import { parse, format, parseISO } from "date-fns";
+import { format, parseISO } from "date-fns";
 import FoodSummaryDays from "./FoodSummaryDays";
 import CaloriesChart from "./CaloriesChart";
 import WaterIntake from "./WaterIntake";

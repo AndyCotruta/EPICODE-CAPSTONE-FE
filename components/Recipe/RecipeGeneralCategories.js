@@ -19,10 +19,6 @@ const RecipeGeneralCategories = () => {
   const lunchRecipes = useSelector(selectLunch);
   const dinnerRecipes = useSelector(selectDinner);
 
-  useEffect(() => {
-    dispatch(fetchRecipeByType(active));
-  }, [active]);
-
   return (
     <View style={tw.style("p-4")}>
       <View style={tw.style("flex-row justify-between items-center")}>

@@ -225,10 +225,6 @@ const RecipeScreen = () => {
                   {" "}
                   {ingredient.measures.metric.unitShort}
                 </Text>
-                {/* <Image
-                style={tw.style("w-10 h-10")}
-                source={{ uri: ingredient.image }}
-              /> */}
               </View>
             ))}
           </View>
@@ -245,19 +241,13 @@ const RecipeScreen = () => {
             </View>
             <View style={tw.style("flex-row")}>
               <Text style={tw.style("font-bold")}>Dish Types: </Text>
-              {recipeData.dishTypes.map((type) => (
-                <Text key={type}>{type}, </Text>
+              {recipeData.dishTypes.map((type, i) => (
+                <Text key={i}>{type}, </Text>
               ))}
             </View>
-            {/* <View style={tw.style("flex-row")}>
-              <Text style={tw.style("font-bold")}>Ready in: </Text>
-              <Text>{recipeData.readyInMinutes}</Text>
-              <Text> minutes</Text>
-            </View> */}
-
             <Text style={tw.style("font-bold")}>Step by step guide:</Text>
             <View>
-              {recipeData.analyzedInstructions[0].steps.map((stepp, i) => (
+              {recipeData.analyzedInstructions[0]?.steps?.map((stepp, i) => (
                 <View key={i}>
                   <Text>
                     {stepp.number}. {stepp.step}

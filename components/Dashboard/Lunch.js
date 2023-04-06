@@ -1,8 +1,6 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import tw from "twrnc";
-import { useSelector } from "react-redux";
-import { selectUserData } from "../../redux/reducers/userSlice";
 import { format } from "date-fns";
 
 const Lunch = ({ filteredByDay }) => {
