@@ -225,10 +225,6 @@ const RecipeScreen = () => {
                   {" "}
                   {ingredient.measures.metric.unitShort}
                 </Text>
-                {/* <Image
-                style={tw.style("w-10 h-10")}
-                source={{ uri: ingredient.image }}
-              /> */}
               </View>
             ))}
           </View>

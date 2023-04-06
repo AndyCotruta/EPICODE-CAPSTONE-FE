@@ -1,24 +1,15 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import React, { useState } from "react";
+import { View, TouchableOpacity } from "react-native";
+import React from "react";
 import tw from "twrnc";
 import {
-  BellIcon,
-  ChevronDownIcon,
-  PlusIcon,
-} from "react-native-heroicons/outline";
-import {
   HomeIcon,
-  GlobeAmericasIcon,
   CircleStackIcon,
   ChartPieIcon,
 } from "react-native-heroicons/solid";
-import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const DashboardButtons = ({ activeComponent, setActiveComponent }) => {
-  const navigation = useNavigation();
-
   return (
     <View style={tw.style("px-4 py-2 flex-row justify-between items-center")}>
       <View
@@ -31,8 +22,6 @@ const DashboardButtons = ({ activeComponent, setActiveComponent }) => {
             setActiveComponent("Order");
           }}
         >
-          {/* color={activeComponent === "Order" ? "#1FA0AA" : "#D4D8E2"} */}
-
           <Ionicons
             name="fast-food"
             size={24}

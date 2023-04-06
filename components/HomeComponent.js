@@ -5,13 +5,16 @@ import DashboardActivities from "./Dashboard/DashboardActivities";
 import DashboardPlan from "./Dashboard/DashboardPlan";
 import { ChevronDownIcon } from "react-native-heroicons/outline";
 
-const HomeComponent = () => {
+const HomeComponent = ({ activeComponent, setActiveComponent }) => {
   return (
     <View style={tw.style("flex-1 p-4 bg-white")}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <DashboardActivities />
         <Text style={tw.style("text-lg font-bold py-2")}>My Plan</Text>
-        <DashboardPlan />
+        <DashboardPlan
+          activeComponent={activeComponent}
+          setActiveComponent={setActiveComponent}
+        />
         <View style={tw.style("flex-row justify-between items-center py-2")}>
           <Text style={tw.style("text-lg font-bold ")}>Activities</Text>
           <View style={tw.style("flex-row items-center h-5")}>

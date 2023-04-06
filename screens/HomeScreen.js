@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BodyComponent from "../components/BodyComponent";
 import SearchComponent from "../components/SearchComponent";
@@ -13,10 +13,30 @@ import RecipeBodyComponent from "../components/Recipe/RecipeBodyComponent";
 import HomeComponent from "../components/HomeComponent";
 import ManagementComponent from "../components/ManagementComponent";
 import * as Animatable from "react-native-animatable";
+import { useNavigation } from "@react-navigation/native";
+import { BackHandler } from "react-native";
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
+
   const featuredCategories = useSelector(selectFeaturedCategories);
   const [activeComponent, setActiveComponent] = useState("Home");
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        if (activeComponent === "Home") {
+          BackHandler.exitApp();
+        } else {
+          setActiveComponent("Home");
+        }
+        return true;
+      }
+    );
+
+    return () => backHandler.remove();
+  }, [activeComponent]);
 
   return (
     <SafeAreaView
@@ -37,7 +57,12 @@ const HomeScreen = () => {
       )}
       {activeComponent === "Recipe" && <RecipeBodyComponent />}
       {activeComponent === "Dashboard" && <DashboardScreen />}
-      {activeComponent === "Home" && <HomeComponent />}
+      {activeComponent === "Home" && (
+        <HomeComponent
+          activeComponent={activeComponent}
+          setActiveComponent={setActiveComponent}
+        />
+      )}
       {activeComponent === "Management" && <ManagementComponent />}
       <DashboardButtons
         activeComponent={activeComponent}

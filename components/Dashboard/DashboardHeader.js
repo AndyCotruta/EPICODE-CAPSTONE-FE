@@ -1,10 +1,9 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import tw from "twrnc";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import { BellIcon, UserIcon } from "react-native-heroicons/outline";
-import { parse, format } from "date-fns";
+import { format } from "date-fns";
 import { selectUserData } from "../../redux/reducers/userSlice";
 import { useNavigation } from "@react-navigation/native";
 import { darkGreen } from "../../graphics/colours";
